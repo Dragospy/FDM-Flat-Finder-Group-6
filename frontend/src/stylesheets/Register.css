@@ -1,0 +1,130 @@
+/**
+ * Register.css — Styles for the Register page.
+ */
+
+
+/* ─── Layout ───────────────────────────────────────────────────────────────── */
+
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  padding: 1rem;
+}
+
+.register-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.register-fieldset {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+
+.register-radio-group {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 0.25rem;
+}
+
+
+/* ─── Typography ───────────────────────────────────────────────────────────── */
+
+.register-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.register-subtitle {
+  margin: 0 0 1.5rem;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.register-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+}
+
+.register-legend {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #555;
+  padding: 0 0.25rem;
+}
+
+.register-radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.register-footer {
+  margin-top: 1.25rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+
+/* ─── Inputs & controls ────────────────────────────────────────────────────── */
+
+.register-input {
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+  outline: none;
+}
+
+.register-button {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: none;
+  background: #2563eb;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.register-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+
+/* ─── Feedback ─────────────────────────────────────────────────────────────── */
+
+.register-error {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}

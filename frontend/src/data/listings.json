@@ -1,0 +1,110 @@
+[
+  {
+    "id": "lst-001",
+    "hostId": "acc-001",
+    "title": "Cosy Studio in Shoreditch",
+    "description": "A bright, modern studio in the heart of Shoreditch. Walking distance to Old Street station, surrounded by cafés, galleries and nightlife.",
+    "type": "Studio",
+    "location": {
+      "address": "14 Rivington Street",
+      "city": "London",
+      "postcode": "EC2A 3DU",
+      "country": "UK"
+    },
+    "price": 1650,
+    "priceUnit": "month",
+    "bedrooms": 0,
+    "bathrooms": 1,
+    "maxGuests": 2,
+    "amenities": ["WiFi", "Washing Machine", "Bike Storage", "Dishwasher"],
+    "images": [
+      "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800",
+      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800"
+    ],
+    "available": true,
+    "rating": 4.7,
+    "reviewCount": 12,
+    "createdAt": "2024-04-01T08:00:00.000Z"
+  },
+  {
+    "id": "lst-002",
+    "hostId": "acc-001",
+    "title": "Spacious 2-Bed Flat in Hackney",
+    "description": "A recently refurbished two-bedroom flat on a quiet residential street in Hackney. Close to London Fields park and Hackney Central overground.",
+    "type": "Apartment",
+    "location": {
+      "address": "88 Mare Street",
+      "city": "London",
+      "postcode": "E8 4RG",
+      "country": "UK"
+    },
+    "price": 2400,
+    "priceUnit": "month",
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "maxGuests": 4,
+    "amenities": ["WiFi", "Garden", "Washing Machine", "Parking", "Dishwasher"],
+    "images": [
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800",
+      "https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800"
+    ],
+    "available": true,
+    "rating": 4.5,
+    "reviewCount": 8,
+    "createdAt": "2024-04-10T10:30:00.000Z"
+  },
+  {
+    "id": "lst-003",
+    "hostId": "acc-003",
+    "title": "Charming 1-Bed in Notting Hill",
+    "description": "Stylish one-bedroom flat in a Victorian terrace in the iconic Notting Hill neighbourhood. Period features throughout with a modern kitchen.",
+    "type": "Apartment",
+    "location": {
+      "address": "32 Pembridge Road",
+      "city": "London",
+      "postcode": "W11 3HG",
+      "country": "UK"
+    },
+    "price": 2100,
+    "priceUnit": "month",
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "maxGuests": 2,
+    "amenities": ["WiFi", "Washing Machine", "Balcony", "Dishwasher"],
+    "images": [
+      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=800",
+      "https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=800"
+    ],
+    "available": true,
+    "rating": 4.9,
+    "reviewCount": 21,
+    "createdAt": "2024-05-02T11:00:00.000Z"
+  },
+  {
+    "id": "lst-004",
+    "hostId": "acc-003",
+    "title": "Modern 3-Bed House in Peckham",
+    "description": "A fantastic three-bedroom house with a private garden in trendy Peckham. Great transport links and surrounded by independent restaurants and bars.",
+    "type": "House",
+    "location": {
+      "address": "7 Bellenden Road",
+      "city": "London",
+      "postcode": "SE15 4DH",
+      "country": "UK"
+    },
+    "price": 3200,
+    "priceUnit": "month",
+    "bedrooms": 3,
+    "bathrooms": 2,
+    "maxGuests": 6,
+    "amenities": ["WiFi", "Garden", "Washing Machine", "Parking", "BBQ", "Dishwasher"],
+    "images": [
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800",
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800"
+    ],
+    "available": false,
+    "rating": 4.6,
+    "reviewCount": 5,
+    "createdAt": "2024-05-20T14:00:00.000Z"
+  }
+]

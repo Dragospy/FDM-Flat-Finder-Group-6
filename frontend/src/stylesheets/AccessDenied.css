@@ -1,0 +1,59 @@
+/**
+ * AccessDenied.css — Styles for the Access Denied screen
+ * rendered by ProtectedRoute when a user's role is not permitted.
+ */
+
+
+/* ─── Layout ───────────────────────────────────────────────────────────────── */
+
+.access-denied-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  padding: 1rem;
+}
+
+.access-denied-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  padding: 2.5rem;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+}
+
+
+/* ─── Typography ───────────────────────────────────────────────────────────── */
+
+.access-denied-icon {
+  font-size: 3rem;
+}
+
+.access-denied-title {
+  margin: 0.75rem 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #111;
+}
+
+.access-denied-message {
+  color: #555;
+  font-size: 0.95rem;
+  margin: 0 0 0.5rem;
+}
+
+.access-denied-hint {
+  color: #888;
+  font-size: 0.85rem;
+  margin: 0 0 1.5rem;
+}
+
+.access-denied-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+}

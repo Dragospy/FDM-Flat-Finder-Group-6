@@ -1,0 +1,38 @@
+[
+  {
+    "id": "acc-000",
+    "name": "Admin User",
+    "email": "admin@example.com",
+    "password": "admin123",
+    "role": "admin",
+    "avatar": "https://i.pravatar.cc/150?u=admin",
+    "createdAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "acc-001",
+    "name": "Alice Johnson",
+    "email": "alice@example.com",
+    "password": "password123",
+    "role": "host",
+    "avatar": "https://i.pravatar.cc/150?u=alice",
+    "createdAt": "2024-01-15T10:00:00.000Z"
+  },
+  {
+    "id": "acc-002",
+    "name": "Bob Smith",
+    "email": "bob@example.com",
+    "password": "password123",
+    "role": "rentee",
+    "avatar": "https://i.pravatar.cc/150?u=bob",
+    "createdAt": "2024-02-20T14:30:00.000Z"
+  },
+  {
+    "id": "acc-003",
+    "name": "Carol White",
+    "email": "carol@example.com",
+    "password": "password123",
+    "role": "host",
+    "avatar": "https://i.pravatar.cc/150?u=carol",
+    "createdAt": "2024-03-05T09:15:00.000Z"
+  }
+]
