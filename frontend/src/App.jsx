@@ -25,6 +25,7 @@ import MyBookings  from "./pages/MyBookings";
 import MyListings  from "./pages/MyListings";
 import Admin       from "./pages/Admin";
 import Moderation  from "./pages/Moderation";
+import PublicOnlyRoute from "./components/PublicOnlyRoute";
 
 
 export default function App() {
@@ -33,10 +34,30 @@ export default function App() {
       <Routes>
 
         {/* ── Public ─────────────────────────────────────────────────────── */}
-        <Route path="/"         element={<Home />}     />
-        <Route path="/login"    element={<Login />}    />
-        <Route path="/register" element={<Register />} />
-
+        <Route 
+          path="/"         
+          element={
+            <PublicOnlyRoute>
+              <Home />
+            </PublicOnlyRoute>
+          }    
+        />
+        <Route 
+          path="/login"         
+          element={
+            <PublicOnlyRoute>
+              <Login />
+            </PublicOnlyRoute>
+          }    
+        />
+        <Route 
+          path="/register"         
+          element={
+            <PublicOnlyRoute>
+              <Register />
+            </PublicOnlyRoute>
+          }    
+        />
 
         {/* ── Any authenticated user ─────────────────────────────────────── */}
         <Route
