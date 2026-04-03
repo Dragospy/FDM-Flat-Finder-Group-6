@@ -1,3 +1,44 @@
 /**
  * Admin.css — Styles for the Admin page.
  */
+p {
+    margin: 0;
+}
+
+.listing-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.listing-container {
+    display: flex;
+    flex-direction: column; 
+    text-align: center;
+    width: 15rem;
+    font-size: 0.5rem;
+    padding: 1rem;
+}
+
+.listing-container:hover {
+    background-color: lightgrey;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.listing-image {
+    border-radius: 1rem;
+}
+
+.listing-title {
+    margin: 0.5rem 0 0.1rem 0;
+    font-size: 0.8rem;
+}
+
+.listing-info {
+    display: flex;
+    justify-content: center;
+    gap: 0.3rem;
+    color: grey;
+    margin: 0;
+    font-size: 0.8rem;
+}
