@@ -28,10 +28,17 @@ function Listing({id}) {
   )
 }
 
-function StatusSelection({heading, setHeading}) {
+/**
+ * Drop down menu to pick the status of listings to show
+ * 
+ * @param {string} displayedStatus Status of listings currently being displayed
+ * @param {function} setDisplayedStatus Function to change the displayed status to the selected value
+ * @returns Component to pick a status
+ */
+function StatusSelection({displayedStatus, setDisplayedStatus}) {
   return (
     <form>
-      <select id="statuses" value={heading} onChange={(event) => {setHeading(event.target.value);}}>
+      <select id="statuses" className="status-selection" value={displayedStatus} onChange={(event) => {setDisplayedStatus(event.target.value);}}>
         <option value={LISTING_STATUS.PENDING}>Pending</option>
         <option value={LISTING_STATUS.APPROVED}>Approved</option>
         <option value={LISTING_STATUS.REJECTED}>Rejected</option>
@@ -40,6 +47,13 @@ function StatusSelection({heading, setHeading}) {
   )
 }
 
+/**
+ * Filters the listings by the passed in status and renders the component for each match
+ * 
+ * @param {Array} listings List of all listings
+ * @param {string} status Status to filter listings by
+ * @returns Components of all listings that have the passed in status
+ */
 function displayListings(listings, status) {
   const validStatuses = Object.values(LISTING_STATUS);
   if (!validStatuses.includes(status))  throw new Error(`Status "${status}" not defined`);
@@ -57,17 +71,17 @@ function displayListings(listings, status) {
 export default function Admin() {
   // db.reset();
   // console.log(getListings());
-  const [heading, setHeading] = useState(LISTING_STATUS.PENDING);
+  const [displayedStatus, setDisplayedStatus] = useState(LISTING_STATUS.PENDING);
   
   return (
-    <main>
+    <main className="admin-container">
       <h1>Admin Panel</h1>
-      <StatusSelection heading={heading} setHeading={setHeading}/>
-      <h2>{heading.charAt(0).toUpperCase() + heading.slice(1)}</h2>
+      <StatusSelection displayedStatus={displayedStatus} setDisplayedStatus={setDisplayedStatus}/>
+      <h2>{displayedStatus.charAt(0).toUpperCase() + displayedStatus.slice(1)}</h2>
       <div className="listing-group">
-        {heading === LISTING_STATUS.PENDING && displayListings(getListings(), LISTING_STATUS.PENDING)}
-        {heading === LISTING_STATUS.APPROVED && displayListings(getListings(), LISTING_STATUS.APPROVED)}   
-        {heading === LISTING_STATUS.REJECTED && displayListings(getListings(), LISTING_STATUS.REJECTED)}  
+        {displayedStatus === LISTING_STATUS.PENDING && displayListings(getListings(), LISTING_STATUS.PENDING)}
+        {displayedStatus === LISTING_STATUS.APPROVED && displayListings(getListings(), LISTING_STATUS.APPROVED)}   
+        {displayedStatus === LISTING_STATUS.REJECTED && displayListings(getListings(), LISTING_STATUS.REJECTED)}  
       </div>
     </main>
   );

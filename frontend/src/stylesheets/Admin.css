@@ -1,9 +1,21 @@
 /**
  * Admin.css — Styles for the Admin page.
  */
+
+ /********************************
+            Main Styles
+********************************/
+.admin-container {
+    margin: 1rem;
+}
+
 p {
     margin: 0;
 }
+
+/********************************
+        Listing Card Styles
+********************************/
 
 .listing-group {
     display: flex;
@@ -42,3 +54,15 @@ p {
     margin: 0;
     font-size: 0.8rem;
 }
+
+/********************************
+     Status Selection Styles
+********************************/
+
+.status-selection {
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    font-weight: bold;
+}
+
+
