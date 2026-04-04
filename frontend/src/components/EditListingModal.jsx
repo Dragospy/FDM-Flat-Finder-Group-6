@@ -39,6 +39,37 @@ export default function EditListingModal({ isOpen, onClose, listing, onSave, isC
     });
   };
 
+  const handleImageUpload = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (files.length === 0) return;
+
+    const imageDataUrls = await Promise.all(
+      files.map(
+        (file) =>
+          new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = () => reject(new Error("Failed to read image file."));
+            reader.readAsDataURL(file);
+          })
+      )
+    );
+
+    setEditedListing({
+      ...editedListing,
+      images: [...(editedListing.images || []), ...imageDataUrls]
+    });
+
+    e.target.value = '';
+  };
+
+  const removeImage = (index) => {
+    setEditedListing({
+      ...editedListing,
+      images: (editedListing.images || []).filter((_, i) => i !== index)
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     onSave(editedListing);
@@ -175,12 +206,23 @@ export default function EditListingModal({ isOpen, onClose, listing, onSave, isC
             />
           </label>
           <label>
-            Images (one URL per line):
-            <textarea
-              value={editedListing.images ? editedListing.images.join('\n') : ''}
-              onChange={(e) => handleChange('images', e.target.value.split('\n').map(url => url.trim()).filter(url => url))}
-              placeholder="Enter image URLs, one per line"
+            Images:
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={handleImageUpload}
             />
+            {(editedListing.images || []).length > 0 && (
+              <div className="image-upload-preview-grid">
+                {(editedListing.images || []).map((image, index) => (
+                  <div key={index} className="image-upload-preview-item">
+                    <img src={image} alt={`Uploaded listing ${index + 1}`} />
+                    <button type="button" onClick={() => removeImage(index)}>Remove</button>
+                  </div>
+                ))}
+              </div>
+            )}
           </label>
           <label>
             Amenities:
