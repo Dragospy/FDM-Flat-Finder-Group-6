@@ -26,12 +26,11 @@ export default function ListingCard({ listing, onEdit, onArchive, onDelete }) {
   };
 
   const handleArchiveClick = () => {
-    if (!listing.available) return;
     onArchive(listing.id);
   };
 
   return (
-    <div className="listing-card">
+    <div className={`listing-card ${!listing.available ? 'archived-card' : ''}`}>
       {/* Images */}
       <div className="listing-images">
         {listing.images && listing.images.length > 0 ? (
@@ -125,9 +124,8 @@ export default function ListingCard({ listing, onEdit, onArchive, onDelete }) {
           <button
             className="archive-button"
             onClick={handleArchiveClick}
-            disabled={!listing.available}
           >
-            {listing.available ? 'Archive' : 'Archived'}
+            {listing.available ? 'Archive' : 'Unarchive'}
           </button>
         )}
         {isOwner && onDelete && (

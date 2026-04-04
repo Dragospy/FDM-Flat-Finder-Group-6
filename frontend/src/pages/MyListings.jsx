@@ -34,12 +34,13 @@ export default function MyListings() {
   };
 
   const handleArchive = (listingId) => {
-    const listingToArchive = listings.find((listing) => listing.id === listingId);
-    if (!listingToArchive) return;
+    const listingToToggle = listings.find((listing) => listing.id === listingId);
+    if (!listingToToggle) return;
 
-    const archivedListing = { ...listingToArchive, available: false };
-    updateListing(listingId, { available: false });
-    setListings(listings.map((listing) => listing.id === listingId ? archivedListing : listing));
+    const updatedAvailability = !listingToToggle.available;
+    const updatedListing = { ...listingToToggle, available: updatedAvailability };
+    updateListing(listingId, { available: updatedAvailability });
+    setListings(listings.map((listing) => listing.id === listingId ? updatedListing : listing));
   };
 
   const handleSave = (updatedListing) => {
