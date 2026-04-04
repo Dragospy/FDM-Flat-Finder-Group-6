@@ -198,14 +198,6 @@ export default function EditListingModal({ isOpen, onClose, listing, onSave, isC
             />
           </label>
           <label>
-            Available:
-            <input
-              type="checkbox"
-              checked={editedListing.available || false}
-              onChange={(e) => handleChange('available', e.target.checked)}
-            />
-          </label>
-          <label>
             Images:
             <input
               type="file"
