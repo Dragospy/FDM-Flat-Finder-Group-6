@@ -61,3 +61,43 @@
   background-color: #6c757d;
   color: white;
 }
+
+.amenities-editor {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.add-amenity {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.add-amenity input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.amenities-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.amenity-item {
+  background-color: #f8f9fa;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.amenity-item button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+}
