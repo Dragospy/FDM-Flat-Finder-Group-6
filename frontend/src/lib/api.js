@@ -164,7 +164,6 @@ export function rejectListing(id) {
   return rejected;
 }
 
-
 // ─── Accounts ─────────────────────────────────────────────────────────────────
 
 /**
