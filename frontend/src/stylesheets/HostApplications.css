@@ -1,0 +1,110 @@
+/* HostApplications.css */
+
+.host-applications-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.host-applications-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.host-applications-subtitle {
+  margin: 6px 0 0;
+  opacity: 0.8;
+}
+
+.host-applications-alert {
+  margin: 10px 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.host-applications-alert--error {
+  background: rgba(220, 38, 38, 0.12);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+}
+
+.host-applications-alert--success {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.host-applications-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.host-applications-item {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 14px;
+  padding: 14px;
+  background: #fff;
+}
+
+.host-applications-item-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.host-applications-title {
+  margin: 0;
+  font-size: 16px;
+}
+
+.host-applications-meta {
+  margin: 4px 0 0;
+  opacity: 0.75;
+  font-size: 13px;
+}
+
+.host-applications-item-bottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.host-applications-dates {
+  opacity: 0.75;
+  font-size: 13px;
+}
+
+.host-applications-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.host-applications-button {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #111827;
+  color: white;
+  cursor: pointer;
+}
+
+.host-applications-button--secondary {
+  background: white;
+  color: #111827;
+}
+
+.host-applications-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.host-applications-empty {
+  opacity: 0.75;
+  padding: 16px;
+}
+

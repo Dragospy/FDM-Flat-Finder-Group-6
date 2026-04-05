@@ -1,0 +1,128 @@
+/* BrowseListings.css */
+
+.browse-listings-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.browse-listings-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.browse-listings-subtitle {
+  margin: 6px 0 0;
+  opacity: 0.8;
+}
+
+.browse-listings-link {
+  color: inherit;
+  text-decoration: underline;
+}
+
+.browse-listings-controls {
+  display: flex;
+  gap: 12px;
+  margin: 12px 0 16px;
+}
+
+.browse-listings-label {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.browse-listings-input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  min-width: 240px;
+}
+
+.browse-listings-alert {
+  margin: 10px 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+}
+
+.browse-listings-alert--error {
+  background: rgba(220, 38, 38, 0.12);
+  border: 1px solid rgba(220, 38, 38, 0.25);
+}
+
+.browse-listings-alert--success {
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.browse-listings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.browse-listings-card {
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 14px;
+  padding: 14px;
+  background: #fff;
+}
+
+.browse-listings-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.browse-listings-title {
+  margin: 0;
+  font-size: 16px;
+}
+
+.browse-listings-meta {
+  margin: 4px 0 0;
+  opacity: 0.75;
+  font-size: 13px;
+}
+
+.browse-listings-price {
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.browse-listings-desc {
+  margin: 10px 0 12px;
+  opacity: 0.85;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.browse-listings-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.browse-listings-button {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #111827;
+  color: white;
+  cursor: pointer;
+}
+
+.browse-listings-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.browse-listings-empty {
+  opacity: 0.75;
+  padding: 16px;
+}
+

@@ -1,3 +1,60 @@
 /**
  * Dashboard.css — Styles for the Dashboard page.
  */
+
+.dashboard-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.dashboard-title {
+  margin: 0;
+}
+
+.dashboard-subtitle {
+  margin: 6px 0 0;
+  opacity: 0.8;
+}
+
+.dashboard-logout {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: white;
+  cursor: pointer;
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.dashboard-card {
+  display: block;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  color: inherit;
+  text-decoration: none;
+}
+
+.dashboard-card h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.dashboard-card p {
+  margin: 6px 0 0;
+  opacity: 0.75;
+}
