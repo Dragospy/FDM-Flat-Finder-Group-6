@@ -148,8 +148,7 @@ export function deleteListing(id) {
  * @returns the approved listing
  */
 export function approveListing(id) {
-  const status = LISTING_STATUS.APPROVED;
-  const approved = updateListing(id,  {status});
+  const approved = updateListing(id,  {status: LISTING_STATUS.APPROVED});
   return approved;
 }
 
@@ -162,6 +161,17 @@ export function approveListing(id) {
 export function rejectListing(id) {
   const rejected = updateListing(id,  {status: LISTING_STATUS.REJECTED});
   return rejected;
+}
+
+/**
+ * Reverts a listing's status to pending
+ * 
+ * @param {string} id 
+ * @returns the pending listing
+ */
+export function revertListingToPending(id) {
+  const pending = updateListing(id, {status: LISTING_STATUS.PENDING})
+  return pending;
 }
 
 // ─── Accounts ─────────────────────────────────────────────────────────────────

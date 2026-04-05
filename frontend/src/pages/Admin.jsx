@@ -2,7 +2,7 @@
  * Admin.jsx — Admin-only management panel.
  */
 import { useEffect, useState } from "react";
-import { approveListing, getListing, getListings, rejectListing } from "../lib/api";
+import { approveListing, getListing, getListings, rejectListing, revertListingToPending } from "../lib/api";
 import "../stylesheets/Admin.css";
 import { db } from "../lib/db";
 import { LISTING_STATUS } from "../constants/listingStatus";
@@ -81,6 +81,7 @@ function ListingDetails({id, toggleDisplayedListing}) {
       
       {listing.status === LISTING_STATUS.PENDING && <button className="approveButton" onClick={() => {approveListing(id); toggleDisplayedListing(null);}}>Approve</button>}
       {listing.status === LISTING_STATUS.PENDING && <button className="rejectButton" onClick={() => {rejectListing(id); toggleDisplayedListing(null)}}>Reject</button>}
+      {listing.status != LISTING_STATUS.PENDING && <button className="revertButton" onClick={() => {revertListingToPending(id); toggleDisplayedListing(null)}}>Revert to Pending</button>}
     </div>
   )
 }
@@ -127,7 +128,7 @@ function displayListings(status, setDisplayedListing) {
 }
 
 export default function Admin() {
-  db.reset();
+  // db.reset();
   // console.log(getListings());
   const [displayedStatus, setDisplayedStatus] = useState(LISTING_STATUS.PENDING);
   const [displayedListing, setDisplayedListing] = useState(null);
@@ -150,7 +151,7 @@ export default function Admin() {
         </div>
       </div>
 
-      <hr className="panel-separator"/>
+      {displayedListing != null && <hr className="panel-separator"/>}
 
       {displayedListing != null && <div className="right-panel">
         <button className="listing-details-close-button" onClick={() => toggleDisplayedListing(null)}>X</button>

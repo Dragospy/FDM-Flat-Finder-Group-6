@@ -152,7 +152,7 @@ p, h1, h2, h3 {
     margin: 0;
 }
 
-.approveButton, .rejectButton {
+.approveButton, .rejectButton, .revertButton {
     padding: 1rem;
     border-radius: 0.5rem;
     border: none;
@@ -164,6 +164,7 @@ p, h1, h2, h3 {
 
 .approveButton {
     background-color: rgb(37, 206, 37);
+    border: solid 1px rgb(29, 184, 29);
 }
 
 .approveButton:hover {
@@ -172,9 +173,19 @@ p, h1, h2, h3 {
 
 .rejectButton {
     background-color: rgb(247, 42, 42);
+    border: solid 1px rgb(223, 32, 32);
 }
 
 .rejectButton:hover {
     background-color: rgb(223, 32, 32);
+}
+
+.revertButton {
+    background-color: rgb(0, 119, 255);
+    border: solid 1px rgb(1, 109, 231);
+}
+
+.revertButton:hover {
+    background-color: rgb(1, 109, 231);
 }
 
