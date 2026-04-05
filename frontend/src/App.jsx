@@ -15,7 +15,7 @@ import { Routes, Route } from "react-router-dom";
 
 import { AuthProvider }  from "./context/AuthContext";
 import { ROLES }         from "./lib/auth";
-import ProtectedRoute    from "./components/ProtectedRoute";
+import ProtectedLayout   from "./components/ProtectedLayout";
 
 import Home        from "./pages/Home";
 import Login       from "./pages/Login";
@@ -66,9 +66,9 @@ export default function App() {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute>
+            <ProtectedLayout>
               <Dashboard />
-            </ProtectedRoute>
+            </ProtectedLayout>
           }
         />
 
@@ -76,17 +76,17 @@ export default function App() {
         <Route
           path="/listings"
           element={
-            <ProtectedRoute allowedRoles={[ROLES.RENTEE]}>
+            <ProtectedLayout allowedRoles={[ROLES.RENTEE]}>
               <BrowseListings />
-            </ProtectedRoute>
+            </ProtectedLayout>
           }
         />
         <Route
           path="/applications"
           element={
-            <ProtectedRoute allowedRoles={[ROLES.RENTEE]}>
+            <ProtectedLayout allowedRoles={[ROLES.RENTEE]}>
               <MyApplications />
-            </ProtectedRoute>
+            </ProtectedLayout>
           }
         />
 
@@ -94,9 +94,9 @@ export default function App() {
         <Route
           path="/applications/manage"
           element={
-            <ProtectedRoute allowedRoles={[ROLES.HOST]}>
+            <ProtectedLayout allowedRoles={[ROLES.HOST]}>
               <HostApplications />
-            </ProtectedRoute>
+            </ProtectedLayout>
           }
         />
 
@@ -105,9 +105,9 @@ export default function App() {
         <Route
           path="/my-bookings"
           element={
-            <ProtectedRoute allowedRoles={[ROLES.RENTEE]}>
+            <ProtectedLayout allowedRoles={[ROLES.RENTEE]}>
               <MyBookings />
-            </ProtectedRoute>
+            </ProtectedLayout>
           }
         />
 
@@ -116,9 +116,9 @@ export default function App() {
         <Route
           path="/my-listings"
           element={
-            <ProtectedRoute allowedRoles={[ROLES.HOST]}>
+            <ProtectedLayout allowedRoles={[ROLES.HOST]}>
               <MyListings />
-            </ProtectedRoute>
+            </ProtectedLayout>
           }
         />
 
@@ -127,9 +127,9 @@ export default function App() {
         <Route
           path="/admin"
           element={
-            <ProtectedRoute allowedRoles={[ROLES.ADMIN]}>
+            <ProtectedLayout allowedRoles={[ROLES.ADMIN]}>
               <Admin />
-            </ProtectedRoute>
+            </ProtectedLayout>
           }
         />
 
@@ -138,9 +138,9 @@ export default function App() {
         <Route
           path="/moderation"
           element={
-            <ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.HOST]}>
+            <ProtectedLayout allowedRoles={[ROLES.ADMIN, ROLES.HOST]}>
               <Moderation />
-            </ProtectedRoute>
+            </ProtectedLayout>
           }
         />
 

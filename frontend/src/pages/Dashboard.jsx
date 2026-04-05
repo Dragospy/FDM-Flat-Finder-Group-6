@@ -10,7 +10,7 @@ import { ROLES } from "../lib/auth";
 import "../stylesheets/Dashboard.css";
 
 export default function Dashboard() {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
 
   return (
     <main className="dashboard-page">
@@ -21,8 +21,6 @@ export default function Dashboard() {
             Signed in as <strong>{user?.name}</strong> ({user?.role})
           </p>
         </div>
-
-        <button className="dashboard-logout" onClick={logout}>Log out</button>
       </header>
 
       <section className="dashboard-cards">

@@ -1,0 +1,92 @@
+.auth-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f8fafc;
+}
+
+.auth-shell-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
+  padding: 12px 20px;
+  background: #fff;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.auth-shell-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 140px;
+}
+
+.auth-shell-logo {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #0f172a;
+  text-decoration: none;
+}
+
+.auth-shell-logo:hover {
+  text-decoration: underline;
+}
+
+.auth-shell-user {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.auth-shell-role {
+  text-transform: capitalize;
+}
+
+.auth-shell-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+  flex: 1;
+  justify-content: center;
+}
+
+.auth-shell-link {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  color: #334155;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.auth-shell-link:hover {
+  background: rgba(15, 23, 42, 0.06);
+}
+
+.auth-shell-link--active {
+  background: rgba(15, 23, 42, 0.1);
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.auth-shell-logout {
+  margin-left: auto;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.auth-shell-logout:hover {
+  background: #f1f5f9;
+}
+
+.auth-shell-body {
+  flex: 1;
+}

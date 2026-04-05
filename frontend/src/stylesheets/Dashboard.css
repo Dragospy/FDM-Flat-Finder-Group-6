@@ -25,14 +25,6 @@
   opacity: 0.8;
 }
 
-.dashboard-logout {
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  background: white;
-  cursor: pointer;
-}
-
 .dashboard-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
