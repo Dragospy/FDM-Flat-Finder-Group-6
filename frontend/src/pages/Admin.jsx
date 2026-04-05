@@ -28,21 +28,39 @@ function Listing({id, setDisplayedListing}) {
   )
 }
 
-function ListingDetails({id, toggleDisplayedListing}) {
+/**
+ * Renders the details for a listing and buttons to approve/reject/revert the listing, depending on the current status
+ * 
+ * @param {string} id
+ * @param {function} toggleDisplayedListing Function to toggle the displayed listing
+ * @param {function} setCurrentImage Function to change the image showing for the listing
+ * @param {number} currentImage Index in the images array of the current image showing for the listing
+ * @returns Component to display the details for a listing
+ */
+function ListingDetails({id, toggleDisplayedListing, setCurrentImage, currentImage}) {
+
   const listing = getListing(id);
+
+  const prevImage = () => {
+    setCurrentImage(currentImage - 1)
+    if (currentImage === 0) {setCurrentImage(listing.images.length-1);}
+  }
+
+  const nextImage = () => {
+    setCurrentImage(currentImage + 1)
+    if (currentImage === listing.images.length-1) {setCurrentImage(0);}
+  }
 
   return (
     <div className="listing-details-container">
       <header className="listing-details-header">
         <div className="listing-images-container">
-          {
-            listing.images.map((image, index) => {
-              return (
-                <img key={index} src={image} className="listing-details-image"></img>
-              )
-              
-            })
-          }
+
+          <img src={listing.images[currentImage]} className="listing-details-image"></img>
+          <div className="arrow-buttons-container">
+            <button onClick={prevImage} className="image-prev-button">&lt;</button>
+            <button onClick={nextImage} className="image-next-button">&gt;</button>
+          </div>
         </div>
 
         <h2 className="listing-details-title">{listing.title}</h2>
@@ -132,10 +150,13 @@ export default function Admin() {
   // console.log(getListings());
   const [displayedStatus, setDisplayedStatus] = useState(LISTING_STATUS.PENDING);
   const [displayedListing, setDisplayedListing] = useState(null);
+  const [currentImage, setCurrentImage] = useState(0);
 
   const toggleDisplayedListing = (newListing) => {
     if (displayedListing === newListing) {setDisplayedListing(null)}
     else (setDisplayedListing(newListing))
+
+    setCurrentImage(0);
   }
   
   return (
@@ -155,7 +176,7 @@ export default function Admin() {
 
       {displayedListing != null && <div className="right-panel">
         <button className="listing-details-close-button" onClick={() => toggleDisplayedListing(null)}>X</button>
-        <ListingDetails id={displayedListing} toggleDisplayedListing={toggleDisplayedListing}/>
+        <ListingDetails id={displayedListing} toggleDisplayedListing={toggleDisplayedListing} setCurrentImage={setCurrentImage} currentImage={currentImage}/>
       </div>}
     </main>
   );
