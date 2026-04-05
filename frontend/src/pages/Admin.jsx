@@ -2,7 +2,7 @@
  * Admin.jsx — Admin-only management panel.
  */
 import { useEffect, useState } from "react";
-import { approveListing, getListing, getListings, rejectListing, revertListingToPending } from "../lib/api";
+import { approveListing, deleteListing, getListing, getListings, rejectListing, revertListingToPending } from "../lib/api";
 import "../stylesheets/Admin.css";
 import { db } from "../lib/db";
 import { LISTING_STATUS } from "../constants/listingStatus";
@@ -51,6 +51,11 @@ function ListingDetails({id, toggleDisplayedListing, setCurrentImage, currentIma
     if (currentImage === listing.images.length-1) {setCurrentImage(0);}
   }
 
+  function getConfirmation(message) {
+    if (window.confirm(message)) {return true;}
+    else {return false;}
+  }
+
   return (
     <div className="listing-details-container">
       <header className="listing-details-header">
@@ -97,9 +102,10 @@ function ListingDetails({id, toggleDisplayedListing, setCurrentImage, currentIma
         </ul>
       </section>
       
-      {listing.status === LISTING_STATUS.PENDING && <button className="approveButton" onClick={() => {approveListing(id); toggleDisplayedListing(null);}}>Approve</button>}
-      {listing.status === LISTING_STATUS.PENDING && <button className="rejectButton" onClick={() => {rejectListing(id); toggleDisplayedListing(null)}}>Reject</button>}
-      {listing.status != LISTING_STATUS.PENDING && <button className="revertButton" onClick={() => {revertListingToPending(id); toggleDisplayedListing(null)}}>Revert to Pending</button>}
+      {listing.status === LISTING_STATUS.PENDING && <button className="approve-button" onClick={() => {if (getConfirmation("Are you sure you want to approve this listing?")) {approveListing(id); toggleDisplayedListing(null);}}}>Approve</button>}
+      {listing.status === LISTING_STATUS.PENDING && <button className="reject-button" onClick={() => {if (getConfirmation("Are you sure you want to reject this listing?")) {rejectListing(id); toggleDisplayedListing(null);}}}>Reject</button>}
+      {listing.status != LISTING_STATUS.PENDING && <button className="revert-button" onClick={() => {if (getConfirmation("Are you sure you want to revert this listing to pending?")) {revertListingToPending(id); toggleDisplayedListing(null);}}}>Revert to Pending</button>}
+      <button className="delete-button" onClick={() => {if (getConfirmation("Are you sure you want to delete this listing? This action cannot be undone.")) {deleteListing(id); toggleDisplayedListing(null);}}}>Delete</button>
     </div>
   )
 }
