@@ -63,7 +63,7 @@ function DisplayListing({listing}){
                             <p>City: {listing.location.city}</p>
                             <p>Country: {listing.location.country}</p>       
                     </div>    
-                                      
+
                     <div>
                         <h3>Images:</h3>
                             <DisplayImages images={listing.images}/>
@@ -89,6 +89,46 @@ function DisplayListings({listings}){
 
     return <ul>{displayListings}</ul>
 }
+
+// Open weather API key. 437218189febbb7451a26102eb3ef8af
+function Geocoding(){
+
+}
+
+
+function GetDistanceBetweenCoordinates(latitude1, longitude1, latitude2, longitude2){
+    // Haversine formula: Calculate distance between coordinates.
+
+    // Earth radius in metres.
+    const SphereRadius = 6371e3;
+
+    function convertDegToRadians(degree){
+        return degree * Math.PI/180;
+
+    }
+
+    const angle1 = convertDegToRadians(latitude1);
+    const angle2 = convertDegToRadians(latitude2);    
+    
+
+    const latitudeDifference = convertDegToRadians(latitude2-latitude1);
+    const longitudeDifference = convertDegToRadians(longitude2-longitude1);
+    
+
+    const angle = 
+        Math.sin(latitudeDifference/2)*Math.sin(latitudeDifference/2)
+        + Math.cos(angle1)*Math.cos(angle2)*
+        Math.sin(longitudeDifference/2)*Math.sin(longitudeDifference/2);
+    
+    const centralAngle = 2 * Math.atan2(Math.sqrt(angle), Math.sqrt(1-angle));
+    console.log(angle);
+
+    const distance = SphereRadius*centralAngle;
+
+    return distance;
+}
+
+
 
 export function SearchListings() {
     let ascending = true;
