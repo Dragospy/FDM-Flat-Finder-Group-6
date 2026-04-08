@@ -1,5 +1,5 @@
 import { getListings, getListing, getListingsByHost } from "../lib/api.js";
-
+import "../stylesheets/Search.css";
 
 
 // Sort by, 
@@ -30,29 +30,47 @@ function DisplayListing({listing}){
     return(
         <>
             <div className="listing">
-                <h2>{listing.title}</h2>
-                    <h3>Details:</h3>
-                        <div>
-                            <p>Rating: {listing.rating}</p>
-                            <p>Review count: {listing.reviewCount}</p>
-                        </div>
-                        <p>Price: {listing.price} per {listing.priceUnit}</p>
-                        <p>Type: {listing.type}</p>
-                        <p>Bedrooms:{listing.bedrooms}</p>
-                        <p>Bathrooms:{listing.bathrooms}</p>
-                        <p>Maximum number of guests: {listing.maxGuests}</p>
+                <div>
+                    <h2>{listing.title}</h2>
+                </div>
 
-                        <h4>Amenities:</h4>
-                            <DisplayAmenities amenities={listing.amenities}/>
-                    <h3>Description:</h3>
-                        <p>{listing.description}</p>
-                    <h3>Images:</h3>
-                        <DisplayImages images={listing.images}/>
-                    <h3>Location:</h3>       
-                        <p>Postcode: {listing.location.postcode}</p>
-                        <p>Address: {listing.location.address}</p>
-                        <p>City: {listing.location.city}</p>
-                        <p>Country: {listing.location.country}</p>             
+                <div className ="listing-contents">
+                    <div>
+                        <h3>Details:</h3>
+                            <div>
+                                <p>Rating: {listing.rating}</p>
+                                <p>Review count: {listing.reviewCount}</p>
+                            </div>
+                            <p>Price: {listing.price} per {listing.priceUnit}</p>
+                            <p>Type: {listing.type}</p>
+                            <p>Bedrooms:{listing.bedrooms}</p>
+                            <p>Bathrooms:{listing.bathrooms}</p>
+                            <p>Maximum number of guests: {listing.maxGuests}</p>
+
+                            <h4>Amenities:</h4>
+                                <DisplayAmenities amenities={listing.amenities}/>
+                    </div>
+
+                    <div>
+                        <h3>Description:</h3>
+                            <p>{listing.description}</p>
+                    </div>
+
+                    <div>
+                        <h3>Location:</h3>       
+                            <p>Postcode: {listing.location.postcode}</p>
+                            <p>Address: {listing.location.address}</p>
+                            <p>City: {listing.location.city}</p>
+                            <p>Country: {listing.location.country}</p>       
+                    </div>    
+                                      
+                    <div>
+                        <h3>Images:</h3>
+                            <DisplayImages images={listing.images}/>
+                    </div>
+
+ 
+                </div>   
             </div>
         
         </>
@@ -60,15 +78,17 @@ function DisplayListing({listing}){
 
 }
 
-// function DisplayListings({listings}){
-//     let listOfListing = [];
-//     listOfListing.push(DisplayListing(listings[0]));
+function DisplayListings({listings}){
+    console.log("listings");
+    console.log(listings);
+    //let listOfListing = [];
+    //listOfListing.push(DisplayListing(listings[0]));
 
 
-//     const displayListings = listings.map(listing => );
+    const displayListings = listings.map(listing => <DisplayListing listing={listing}/>);
 
-//     return <ul>{displayListings}</ul>
-// }
+    return <ul>{displayListings}</ul>
+}
 
 export function SearchListings() {
     let ascending = true;
@@ -93,7 +113,8 @@ export function SearchListings() {
 
     return (
         <div>
-            <DisplayListing listing={listings[0]}/>
+            {/* <DisplayListing listing={listings[0]}/> */}
+            <DisplayListings listings={sortedListing}/>
         </div>
 
         
