@@ -1,0 +1,72 @@
+.auth-shell {
+  min-height: 100vh;
+  background: #ffffff;
+}
+
+.auth-shell-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #e6e6e6;
+  position: sticky;
+  top: 0;
+  background: #ffffff;
+}
+
+.auth-shell-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.auth-shell-logo {
+  text-decoration: none;
+  color: #111;
+  font-weight: 700;
+}
+
+.auth-shell-user {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.auth-shell-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.auth-shell-link {
+  text-decoration: none;
+  color: #333;
+  border: 1px solid #d6d6d6;
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  font-size: 0.92rem;
+}
+
+.auth-shell-link--active {
+  background: #efefef;
+  border-color: #bbbbbb;
+}
+
+.auth-shell-logout {
+  border: 1px solid #d6d6d6;
+  border-radius: 6px;
+  background: #fff;
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+}
+
+.auth-shell-body {
+  padding: 1rem;
+}
+
+@media (max-width: 840px) {
+  .auth-shell-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
