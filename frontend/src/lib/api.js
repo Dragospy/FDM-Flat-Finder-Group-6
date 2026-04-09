@@ -9,7 +9,7 @@
  */
 
 import { db } from "./db";
-
+import { LISTING_STATUS } from "../constants/listingStatus";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -141,6 +141,38 @@ export function deleteListing(id) {
   return true;
 }
 
+/**
+ * Sets a listing's status to "approved"
+ * 
+ * @param {string} id 
+ * @returns the approved listing
+ */
+export function approveListing(id) {
+  const approved = updateListing(id,  {status: LISTING_STATUS.APPROVED});
+  return approved;
+}
+
+/**
+ * Sets a listing's status to "rejected"
+ * 
+ * @param {string} id 
+ * @returns the approved listing
+ */
+export function rejectListing(id) {
+  const rejected = updateListing(id,  {status: LISTING_STATUS.REJECTED});
+  return rejected;
+}
+
+/**
+ * Reverts a listing's status to pending
+ * 
+ * @param {string} id 
+ * @returns the pending listing
+ */
+export function revertListingToPending(id) {
+  const pending = updateListing(id, {status: LISTING_STATUS.PENDING})
+  return pending;
+}
 
 // ─── Accounts ─────────────────────────────────────────────────────────────────
 

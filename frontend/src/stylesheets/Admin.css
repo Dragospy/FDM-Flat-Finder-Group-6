@@ -1,3 +1,225 @@
 /**
  * Admin.css — Styles for the Admin page.
  */
+
+ /********************************
+            Main Styles
+********************************/
+.admin-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-panel {
+    margin-left: 1rem;
+}
+
+.right-panel {
+    margin-right: 1rem;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-separator {
+    margin-right: 1rem;
+}
+
+p, h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+}
+
+/********************************
+        Listing Card Styles
+********************************/
+
+.listing-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.listing-container {
+    display: flex;
+    flex-direction: column; 
+    text-align: center;
+    width: 15rem;
+    font-size: 0.5rem;
+    padding: 1rem;
+}
+
+.listing-container:hover {
+    background-color: lightgrey;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.listing-image {
+    border-radius: 1rem;
+}
+
+.listing-title {
+    margin: 0.5rem 0 0.1rem 0;
+    font-size: 0.8rem;
+}
+
+.listing-info {
+    display: flex;
+    justify-content: center;
+    gap: 0.3rem;
+    color: grey;
+    font-size: 0.8rem;
+}
+
+/********************************
+     Status Selection Styles
+********************************/
+
+.status-selection {
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    font-weight: bold;
+}
+
+/********************************
+     Listing Details Styles
+********************************/
+
+.listing-details-container {
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.listing-details-close-button {
+    width: 4rem;
+    height: 4rem;
+    margin-top: 1rem;
+    background: rgba(211, 211, 211, 0.301);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.listing-details-close-button:hover {
+    background: rgba(175, 173, 173, 0.301);
+}
+
+.listing-images-container {
+    position: relative;
+}
+
+.listing-details-image {
+    width: 100%;
+    max-height: 30rem;
+}
+
+.listing-images-container:hover .arrow-buttons-container {
+    opacity: 1;
+}
+
+.arrow-buttons-container {
+    opacity: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+}
+
+.image-prev-button, .image-next-button {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 3rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 0 0.5rem 0 0.5rem;
+    cursor: pointer;
+    background-color: rgb(211, 211, 211);
+    border: solid 1px rgba(175, 173, 173, 0.301);
+}
+
+.image-prev-button:hover, .image-next-button:hover {
+    background-color: rgb(175, 173, 173);
+}
+
+.listing-details-title {
+    margin-top: 1rem;
+}
+
+.listing-details-price {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.listing-description-container {
+    width: 40rem;
+}
+
+.listing-details-desc-heading {
+    margin-bottom: 0.5rem;
+}
+
+.listing-amenities, .listing-location {
+    margin: 0;
+}
+
+.listing-location {
+    list-style: none;
+    padding: 0;
+}
+
+.listing-amenities-heading, .listing-location-heading {
+    margin: 0;
+}
+
+.approve-button, .reject-button, .revert-button, .delete-button {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.approve-button {
+    background-color: rgb(37, 206, 37);
+    border: solid 1px rgb(29, 184, 29);
+}
+
+.approve-button:hover {
+    background-color: rgb(29, 184, 29);
+}
+
+.reject-button {
+    background-color: rgb(247, 182, 42);
+    border: solid 1px rgb(230, 166, 28);
+}
+
+.reject-button:hover {
+    background-color: rgb(230, 166, 28);;
+}
+
+.revert-button {
+    background-color: rgb(0, 119, 255);
+    border: solid 1px rgb(1, 109, 231);
+}
+
+.revert-button:hover {
+    background-color: rgb(1, 109, 231);
+}
+
+.delete-button {
+    background-color: rgb(247, 42, 42);
+    border: solid 1px rgb(223, 32, 32);
+}
+
+.delete-button:hover {
+    background-color: rgb(223, 32, 32);
+}
