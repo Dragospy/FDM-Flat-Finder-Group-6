@@ -13,7 +13,7 @@ import { LISTING_STATUS } from "../constants/listingStatus";
  * @param {string} id 
  * @returns Component to display a listing
  */
-function Listing({id, setDisplayedListing}) {
+function Listing({id, setDisplayedListing, setPopUp}) {
   const listing = getListing(id);
   return (
     <div className="listing-container" onClick={() => setDisplayedListing(id)}>
@@ -32,12 +32,12 @@ function Listing({id, setDisplayedListing}) {
  * Renders the details for a listing and buttons to approve/reject/revert the listing, depending on the current status
  * 
  * @param {string} id
- * @param {function} toggleDisplayedListing Function to toggle the displayed listing
  * @param {function} setCurrentImage Function to change the image showing for the listing
+ * @param {function} showPopUp Function to show the pop up to ask if the user is sure they want to perform an action
  * @param {number} currentImage Index in the images array of the current image showing for the listing
  * @returns Component to display the details for a listing
  */
-function ListingDetails({id, toggleDisplayedListing, setCurrentImage, currentImage}) {
+function ListingDetails({id, setCurrentImage, currentImage, showPopUp}) {
 
   const listing = getListing(id);
 
@@ -49,11 +49,6 @@ function ListingDetails({id, toggleDisplayedListing, setCurrentImage, currentIma
   const nextImage = () => {
     setCurrentImage(currentImage + 1)
     if (currentImage === listing.images.length-1) {setCurrentImage(0);}
-  }
-
-  function getConfirmation(message) {
-    if (window.confirm(message)) {return true;}
-    else {return false;}
   }
 
   return (
@@ -102,10 +97,10 @@ function ListingDetails({id, toggleDisplayedListing, setCurrentImage, currentIma
         </ul>
       </section>
       
-      {listing.status === LISTING_STATUS.PENDING && <button className="approve-button" onClick={() => {if (getConfirmation("Are you sure you want to approve this listing?")) {approveListing(id); toggleDisplayedListing(null);}}}>Approve</button>}
-      {listing.status === LISTING_STATUS.PENDING && <button className="reject-button" onClick={() => {if (getConfirmation("Are you sure you want to reject this listing?")) {rejectListing(id); toggleDisplayedListing(null);}}}>Reject</button>}
-      {listing.status != LISTING_STATUS.PENDING && <button className="revert-button" onClick={() => {if (getConfirmation("Are you sure you want to revert this listing to pending?")) {revertListingToPending(id); toggleDisplayedListing(null);}}}>Revert to Pending</button>}
-      <button className="delete-button" onClick={() => {if (getConfirmation("Are you sure you want to delete this listing? This action cannot be undone.")) {deleteListing(id); toggleDisplayedListing(null);}}}>Delete</button>
+      {listing.status === LISTING_STATUS.PENDING && <button className="approve-button" onClick={() => showPopUp("Are you sure you want to approve this listing?")}>Approve</button>}
+      {listing.status === LISTING_STATUS.PENDING && <button className="reject-button" onClick={() => showPopUp("Are you sure you want to reject this listing?")}>Reject</button>}
+      {listing.status != LISTING_STATUS.PENDING && <button className="revert-button" onClick={() => showPopUp("Are you sure you want to revert this listing to pending?")}>Revert to Pending</button>}
+      <button className="delete-button" onClick={() => showPopUp("Are you sure you want to delete this listing? This action cannot be undone.")}>Delete</button>      
     </div>
   )
 }
@@ -151,12 +146,51 @@ function displayListings(status, setDisplayedListing) {
 
 }
 
+function PopUp({message, displayedListing, toggleDisplayedListing, togglePopUp}) {
+
+  let m = "";
+  let type = "";
+
+  if (message.includes("approve")) {m = message.split("approve"); type = "approve";}
+  else if (message.includes("reject")) {m = message.split("reject"); type = "reject";}
+  else if (message.includes("revert")) {m = message.split("revert"); type = "revert";}
+  else if (message.includes("delete")) {m = message.split("delete"); type = "delete";}
+  else {type = "error";}
+
+  function processListing() {
+    if (message.includes("approve")) {approveListing(displayedListing);}
+    else if (message.includes("reject")) {rejectListing(displayedListing);}
+    else if (message.includes("revert")) {revertListingToPending(displayedListing);}
+    else if (message.includes("delete")) {deleteListing(displayedListing);}
+    else {type = "error";}
+
+    togglePopUp(null);
+    toggleDisplayedListing(null);
+  }
+
+  return (
+    <div className="overlay-container">
+      <div className="pop-up-container">
+        <div className="pop-up-message">
+          <p>{m[0]} <u className={"pop-up-" + type}>{type}</u> {m[1]}</p>
+        </div>
+        <div className="pop-up-button-container">
+          <button className="pop-up-ok" onClick={processListing}>Ok</button>
+          <button className="pop-up-cancel" onClick={() => togglePopUp(null)}>Cancel</button>
+        </div>
+      </div>
+
+    </div>
+  )
+}
+
 export default function Admin() {
   // db.reset();
   // console.log(getListings());
   const [displayedStatus, setDisplayedStatus] = useState(LISTING_STATUS.PENDING);
   const [displayedListing, setDisplayedListing] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
+  const [popUp, setPopUp] = useState(null);
 
   const toggleDisplayedListing = (newListing) => {
     if (displayedListing === newListing) {setDisplayedListing(null)}
@@ -172,9 +206,7 @@ export default function Admin() {
         <StatusSelection displayedStatus={displayedStatus} setDisplayedStatus={setDisplayedStatus} toggleDisplayedListing={toggleDisplayedListing}/>
         <h2>{displayedStatus.charAt(0).toUpperCase() + displayedStatus.slice(1)}</h2>
         <div className="listing-group">
-          {displayedStatus === LISTING_STATUS.PENDING && displayListings(LISTING_STATUS.PENDING, toggleDisplayedListing)}
-          {displayedStatus === LISTING_STATUS.APPROVED && displayListings(LISTING_STATUS.APPROVED , toggleDisplayedListing)}   
-          {displayedStatus === LISTING_STATUS.REJECTED && displayListings(LISTING_STATUS.REJECTED , toggleDisplayedListing)}  
+          {displayListings(displayedStatus, toggleDisplayedListing)}
         </div>
       </div>
 
@@ -182,8 +214,10 @@ export default function Admin() {
 
       {displayedListing != null && <div className="right-panel">
         <button className="listing-details-close-button" onClick={() => toggleDisplayedListing(null)}>X</button>
-        <ListingDetails id={displayedListing} toggleDisplayedListing={toggleDisplayedListing} setCurrentImage={setCurrentImage} currentImage={currentImage}/>
+        <ListingDetails id={displayedListing} toggleDisplayedListing={toggleDisplayedListing} setCurrentImage={setCurrentImage} currentImage={currentImage} showPopUp={setPopUp}/>
       </div>}
+
+      {popUp != null && <PopUp message={popUp} displayedListing={displayedListing} toggleDisplayedListing={setDisplayedListing} togglePopUp={setPopUp}/>}
     </main>
   );
 }
