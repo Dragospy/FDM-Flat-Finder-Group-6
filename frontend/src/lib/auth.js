@@ -74,6 +74,10 @@ export function login(email, password) {
     throw new Error("Invalid email or password.");
   }
 
+  if (account.active === false) {
+    throw new Error("This account has been deactivated. Please contact an administrator.");
+  }
+
   const user = sanitize(account);
   localStorage.setItem(SESSION_KEY, JSON.stringify(user));
   return user;
@@ -101,7 +105,7 @@ export function register({ name, email, password, role = ROLES.RENTEE }) {
     throw new Error("An account with this email already exists.");
   }
 
-  const newAccount = db.insert("accounts", { name, email, password, role, avatar: "" });
+  const newAccount = db.insert("accounts", { name, email, password, role, avatar: "", active: true });
   const user       = sanitize(newAccount);
 
   localStorage.setItem(SESSION_KEY, JSON.stringify(user));
