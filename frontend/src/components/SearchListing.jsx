@@ -1,6 +1,6 @@
 import { getListings, getListing, getListingsByHost } from "../lib/api.js";
 import "../stylesheets/Search.css";
-
+import { useState } from "react";
 
 // Sort by, 
 //     0 CreatedAt
@@ -131,7 +131,29 @@ function GetDistanceBetweenCoordinates(latitude1, longitude1, latitude2, longitu
 
 
 export function SearchListings() {
-    let ascending = true;
+    // Allow search by location and name.
+
+
+    // State:
+    const [sortOrder, setSortOrder] = useState(true);
+
+    console.log(document);
+    
+    let searchParam = new URLSearchParams(window.location.search);
+
+    console.log(searchParam);
+
+    function handleSearchSubmit(page){
+        page.preventDefault();
+
+        const searchForm = page.target;
+        const formData = new FormData(searchForm);
+
+        const formJson = Object.fromEntries(formData.entries());
+        console.log(formJson);
+    }
+
+    let ascending = sortOrder;
     let listings = getListings();
     console.log(listings);
 
@@ -152,11 +174,28 @@ export function SearchListings() {
     console.log(sortedListing)
 
     return (
-        <div>
-            {/* <DisplayListing listing={listings[0]}/> */}
-            <DisplayListings listings={sortedListing}/>
-        </div>
+        <>
+            <form name="searchForm" method="post" onSubmit={handleSearchSubmit}>
+                <label for="sort-by">Sort by</label>
+                <select id="sort-by" name="order">
+                    <option value ="cost">Cost</option>
+                    <option value ="ratings">Ratings</option>
+                    <option value ="reviewCount">Review count</option>
+                    <option value ="distance">Distance</option>
+                </select>
+                <label for="sort-order">Sort order</label>
+                <select id="sort-order" name="sortOrder">
+                    <option value ="ascending">Ascending</option>
+                    <option value ="descending">Descending</option>
+                </select>
+                <input type="submit" value="Search"></input>
+            </form>
 
+            <div>
+                {/* <DisplayListing listing={listings[0]}/> */}
+                <DisplayListings listings={sortedListing}/>
+            </div>
+        </>
         
     );
     
