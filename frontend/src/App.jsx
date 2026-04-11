@@ -72,7 +72,7 @@ export default function App() {
         <Route
           path="/profile"
           element={
-            <ProtectedLayout>
+            <ProtectedLayout allowedRoles={[ROLES.HOST, ROLES.RENTEE]}>
               <Profile />
             </ProtectedLayout>
           }

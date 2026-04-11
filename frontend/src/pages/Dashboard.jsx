@@ -20,9 +20,11 @@ export default function Dashboard() {
       </p>
 
       <section className="dashboard-links">
-        <Link className="dashboard-link-card" to="/profile">
-          My Profile
-        </Link>
+        {user?.role !== ROLES.ADMIN && (
+          <Link className="dashboard-link-card" to="/profile">
+            My Profile
+          </Link>
+        )}
 
         {user?.role === ROLES.RENTEE && (
           <Link className="dashboard-link-card" to="/my-bookings">

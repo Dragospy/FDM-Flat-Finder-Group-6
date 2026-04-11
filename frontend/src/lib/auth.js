@@ -101,7 +101,14 @@ export function register({ name, email, password, role = ROLES.RENTEE }) {
     throw new Error("An account with this email already exists.");
   }
 
-  const newAccount = db.insert("accounts", { name, email, password, role, avatar: "" });
+  const newAccount = db.insert("accounts", {
+    name,
+    email,
+    password,
+    role,
+    avatar: "",
+    phone: "",
+  });
   const user       = sanitize(newAccount);
 
   localStorage.setItem(SESSION_KEY, JSON.stringify(user));

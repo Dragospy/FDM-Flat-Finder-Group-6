@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { useAuth } from "../context/AuthContext";
-import { getAccount, updateAccount } from "../lib/api";
+import { getAccount, persistAccountsToJson, updateAccount } from "../lib/api";
 
 import "../stylesheets/Profile.css";
 
@@ -12,8 +12,6 @@ export default function Profile() {
     name: "",
     email: "",
     phone: "",
-    preferredLocation: "",
-    budget: "",
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -26,8 +24,6 @@ export default function Profile() {
       name: account.name ?? "",
       email: account.email ?? "",
       phone: account.phone ?? "",
-      preferredLocation: account.preferredLocation ?? "",
-      budget: account.budget === undefined || account.budget === null ? "" : String(account.budget),
     });
   }, [user?.id]);
 
@@ -35,33 +31,25 @@ export default function Profile() {
     setForm((prev) => ({ ...prev, [field]: value }));
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     setError("");
     setSuccess("");
 
     try {
-      const nextBudget = form.budget.trim() === "" ? null : Number(form.budget);
-
-      if (nextBudget !== null && (Number.isNaN(nextBudget) || nextBudget < 0)) {
-        throw new Error("Budget must be a positive number or blank.");
-      }
-
       const updated = updateAccount(user.id, {
         name: form.name.trim(),
         email: form.email.trim(),
         phone: form.phone.trim(),
-        preferredLocation: form.preferredLocation.trim(),
-        budget: nextBudget,
       });
+
+      await persistAccountsToJson();
 
       refresh();
       setForm({
         name: updated.name ?? "",
         email: updated.email ?? "",
         phone: updated.phone ?? "",
-        preferredLocation: updated.preferredLocation ?? "",
-        budget: updated.budget === undefined || updated.budget === null ? "" : String(updated.budget),
       });
       setSuccess("Profile details updated.");
     } catch (err) {
@@ -104,28 +92,6 @@ export default function Profile() {
             type="text"
             value={form.phone}
             onChange={(e) => handleChange("phone", e.target.value)}
-            placeholder="Optional"
-          />
-        </label>
-
-        <label className="profile-field">
-          Preferred Location
-          <input
-            type="text"
-            value={form.preferredLocation}
-            onChange={(e) => handleChange("preferredLocation", e.target.value)}
-            placeholder="Optional"
-          />
-        </label>
-
-        <label className="profile-field">
-          Budget (GBP)
-          <input
-            type="number"
-            min="0"
-            step="1"
-            value={form.budget}
-            onChange={(e) => handleChange("budget", e.target.value)}
             placeholder="Optional"
           />
         </label>

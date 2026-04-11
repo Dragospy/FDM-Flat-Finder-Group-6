@@ -176,9 +176,7 @@ export function getAccount(id) {
  *   name?: string,
  *   email?: string,
  *   avatar?: string,
- *   phone?: string,
- *   preferredLocation?: string,
- *   budget?: number|null
+ *   phone?: string
  * }} data
  * @returns {object} the updated account (password stripped)
  */
@@ -209,6 +207,24 @@ export function updateAccount(id, data) {
   const updated = db.update("accounts", id, safeData);
   if (!updated) throw new Error(`Account "${id}" not found.`);
   return sanitizeAccount(updated);
+}
+
+/**
+ * Dev-only helper to persist current account records back into src/data/accounts.json.
+ * This only works while running the Vite dev server.
+ *
+ * @returns {Promise<void>}
+ */
+export async function persistAccountsToJson() {
+  const response = await fetch("/__dev/write-accounts-json", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ accounts: db.getAll("accounts") }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to persist account data to accounts.json.");
+  }
 }
 
 /**
