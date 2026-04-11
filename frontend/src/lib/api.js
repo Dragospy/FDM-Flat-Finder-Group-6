@@ -219,3 +219,29 @@ export function deleteAccount(id) {
   if (!removed) throw new Error(`Account "${id}" not found.`);
   return true;
 }
+
+/**
+ * Deactivate an account, preventing the user from logging in.
+ * Throws if the account does not exist.
+ *
+ * @param {string} id
+ * @returns {object} the updated account (password stripped)
+ */
+export function deactivateAccount(id) {
+  const updated = db.update("accounts", id, { active: false });
+  if (!updated) throw new Error(`Account "${id}" not found.`);
+  return sanitizeAccount(updated);
+}
+
+/**
+ * Reactivate a previously deactivated account.
+ * Throws if the account does not exist.
+ *
+ * @param {string} id
+ * @returns {object} the updated account (password stripped)
+ */
+export function activateAccount(id) {
+  const updated = db.update("accounts", id, { active: true });
+  if (!updated) throw new Error(`Account "${id}" not found.`);
+  return sanitizeAccount(updated);
+}
