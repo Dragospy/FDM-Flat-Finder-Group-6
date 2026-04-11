@@ -1,16 +1,29 @@
 /**
  * Admin.jsx — Admin-only management panel.
+ * Has two sub-tabs:
+ *   • Accommodation Approval — moderate listings (approve/reject/revert/delete)
+ *   • Account Management     — search, deactivate, and reactivate user accounts
  */
-import { useEffect, useState } from "react";
-import { approveListing, deleteListing, getListing, getListings, rejectListing, revertListingToPending } from "../lib/api";
-import "../stylesheets/Admin.css";
-import { db } from "../lib/db";
+import { useMemo, useState } from "react";
+import {
+  approveListing,
+  deleteListing,
+  getListing,
+  getListings,
+  rejectListing,
+  revertListingToPending,
+  getAccounts,
+  deactivateAccount,
+  activateAccount,
+} from "../lib/api";
+import { useAuth } from "../context/AuthContext";
 import { LISTING_STATUS } from "../constants/listingStatus";
+import "../stylesheets/Admin.css";
 
 /**
- * A listing card 
- * 
- * @param {string} id 
+ * A listing card
+ *
+ * @param {string} id
  * @returns Component to display a listing
  */
 function Listing({id, setDisplayedListing, setPopUp}) {
@@ -30,7 +43,7 @@ function Listing({id, setDisplayedListing, setPopUp}) {
 
 /**
  * Renders the details for a listing and buttons to approve/reject/revert the listing, depending on the current status
- * 
+ *
  * @param {string} id
  * @param {function} setCurrentImage Function to change the image showing for the listing
  * @param {function} showPopUp Function to show the pop up to ask if the user is sure they want to perform an action
@@ -86,7 +99,7 @@ function ListingDetails({id, setCurrentImage, currentImage, showPopUp}) {
           }
         </ul>
       </section>
-      
+
       <section>
         <h3 className="listing-location-heading">Location</h3>
           <ul className="listing-location">
@@ -96,18 +109,18 @@ function ListingDetails({id, setCurrentImage, currentImage, showPopUp}) {
             <li>{listing.location.country}</li>
         </ul>
       </section>
-      
+
       {listing.status === LISTING_STATUS.PENDING && <button className="approve-button" onClick={() => showPopUp("Are you sure you want to approve this listing?")}>Approve</button>}
       {listing.status === LISTING_STATUS.PENDING && <button className="reject-button" onClick={() => showPopUp("Are you sure you want to reject this listing?")}>Reject</button>}
       {listing.status != LISTING_STATUS.PENDING && <button className="revert-button" onClick={() => showPopUp("Are you sure you want to revert this listing to pending?")}>Revert to Pending</button>}
-      <button className="delete-button" onClick={() => showPopUp("Are you sure you want to delete this listing? This action cannot be undone.")}>Delete</button>      
+      <button className="delete-button" onClick={() => showPopUp("Are you sure you want to delete this listing? This action cannot be undone.")}>Delete</button>
     </div>
   )
 }
 
 /**
  * Drop down menu to pick the status of listings to show
- * 
+ *
  * @param {string} displayedStatus Status of listings currently being displayed
  * @param {function} setDisplayedStatus Function to change the displayed status to the selected value
  * @returns Component to pick a status
@@ -126,7 +139,7 @@ function StatusSelection({displayedStatus, setDisplayedStatus, toggleDisplayedLi
 
 /**
  * Filters the listings by the passed in status and renders the component for each match
- * 
+ *
  * @param {Array} listings List of all listings
  * @param {string} status Status to filter listings by
  * @returns Components of all listings that have the passed in status
@@ -184,9 +197,10 @@ function PopUp({message, displayedListing, toggleDisplayedListing, togglePopUp})
   )
 }
 
-export default function Admin() {
-  // db.reset();
-  // console.log(getListings());
+/**
+ * Accommodation approval sub-tab — listing moderation panel.
+ */
+function AccommodationApproval() {
   const [displayedStatus, setDisplayedStatus] = useState(LISTING_STATUS.PENDING);
   const [displayedListing, setDisplayedListing] = useState(null);
   const [currentImage, setCurrentImage] = useState(0);
@@ -198,11 +212,10 @@ export default function Admin() {
 
     setCurrentImage(0);
   }
-  
+
   return (
-    <main className="admin-container">
+    <div className="admin-container">
       <div className="left-panel">
-        <h1>Admin Panel</h1>
         <StatusSelection displayedStatus={displayedStatus} setDisplayedStatus={setDisplayedStatus} toggleDisplayedListing={toggleDisplayedListing}/>
         <h2>{displayedStatus.charAt(0).toUpperCase() + displayedStatus.slice(1)}</h2>
         <div className="listing-group">
@@ -218,6 +231,149 @@ export default function Admin() {
       </div>}
 
       {popUp != null && <PopUp message={popUp} displayedListing={displayedListing} toggleDisplayedListing={setDisplayedListing} togglePopUp={setPopUp}/>}
+    </div>
+  );
+}
+
+/**
+ * Account management sub-tab — search, deactivate, and reactivate user accounts.
+ */
+function AccountManagement() {
+  const { user } = useAuth();
+  const [search, setSearch] = useState("");
+  const [tab, setTab] = useState("active");
+  const [accounts, setAccounts] = useState(() => getAccounts());
+  const [error, setError] = useState("");
+
+  const filtered = useMemo(() => {
+    const query = search.toLowerCase();
+    return accounts
+      .filter((a) => a.id !== user.id) // admins cannot deactivate themselves
+      .filter((a) => (tab === "active" ? a.active !== false : a.active === false))
+      .filter(
+        (a) =>
+          a.name.toLowerCase().includes(query) ||
+          a.email.toLowerCase().includes(query) ||
+          a.role.toLowerCase().includes(query)
+      );
+  }, [accounts, search, tab, user.id]);
+
+  function handleDeactivate(id) {
+    try {
+      deactivateAccount(id);
+      setAccounts(getAccounts());
+      setError("");
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
+  function handleActivate(id) {
+    try {
+      activateAccount(id);
+      setAccounts(getAccounts());
+      setError("");
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
+  return (
+    <div className="account-management">
+      <div className="account-tabs">
+        <button
+          className={`account-tab ${tab === "active" ? "active" : ""}`}
+          onClick={() => { setTab("active"); setSearch(""); }}
+        >
+          Active Users
+        </button>
+        <button
+          className={`account-tab ${tab === "deactivated" ? "active" : ""}`}
+          onClick={() => { setTab("deactivated"); setSearch(""); }}
+        >
+          Deactivated Users
+        </button>
+      </div>
+
+      <input
+        type="text"
+        className="account-search"
+        placeholder={`Search ${tab} users by name, email, or role…`}
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
+
+      {error && <p className="account-error">{error}</p>}
+
+      {filtered.length === 0 ? (
+        <p className="account-empty">
+          {search ? "No users match your search." : `No ${tab} users found.`}
+        </p>
+      ) : (
+        <table className="account-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filtered.map((account) => (
+              <tr key={account.id}>
+                <td>{account.name}</td>
+                <td>{account.email}</td>
+                <td className="account-role">{account.role}</td>
+                <td>
+                  {tab === "active" ? (
+                    <button
+                      className="account-btn deactivate"
+                      onClick={() => handleDeactivate(account.id)}
+                    >
+                      Deactivate
+                    </button>
+                  ) : (
+                    <button
+                      className="account-btn activate"
+                      onClick={() => handleActivate(account.id)}
+                    >
+                      Activate
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+}
+
+export default function Admin() {
+  const [section, setSection] = useState("approval");
+
+  return (
+    <main>
+      <h1 style={{ margin: "1rem" }}>Admin Panel</h1>
+
+      <div className="admin-subtabs">
+        <button
+          className={`admin-subtab ${section === "approval" ? "active" : ""}`}
+          onClick={() => setSection("approval")}
+        >
+          Accommodation Approval
+        </button>
+        <button
+          className={`admin-subtab ${section === "accounts" ? "active" : ""}`}
+          onClick={() => setSection("accounts")}
+        >
+          Account Management
+        </button>
+      </div>
+
+      {section === "approval" ? <AccommodationApproval /> : <AccountManagement />}
     </main>
   );
 }
