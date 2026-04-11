@@ -26,7 +26,7 @@ import MyListings  from "./pages/MyListings";
 import Admin       from "./pages/Admin";
 import Moderation  from "./pages/Moderation";
 import PublicOnlyRoute from "./components/PublicOnlyRoute";
-
+import Search  from "./pages/Search";
 
 export default function App() {
   return (
@@ -55,6 +55,14 @@ export default function App() {
           element={
             <PublicOnlyRoute>
               <Register />
+            </PublicOnlyRoute>
+          }    
+        />
+        <Route 
+          path="/search"         
+          element={
+            <PublicOnlyRoute>
+              <Search />
             </PublicOnlyRoute>
           }    
         />
