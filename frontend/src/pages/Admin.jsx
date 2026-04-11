@@ -97,10 +97,10 @@ function ListingDetails({id, setCurrentImage, currentImage, showPopUp}) {
         </ul>
       </section>
       
-      {listing.status === LISTING_STATUS.PENDING && <button className="approve-button" onClick={() => showPopUp("Are you sure you want to approve this listing?")}>Approve</button>}
-      {listing.status === LISTING_STATUS.PENDING && <button className="reject-button" onClick={() => showPopUp("Are you sure you want to reject this listing?")}>Reject</button>}
-      {listing.status != LISTING_STATUS.PENDING && <button className="revert-button" onClick={() => showPopUp("Are you sure you want to revert this listing to pending?")}>Revert to Pending</button>}
-      <button className="delete-button" onClick={() => showPopUp("Are you sure you want to delete this listing? This action cannot be undone.")}>Delete</button>      
+      {listing.status === LISTING_STATUS.PENDING && <button className="approve-button" onClick={() => showPopUp("Are you sure you want to approve this listing?", "approve", approveListing)}>Approve</button>}
+      {listing.status === LISTING_STATUS.PENDING && <button className="reject-button" onClick={() => showPopUp("Are you sure you want to reject this listing?", "reject", rejectListing)}>Reject</button>}
+      {listing.status != LISTING_STATUS.PENDING && <button className="revert-button" onClick={() => showPopUp("Are you sure you want to revert this listing to pending?", "revert", revertListingToPending)}>Revert to Pending</button>}
+      <button className="delete-button" onClick={() => showPopUp("Are you sure you want to delete this listing? This action cannot be undone.", "delete", deleteListing)}>Delete</button>      
     </div>
   )
 }
@@ -146,23 +146,23 @@ function displayListings(status, setDisplayedListing) {
 
 }
 
-function PopUp({message, displayedListing, toggleDisplayedListing, togglePopUp}) {
+/**
+ * Custom pop up to get confirmation from the user
+ * 
+ * @param {string} message Pop up message
+ * @param {string} keyword Word to be highlighted
+ * @param {function} action Method to be called if OK is pressed
+ * @param {string} displayedListing Id for the current listing being shown
+ * @param {function} toggleDisplayedListing Function to toggle the displayed listing
+ * @param {function} togglePopUp Function to toggle the pop up
+ * @returns 
+ */
+function PopUp({message, keyword, action, displayedListing, toggleDisplayedListing, togglePopUp}) {
 
-  let m = "";
-  let type = "";
-
-  if (message.includes("approve")) {m = message.split("approve"); type = "approve";}
-  else if (message.includes("reject")) {m = message.split("reject"); type = "reject";}
-  else if (message.includes("revert")) {m = message.split("revert"); type = "revert";}
-  else if (message.includes("delete")) {m = message.split("delete"); type = "delete";}
-  else {type = "error";}
+  const m = message.split(keyword);
 
   function processListing() {
-    if (message.includes("approve")) {approveListing(displayedListing);}
-    else if (message.includes("reject")) {rejectListing(displayedListing);}
-    else if (message.includes("revert")) {revertListingToPending(displayedListing);}
-    else if (message.includes("delete")) {deleteListing(displayedListing);}
-    else {type = "error";}
+    action(displayedListing);
 
     togglePopUp(null);
     toggleDisplayedListing(null);
@@ -172,7 +172,7 @@ function PopUp({message, displayedListing, toggleDisplayedListing, togglePopUp})
     <div className="overlay-container">
       <div className="pop-up-container">
         <div className="pop-up-message">
-          <p>{m[0]} <u className={"pop-up-" + type}>{type}</u> {m[1]}</p>
+          <p>{m[0]} <u className={"pop-up-" + keyword}>{keyword}</u> {m[1]}</p>
         </div>
         <div className="pop-up-button-container">
           <button className="pop-up-ok" onClick={processListing}>Ok</button>
@@ -198,6 +198,10 @@ export default function Admin() {
 
     setCurrentImage(0);
   }
+
+  const configurePopUp = (message, keyword, action) => {
+    setPopUp(popUp => [message, keyword, action])
+  }
   
   return (
     <main className="admin-container">
@@ -214,10 +218,10 @@ export default function Admin() {
 
       {displayedListing != null && <div className="right-panel">
         <button className="listing-details-close-button" onClick={() => toggleDisplayedListing(null)}>X</button>
-        <ListingDetails id={displayedListing} toggleDisplayedListing={toggleDisplayedListing} setCurrentImage={setCurrentImage} currentImage={currentImage} showPopUp={setPopUp}/>
+        <ListingDetails id={displayedListing} toggleDisplayedListing={toggleDisplayedListing} setCurrentImage={setCurrentImage} currentImage={currentImage} showPopUp={configurePopUp}/>
       </div>}
 
-      {popUp != null && <PopUp message={popUp} displayedListing={displayedListing} toggleDisplayedListing={setDisplayedListing} togglePopUp={setPopUp}/>}
+      {popUp != null && <PopUp message={popUp[0]} keyword={popUp[1]} action={popUp[2]} displayedListing={displayedListing} toggleDisplayedListing={setDisplayedListing} togglePopUp={setPopUp}/>}
     </main>
   );
 }
