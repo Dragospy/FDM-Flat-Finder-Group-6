@@ -1,3 +1,462 @@
 /**
  * Admin.css — Styles for the Admin page.
  */
+
+ /********************************
+            Sub Tabs
+********************************/
+
+.admin-subtabs {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0 1rem 1rem 1rem;
+    border-bottom: 1px solid #333;
+}
+
+.admin-subtab {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.admin-subtab:hover {
+    color: #fff;
+}
+
+.admin-subtab.active {
+    color: #77ff00;
+    border-bottom-color: #77ff00;
+}
+
+ /********************************
+            Main Styles
+********************************/
+
+.admin-container {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.left-panel {
+    margin-left: 1rem;
+}
+
+.right-panel {
+    margin-right: 1rem;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-separator {
+    margin-right: 1rem;
+}
+
+p, h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+}
+
+/********************************
+        Listing Card Styles
+********************************/
+
+.listing-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.listing-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 15rem;
+    font-size: 0.5rem;
+    padding: 1rem;
+}
+
+.listing-container:hover {
+    background-color: #464646;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+.listing-image {
+    border-radius: 1rem;
+}
+
+.listing-title {
+    margin: 0.5rem 0 0.1rem 0;
+    font-size: 0.8rem;
+    color: #77ff00;
+}
+
+.listing-info {
+    display: flex;
+    justify-content: center;
+    gap: 0.3rem;
+    color: white;
+    font-size: 0.8rem;
+}
+
+/********************************
+     Status Selection Styles
+********************************/
+
+.status-selection {
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    font-weight: bold;
+}
+
+/********************************
+     Listing Details Styles
+********************************/
+
+.listing-details-container {
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2rem;
+    color: white;
+}
+
+.listing-details-close-button {
+    width: 4rem;
+    height: 4rem;
+    margin-top: 1rem;
+    background: #77ff00;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.listing-details-close-button:hover {
+    background: #64d104;
+}
+
+.listing-images-container {
+    position: relative;
+}
+
+.listing-details-image {
+    width: 100%;
+    max-height: 30rem;
+}
+
+.listing-images-container:hover .arrow-buttons-container {
+    opacity: 1;
+}
+
+.arrow-buttons-container {
+    opacity: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+}
+
+.image-prev-button, .image-next-button {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 3rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 0 0.5rem 0 0.5rem;
+    cursor: pointer;
+    background-color: #77ff00;
+    border: solid 1px rgba(175, 173, 173, 0.301);
+}
+
+.image-prev-button:hover, .image-next-button:hover {
+    background-color: #64d104;
+}
+
+.listing-details-title {
+    margin-top: 1rem;
+}
+
+.listing-details-price {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.listing-description-container {
+    width: 40rem;
+}
+
+.listing-details-desc-heading {
+    margin-bottom: 0.5rem;
+}
+
+.listing-amenities, .listing-location {
+    margin: 0;
+}
+
+.listing-location {
+    list-style: none;
+    padding: 0;
+}
+
+.listing-amenities-heading, .listing-location-heading {
+    margin: 0;
+}
+
+.approve-button, .reject-button, .revert-button, .delete-button {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.approve-button {
+    background-color: rgb(37, 206, 37);
+    border: solid 1px rgb(29, 184, 29);
+}
+
+.approve-button:hover {
+    background-color: rgb(29, 184, 29);
+}
+
+.reject-button {
+    background-color: rgb(247, 182, 42);
+    border: solid 1px rgb(230, 166, 28);
+}
+
+.reject-button:hover {
+    background-color: rgb(230, 166, 28);;
+}
+
+.revert-button {
+    background-color: rgb(0, 119, 255);
+    border: solid 1px rgb(1, 109, 231);
+}
+
+.revert-button:hover {
+    background-color: rgb(1, 109, 231);
+}
+
+.delete-button {
+    background-color: rgb(247, 42, 42);
+    border: solid 1px rgb(223, 32, 32);
+}
+
+.delete-button:hover {
+    background-color: rgb(223, 32, 32);
+}
+
+/********************************
+          Pop Up Styles
+********************************/
+
+.overlay-container {
+    position: fixed;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(93, 93, 93, 0.686)
+}
+
+.pop-up-container {
+    width: 30rem;
+    height: 12rem;
+    padding: 1.5rem 1rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    text-align: center;
+    background-color: black;
+    border: 2px solid #77ff00;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.pop-up-approve {
+    color: rgb(37, 206, 37);
+}
+
+.pop-up-reject {
+    color: rgb(247, 182, 42);
+}
+
+.pop-up-revert {
+    color: rgb(0, 119, 255);
+}
+
+.pop-up-delete {
+    color: rgb(247, 42, 42);
+}
+
+.pop-up-button-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.pop-up-ok, .pop-up-cancel {
+    padding: 1rem 2rem 1rem 2rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.pop-up-ok {
+    background-color: rgb(37, 206, 37);
+    border-color: rgb(29, 184, 29);
+}
+
+.pop-up-ok:hover {
+    background-color: rgb(29, 184, 29);
+}
+
+.pop-up-cancel {
+    background-color: rgb(247, 42, 42);
+    border-color: rgb(223, 32, 32);
+}
+
+.pop-up-cancel:hover {
+    background-color: rgb(223, 32, 32);
+}
+
+/********************************
+      Account Management Styles
+********************************/
+
+.account-management {
+    margin: 0 1rem;
+    color: white;
+}
+
+.account-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.account-tab {
+    padding: 0.5rem 1.25rem;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background: #2a2a2a;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: bold;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.account-tab:hover {
+    background: #333;
+    color: #fff;
+}
+
+.account-tab.active {
+    background: #77ff00;
+    color: #000;
+    border-color: #77ff00;
+}
+
+.account-search {
+    width: 100%;
+    max-width: 40rem;
+    padding: 0.65rem 0.85rem;
+    background: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+}
+
+.account-search::placeholder {
+    color: #888;
+}
+
+.account-search:focus {
+    outline: none;
+    border-color: #77ff00;
+    box-shadow: 0 0 0 2px rgba(119, 255, 0, 0.2);
+}
+
+.account-error {
+    color: #ff5555;
+    margin-bottom: 1rem;
+}
+
+.account-empty {
+    color: #888;
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.account-table {
+    width: 100%;
+    max-width: 60rem;
+    border-collapse: collapse;
+}
+
+.account-table th,
+.account-table td {
+    text-align: left;
+    padding: 0.75rem 0.85rem;
+    border-bottom: 1px solid #333;
+}
+
+.account-table th {
+    font-weight: 600;
+    color: #77ff00;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.account-role {
+    text-transform: capitalize;
+}
+
+.account-btn {
+    padding: 0.45rem 1rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.account-btn:hover {
+    opacity: 0.85;
+}
+
+.account-btn.deactivate {
+    background: rgb(247, 42, 42);
+    border: solid 1px rgb(223, 32, 32);
+}
+
+.account-btn.activate {
+    background: rgb(37, 206, 37);
+    border: solid 1px rgb(29, 184, 29);
+}

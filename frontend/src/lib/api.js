@@ -9,7 +9,7 @@
  */
 
 import { db } from "./db";
-
+import { LISTING_STATUS } from "../constants/listingStatus";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -141,6 +141,38 @@ export function deleteListing(id) {
   return true;
 }
 
+/**
+ * Sets a listing's status to "approved"
+ * 
+ * @param {string} id 
+ * @returns the approved listing
+ */
+export function approveListing(id) {
+  const approved = updateListing(id,  {status: LISTING_STATUS.APPROVED});
+  return approved;
+}
+
+/**
+ * Sets a listing's status to "rejected"
+ * 
+ * @param {string} id 
+ * @returns the approved listing
+ */
+export function rejectListing(id) {
+  const rejected = updateListing(id,  {status: LISTING_STATUS.REJECTED});
+  return rejected;
+}
+
+/**
+ * Reverts a listing's status to pending
+ * 
+ * @param {string} id 
+ * @returns the pending listing
+ */
+export function revertListingToPending(id) {
+  const pending = updateListing(id, {status: LISTING_STATUS.PENDING})
+  return pending;
+}
 
 // ─── Accounts ─────────────────────────────────────────────────────────────────
 
@@ -218,4 +250,30 @@ export function deleteAccount(id) {
   const removed = db.remove("accounts", id);
   if (!removed) throw new Error(`Account "${id}" not found.`);
   return true;
+}
+
+/**
+ * Deactivate an account, preventing the user from logging in.
+ * Throws if the account does not exist.
+ *
+ * @param {string} id
+ * @returns {object} the updated account (password stripped)
+ */
+export function deactivateAccount(id) {
+  const updated = db.update("accounts", id, { active: false });
+  if (!updated) throw new Error(`Account "${id}" not found.`);
+  return sanitizeAccount(updated);
+}
+
+/**
+ * Reactivate a previously deactivated account.
+ * Throws if the account does not exist.
+ *
+ * @param {string} id
+ * @returns {object} the updated account (password stripped)
+ */
+export function activateAccount(id) {
+  const updated = db.update("accounts", id, { active: true });
+  if (!updated) throw new Error(`Account "${id}" not found.`);
+  return sanitizeAccount(updated);
 }
