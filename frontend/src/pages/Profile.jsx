@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
-import { getAccount, persistAccountsToJson, updateAccount } from "../lib/api";
+import {
+  deleteAccount,
+  getAccount,
+  persistAccountsToJson,
+  updateAccount,
+} from "../lib/api";
 
 import "../stylesheets/Profile.css";
 
 export default function Profile() {
-  const { user, refresh } = useAuth();
+  const { user, logout, refresh } = useAuth();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     name: "",
@@ -57,6 +64,26 @@ export default function Profile() {
     }
   }
 
+  async function handleDeleteAccount() {
+    setError("");
+    setSuccess("");
+
+    const confirmed = window.confirm(
+      "Warning: this will permanently delete your account. This action cannot be undone."
+    );
+
+    if (!confirmed) return;
+
+    try {
+      deleteAccount(user.id);
+      await persistAccountsToJson();
+      logout();
+      navigate("/register", { replace: true });
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
   return (
     <main className="profile-page">
       <h1>My Profile</h1>
@@ -98,6 +125,16 @@ export default function Profile() {
 
         <button className="profile-save" type="submit">Save Changes</button>
       </form>
+
+      <section className="profile-danger-zone">
+        <h2 className="profile-danger-title">Warning</h2>
+        <p className="profile-danger-copy">
+          Deleting your account is permanent and cannot be undone.
+        </p>
+        <button className="profile-delete" type="button" onClick={handleDeleteAccount}>
+          Delete Account
+        </button>
+      </section>
     </main>
   );
 }

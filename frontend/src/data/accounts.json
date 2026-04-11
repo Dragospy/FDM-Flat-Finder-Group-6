@@ -15,7 +15,7 @@
     "email": "alice@example.com",
     "password": "password123",
     "role": "host",
-    "phone": "07111111",
+    "phone": "07111111111",
     "avatar": "https://i.pravatar.cc/150?u=alice",
     "createdAt": "2024-01-15T10:00:00.000Z"
   },

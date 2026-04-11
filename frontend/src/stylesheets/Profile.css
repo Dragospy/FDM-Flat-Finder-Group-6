@@ -55,3 +55,34 @@
 .profile-save:hover {
   background: #efefef;
 }
+
+.profile-danger-zone {
+  margin-top: 1.4rem;
+  border-top: 1px solid #ebd0d0;
+  padding-top: 1rem;
+}
+
+.profile-danger-title {
+  margin: 0;
+  color: #8c1f1f;
+  font-size: 1.1rem;
+}
+
+.profile-danger-copy {
+  margin-top: 0.4rem;
+  color: #6b3636;
+}
+
+.profile-delete {
+  width: fit-content;
+  border: 1px solid #df9b9b;
+  border-radius: 6px;
+  background: #fff1f1;
+  color: #8c1f1f;
+  padding: 0.55rem 0.8rem;
+  cursor: pointer;
+}
+
+.profile-delete:hover {
+  background: #ffe6e6;
+}

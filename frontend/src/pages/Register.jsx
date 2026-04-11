@@ -9,6 +9,7 @@ import { useState }              from "react";
 import { Link, useNavigate }     from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
+import { persistAccountsToJson } from "../lib/api";
 
 import "../stylesheets/Register.css";
 
@@ -36,7 +37,7 @@ export default function Register() {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
     setError("");
 
@@ -59,6 +60,7 @@ export default function Register() {
         password: form.password,
         role:     form.role,
       });
+      await persistAccountsToJson();
       navigate("/", { replace: true });
     } catch (err) {
       setError(err.message);

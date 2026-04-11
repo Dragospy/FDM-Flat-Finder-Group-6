@@ -216,10 +216,15 @@ export function updateAccount(id, data) {
  * @returns {Promise<void>}
  */
 export async function persistAccountsToJson() {
+  const accounts = db.getAll("accounts");
+  if (accounts.length === 0) {
+    throw new Error("Refusing to persist: account list is empty.");
+  }
+
   const response = await fetch("/__dev/write-accounts-json", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ accounts: db.getAll("accounts") }),
+    body: JSON.stringify({ accounts }),
   });
 
   if (!response.ok) {
@@ -258,6 +263,11 @@ export function changePassword(id, currentPassword, newPassword) {
  * @returns {true}
  */
 export function deleteAccount(id) {
+  const accounts = db.getAll("accounts");
+  if (accounts.length <= 1) {
+    throw new Error("Cannot delete the final account.");
+  }
+
   const removed = db.remove("accounts", id);
   if (!removed) throw new Error(`Account "${id}" not found.`);
   return true;

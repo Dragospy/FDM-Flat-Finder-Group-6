@@ -29,6 +29,13 @@ function writeAccountsJsonPlugin() {
               return;
             }
 
+            if (payload.accounts.length === 0) {
+              res.statusCode = 400;
+              res.setHeader("Content-Type", "application/json");
+              res.end(JSON.stringify({ error: "refusing to write empty accounts array" }));
+              return;
+            }
+
             await writeFile(
               ACCOUNTS_JSON_PATH,
               `${JSON.stringify(payload.accounts, null, 2)}\n`,
