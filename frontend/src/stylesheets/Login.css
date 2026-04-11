@@ -93,6 +93,28 @@
   cursor: pointer;
 }
 
+.login-reset-toggle {
+  margin-top: 0.65rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  color: #1f2937;
+  padding: 0.65rem;
+  width: 100%;
+  cursor: pointer;
+}
+
+.login-reset-form {
+  margin-top: 0.75rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  background: #fafafa;
+}
+
 .login-link {
   color: #2563eb;
   text-decoration: none;
@@ -109,5 +131,15 @@
   border-radius: 8px;
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.login-success {
+  background: #eefaf0;
+  color: #1f5c2a;
+  border: 1px solid #b9dfc0;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-top: 0.75rem;
   font-size: 0.9rem;
 }

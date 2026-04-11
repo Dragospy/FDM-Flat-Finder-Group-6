@@ -9,6 +9,7 @@ import { useState }                          from "react";
 import { Link, useNavigate, useLocation }    from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
+import { persistAccountsToJson, resetPasswordByEmailAndPhone } from "../lib/api";
 
 import "../stylesheets/Login.css";
 
@@ -25,6 +26,15 @@ export default function Login() {
   const [form,    setForm]    = useState({ email: "", password: "" });
   const [error,   setError]   = useState("");
   const [loading, setLoading] = useState(false);
+  const [showReset, setShowReset] = useState(false);
+  const [resetMessage, setResetMessage] = useState("");
+  const [resetLoading, setResetLoading] = useState(false);
+  const [resetForm, setResetForm] = useState({
+    email: "",
+    phone: "",
+    newPassword: "",
+    confirmNewPassword: "",
+  });
 
 
   // ── Handlers ────────────────────────────────────────────────────────────────
@@ -45,6 +55,43 @@ export default function Login() {
       setError(err.message);
     } finally {
       setLoading(false);
+    }
+  }
+
+  function handleResetChange(e) {
+    setResetForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  }
+
+  async function handleResetSubmit(e) {
+    e.preventDefault();
+    setError("");
+    setResetMessage("");
+
+    if (resetForm.newPassword !== resetForm.confirmNewPassword) {
+      setError("Reset passwords do not match.");
+      return;
+    }
+
+    setResetLoading(true);
+
+    try {
+      resetPasswordByEmailAndPhone({
+        email: resetForm.email,
+        phone: resetForm.phone,
+        newPassword: resetForm.newPassword,
+      });
+      await persistAccountsToJson();
+      setResetMessage("Password reset successfully. You can now sign in.");
+      setResetForm({
+        email: "",
+        phone: "",
+        newPassword: "",
+        confirmNewPassword: "",
+      });
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setResetLoading(false);
     }
   }
 
@@ -93,6 +140,78 @@ export default function Login() {
             {loading ? "Signing in…" : "Sign in"}
           </button>
         </form>
+
+        <button
+          type="button"
+          className="login-reset-toggle"
+          onClick={() => {
+            setError("");
+            setResetMessage("");
+            setShowReset((prev) => !prev);
+          }}
+        >
+          {showReset ? "Hide reset password" : "Forgot password? Reset it"}
+        </button>
+
+        {showReset && (
+          <form onSubmit={handleResetSubmit} className="login-reset-form">
+            <label className="login-label">
+              Email
+              <input
+                className="login-input"
+                type="email"
+                name="email"
+                value={resetForm.email}
+                onChange={handleResetChange}
+                required
+              />
+            </label>
+
+            <label className="login-label">
+              Phone Number
+              <input
+                className="login-input"
+                type="text"
+                name="phone"
+                value={resetForm.phone}
+                onChange={handleResetChange}
+                required
+              />
+            </label>
+
+            <label className="login-label">
+              New Password
+              <input
+                className="login-input"
+                type="password"
+                name="newPassword"
+                value={resetForm.newPassword}
+                onChange={handleResetChange}
+                minLength={6}
+                required
+              />
+            </label>
+
+            <label className="login-label">
+              Confirm New Password
+              <input
+                className="login-input"
+                type="password"
+                name="confirmNewPassword"
+                value={resetForm.confirmNewPassword}
+                onChange={handleResetChange}
+                minLength={6}
+                required
+              />
+            </label>
+
+            <button className="login-button" type="submit" disabled={resetLoading}>
+              {resetLoading ? "Resetting…" : "Reset Password"}
+            </button>
+          </form>
+        )}
+
+        {resetMessage && <p className="login-success">{resetMessage}</p>}
 
         <p className="login-footer">
           Don&apos;t have an account?{" "}

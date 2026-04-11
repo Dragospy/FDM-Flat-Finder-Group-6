@@ -167,8 +167,20 @@ export function getAccount(id) {
 }
 
 /**
- * Update an account's public profile fields.
- * The password field is intentionally blocked here — use changePassword() instead.
+ * Return a single account by id including password.
+ * Intended only for local profile editing in this coursework app.
+ *
+ * @param {string} id
+ * @returns {object}
+ */
+export function getAccountWithPassword(id) {
+  const account = db.getById("accounts", id);
+  if (!account) throw new Error(`Account "${id}" not found.`);
+  return account;
+}
+
+/**
+ * Update an account's profile fields.
  * Throws if the account does not exist.
  *
  * @param {string} id
@@ -181,8 +193,7 @@ export function getAccount(id) {
  * @returns {object} the updated account (password stripped)
  */
 export function updateAccount(id, data) {
-  // Prevent accidental password changes through this function
-  const { password: _ignored, ...safeData } = data;
+  const safeData = { ...data };
 
   if (safeData.name !== undefined && !safeData.name.trim()) {
     throw new Error("Name cannot be empty.");
@@ -202,6 +213,16 @@ export function updateAccount(id, data) {
     }
 
     safeData.email = nextEmail;
+  }
+
+  if (safeData.password !== undefined && safeData.password !== "") {
+    if (safeData.password.length < 6) {
+      throw new Error("Password must be at least 6 characters.");
+    }
+  }
+
+  if (safeData.password === "") {
+    delete safeData.password;
   }
 
   const updated = db.update("accounts", id, safeData);
@@ -252,6 +273,43 @@ export function changePassword(id, currentPassword, newPassword) {
   }
 
   db.update("accounts", id, { password: newPassword });
+  return true;
+}
+
+/**
+ * Reset a password by matching email + phone number.
+ *
+ * @param {{ email: string, phone: string, newPassword: string }} data
+ * @returns {true}
+ */
+export function resetPasswordByEmailAndPhone({ email, phone, newPassword }) {
+  const normalizedEmail = (email ?? "").trim().toLowerCase();
+  const normalizedPhone = (phone ?? "").trim();
+
+  if (!normalizedEmail || !normalizedPhone) {
+    throw new Error("Email and phone number are required.");
+  }
+
+  if (!newPassword || newPassword.length < 6) {
+    throw new Error("New password must be at least 6 characters.");
+  }
+
+  const matches = db.find(
+    "accounts",
+    (a) =>
+      a.email?.trim().toLowerCase() === normalizedEmail
+      && (a.phone ?? "").trim() === normalizedPhone
+  );
+
+  if (matches.length === 0) {
+    throw new Error("No account matched that email and phone number.");
+  }
+
+  if (matches.length > 1) {
+    throw new Error("Multiple accounts matched. Contact support.");
+  }
+
+  db.update("accounts", matches[0].id, { password: newPassword });
   return true;
 }
 

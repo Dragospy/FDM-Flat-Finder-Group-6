@@ -56,6 +56,17 @@
   background: #efefef;
 }
 
+.profile-password-zone {
+  margin-top: 1.4rem;
+  border-top: 1px solid #dcdcdc;
+  padding-top: 1rem;
+}
+
+.profile-password-title {
+  margin: 0 0 0.75rem;
+  font-size: 1.1rem;
+}
+
 .profile-danger-zone {
   margin-top: 1.4rem;
   border-top: 1px solid #ebd0d0;

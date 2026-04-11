@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import {
   deleteAccount,
   getAccount,
+  getAccountWithPassword,
   persistAccountsToJson,
   updateAccount,
 } from "../lib/api";
@@ -19,6 +20,7 @@ export default function Profile() {
     name: "",
     email: "",
     phone: "",
+    password: "",
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -26,11 +28,12 @@ export default function Profile() {
   useEffect(() => {
     if (!user?.id) return;
 
-    const account = getAccount(user.id);
+    const account = getAccountWithPassword(user.id);
     setForm({
       name: account.name ?? "",
       email: account.email ?? "",
       phone: account.phone ?? "",
+      password: account.password ?? "",
     });
   }, [user?.id]);
 
@@ -48,15 +51,18 @@ export default function Profile() {
         name: form.name.trim(),
         email: form.email.trim(),
         phone: form.phone.trim(),
+        ...(form.password.trim() ? { password: form.password } : {}),
       });
 
       await persistAccountsToJson();
 
       refresh();
+      const freshAccount = getAccountWithPassword(user.id);
       setForm({
-        name: updated.name ?? "",
-        email: updated.email ?? "",
-        phone: updated.phone ?? "",
+        name: updated.name ?? freshAccount.name ?? "",
+        email: updated.email ?? freshAccount.email ?? "",
+        phone: updated.phone ?? freshAccount.phone ?? "",
+        password: freshAccount.password ?? "",
       });
       setSuccess("Profile details updated.");
     } catch (err) {
@@ -120,6 +126,17 @@ export default function Profile() {
             value={form.phone}
             onChange={(e) => handleChange("phone", e.target.value)}
             placeholder="Optional"
+          />
+        </label>
+
+        <label className="profile-field">
+          Password
+          <input
+            type="text"
+            value={form.password}
+            onChange={(e) => handleChange("password", e.target.value)}
+            minLength={6}
+            placeholder="Leave blank to keep current password"
           />
         </label>
 
