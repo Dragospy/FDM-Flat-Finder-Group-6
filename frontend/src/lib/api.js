@@ -172,12 +172,39 @@ export function getAccount(id) {
  * Throws if the account does not exist.
  *
  * @param {string} id
- * @param {{ name?: string, avatar?: string }} data
+ * @param {{
+ *   name?: string,
+ *   email?: string,
+ *   avatar?: string,
+ *   phone?: string,
+ *   preferredLocation?: string,
+ *   budget?: number|null
+ * }} data
  * @returns {object} the updated account (password stripped)
  */
 export function updateAccount(id, data) {
   // Prevent accidental password changes through this function
   const { password: _ignored, ...safeData } = data;
+
+  if (safeData.name !== undefined && !safeData.name.trim()) {
+    throw new Error("Name cannot be empty.");
+  }
+
+  if (safeData.email !== undefined) {
+    const nextEmail = safeData.email.trim().toLowerCase();
+    if (!nextEmail) throw new Error("Email cannot be empty.");
+
+    const duplicate = db.findOne(
+      "accounts",
+      (a) => a.email.toLowerCase() === nextEmail && a.id !== id
+    );
+
+    if (duplicate) {
+      throw new Error("An account with this email already exists.");
+    }
+
+    safeData.email = nextEmail;
+  }
 
   const updated = db.update("accounts", id, safeData);
   if (!updated) throw new Error(`Account "${id}" not found.`);
