@@ -50,7 +50,7 @@ function Listing({id, setDisplayedListing, setPopUp}) {
  * @param {number} currentImage Index in the images array of the current image showing for the listing
  * @returns Component to display the details for a listing
  */
-function ListingDetails({id, setCurrentImage, currentImage, showPopUp, toggleDisplayedListing}) {
+function ListingDetails({id, setCurrentImage, currentImage, showPopUp, toggleDisplayedListing, setListings}) {
 
   const listing = getListing(id);
 
@@ -62,6 +62,26 @@ function ListingDetails({id, setCurrentImage, currentImage, showPopUp, toggleDis
   const nextImage = () => {
     setCurrentImage(currentImage + 1)
     if (currentImage === listing.images.length-1) {setCurrentImage(0);}
+  }
+
+  function handleApprove(id) {
+    approveListing(id);
+    setListings(getListings());
+  }
+
+  function handleReject(id) {
+    rejectListing(id);
+    setListings(getListings());
+  }
+
+  function handleRevert(id) {
+    revertListingToPending(id);
+    setListings(getListings());
+  }
+
+  function handleDelete(id) {
+    deleteListing(id);
+    setListings(getListings());
   }
 
   return (
@@ -110,13 +130,15 @@ function ListingDetails({id, setCurrentImage, currentImage, showPopUp, toggleDis
         </ul>
       </section>
       
-      {listing.status === LISTING_STATUS.PENDING && <button className="approve-button" onClick={() => showPopUp("Are you sure you want to approve this listing?", "approve", approveListing, listing.id, toggleDisplayedListing)}>Approve</button>}
-      {listing.status === LISTING_STATUS.PENDING && <button className="reject-button" onClick={() => showPopUp("Are you sure you want to reject this listing?", "reject", rejectListing, listing.id, toggleDisplayedListing)}>Reject</button>}
-      {listing.status != LISTING_STATUS.PENDING && <button className="revert-button" onClick={() => showPopUp("Are you sure you want to revert this listing to pending?", "revert", revertListingToPending, listing.id, toggleDisplayedListing)}>Revert to Pending</button>}
-      <button className="delete-button" onClick={() => showPopUp("Are you sure you want to delete this listing? This action cannot be undone.", "delete", deleteListing, listing.id, toggleDisplayedListing)}>Delete</button>      
+      {listing.status === LISTING_STATUS.PENDING && <button className="approve-button" onClick={() => {showPopUp("Are you sure you want to approve this listing?", "approve", handleApprove, listing.id, toggleDisplayedListing);}}>Approve</button>}
+      {listing.status === LISTING_STATUS.PENDING && <button className="reject-button" onClick={() => {showPopUp("Are you sure you want to reject this listing?", "reject", handleReject, listing.id, toggleDisplayedListing);}}>Reject</button>}
+      {listing.status != LISTING_STATUS.PENDING && <button className="revert-button" onClick={() => {showPopUp("Are you sure you want to revert this listing to pending?", "revert", handleRevert, listing.id, toggleDisplayedListing);}}>Revert to Pending</button>}
+      <button className="delete-button" onClick={() => {showPopUp("Are you sure you want to delete this listing? This action cannot be undone.", "delete", handleDelete, listing.id, toggleDisplayedListing);}}>Delete</button>      
     </div>
   )
 }
+
+
 
 /**
  * Drop down menu to pick the status of listings to show
@@ -125,15 +147,25 @@ function ListingDetails({id, setCurrentImage, currentImage, showPopUp, toggleDis
  * @param {function} setDisplayedStatus Function to change the displayed status to the selected value
  * @returns Component to pick a status
  */
-function StatusSelection({displayedStatus, setDisplayedStatus, toggleDisplayedListing}) {
+function StatusSelection({displayedStatus, setSearch, setDisplayedStatus, setListings, toggleDisplayedListing}) {
+
+  const [open, setOpen] = useState(false);
+
   return (
-    <form>
-      <select id="statuses" className="status-selection" value={displayedStatus} onChange={(event) => {setDisplayedStatus(event.target.value); toggleDisplayedListing(null);}}>
-        <option value={LISTING_STATUS.PENDING}>Pending</option>
-        <option value={LISTING_STATUS.APPROVED}>Approved</option>
-        <option value={LISTING_STATUS.REJECTED}>Rejected</option>
-      </select>
-    </form>
+    <div className="status-selection">
+      <button className="status-selection-button" onClick={() => setOpen(open => !open)}>{displayedStatus.charAt(0).toUpperCase() + displayedStatus.slice(1)}</button>
+      {
+        open && (
+          <div className="status-dropdown">
+            <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.PENDING); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Pending</button>
+            <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.APPROVED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Approved</button>
+            <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.REJECTED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Rejected</button>
+          </div>
+
+        )
+      }
+    </div>
+
   )
 }
 
@@ -144,15 +176,12 @@ function StatusSelection({displayedStatus, setDisplayedStatus, toggleDisplayedLi
  * @param {string} status Status to filter listings by
  * @returns Components of all listings that have the passed in status
  */
-function displayListings(status, setDisplayedListing) {
+function displayListings(listings, status, setDisplayedListing) {
   
-  const listings = getListings();
   const validStatuses = Object.values(LISTING_STATUS);
   if (!validStatuses.includes(status))  throw new Error(`Status "${status}" not defined`);
 
-  const filteredListings = listings.filter((l) => l.status === status);
-
-  return filteredListings.map((listing, index) => {
+  return listings.map((listing, index) => {
     return (
       <Listing key={index} id={listing.id} setDisplayedListing={setDisplayedListing}></Listing>
     )
@@ -208,7 +237,24 @@ function PopUp({details, togglePopUp}) {
 function AccommodationApproval({configurePopUp}) {
   const [displayedStatus, setDisplayedStatus] = useState(LISTING_STATUS.PENDING);
   const [displayedListing, setDisplayedListing] = useState(null);
+  const [listings, setListings] = useState(() => getListings());
   const [currentImage, setCurrentImage] = useState(0);
+  const [search, setSearch] = useState("");
+
+  const filtered = useMemo(() => {
+    const query = search.toLowerCase();
+    return listings
+      .filter((l) => (l.status === displayedStatus))
+      .filter(
+        (l) =>
+          l.title.toLowerCase().includes(query) ||
+          l.type.toLowerCase().includes(query) ||
+          l.location.address.toLowerCase().includes(query) ||
+          l.location.city.toLowerCase().includes(query) ||
+          l.location.postcode.toLowerCase().includes(query) ||
+          l.location.country.toLowerCase().includes(query)
+      );
+  }, [listings, search, displayedStatus]);
 
   const toggleDisplayedListing = (newListing) => {
     if (displayedListing === newListing) {setDisplayedListing(null)}
@@ -220,10 +266,26 @@ function AccommodationApproval({configurePopUp}) {
   return (
     <div className="manage-listings-container">
       <div className="left-panel">
-        <StatusSelection displayedStatus={displayedStatus} setDisplayedStatus={setDisplayedStatus} toggleDisplayedListing={toggleDisplayedListing}/>
-        <h2>{displayedStatus.charAt(0).toUpperCase() + displayedStatus.slice(1)}</h2>
+
+        <div className="listing-filtering">
+          <StatusSelection displayedStatus={displayedStatus} setSearch={setSearch} setDisplayedStatus={setDisplayedStatus} setListings={setListings} toggleDisplayedListing={toggleDisplayedListing}/>
+          
+          <input
+          type="text"
+          className="account-search"
+          placeholder={`Search for ${displayedStatus} listings by title, type or location...`}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+        
         <div className="listing-group">
-          {displayListings(displayedStatus, toggleDisplayedListing)}
+          {filtered.length === 0 ? (
+        <p className="account-empty">
+          {search ? "No listings match your search." : `No ${displayedStatus} listings found.`}
+        </p>
+      ) : 
+          displayListings(filtered, displayedStatus, toggleDisplayedListing)}
         </div>
       </div>
 
@@ -231,7 +293,7 @@ function AccommodationApproval({configurePopUp}) {
 
       {displayedListing != null && <div className="right-panel">
         <button className="listing-details-close-button" onClick={() => toggleDisplayedListing(null)}>X</button>
-        <ListingDetails id={displayedListing} toggleDisplayedListing={toggleDisplayedListing} setCurrentImage={setCurrentImage} currentImage={currentImage} showPopUp={configurePopUp}/>
+        <ListingDetails id={displayedListing} toggleDisplayedListing={toggleDisplayedListing} setCurrentImage={setCurrentImage} currentImage={currentImage} showPopUp={configurePopUp} setListings={setListings}/>
       </div>}
 
     </div>
@@ -355,7 +417,6 @@ function AccountManagement({configurePopUp}) {
 }
 
 export default function Admin() {
-
   const [section, setSection] = useState("approval");
   const [popUp, setPopUp] = useState(null);
 

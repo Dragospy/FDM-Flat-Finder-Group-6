@@ -58,6 +58,7 @@ p, h1, h2, h3 {
 
 .left-panel {
     margin-left: 1rem;
+    min-width: 40rem;
 }
 
 .right-panel {
@@ -69,6 +70,13 @@ p, h1, h2, h3 {
 
 .panel-separator {
     margin-right: 1rem;
+    margin-left: 1rem;
+    border-color: #000000;
+}
+
+.listing-filtering {
+    display: flex;
+    gap: 0.5rem;
 }
 
 /********************************
@@ -117,10 +125,38 @@ p, h1, h2, h3 {
      Status Selection Styles
 ********************************/
 
-.status-selection {
-    padding: 0.5rem;
+.status-selection-button {
+    padding: 0.65rem;
+    min-width: 6rem;
     border-radius: 0.3rem;
     font-weight: bold;
+    background-color: #77ff00;
+    border: none;
+    font-size: 0.95rem;
+    cursor: pointer;
+
+}
+
+.status-dropdown {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.3rem;
+}
+
+.status-option {
+    background-color: black;
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: 0.65rem;
+    width: 6rem;
+    cursor: pointer;
+}
+
+.status-option:hover {
+    background-color: #333;
+    color: #fff;
 }
 
 /********************************
