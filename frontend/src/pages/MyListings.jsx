@@ -63,24 +63,49 @@ export default function MyListings() {
   };
 
   return (
-    <main>
-      <h1>My Listings</h1>
-      <button onClick={handleCreate} className="upload-button">Upload Listing</button>
-      {listings.length === 0 ? (
-        <p>You have no listings yet.</p>
-      ) : (
-        <div className="listings-container">
-          {listings.map((listing) => (
-            <ListingCard
-              key={listing.id}
-              listing={listing}
-              onEdit={handleEdit}
-              onArchive={handleArchive}
-              onDelete={handleDelete}
-            />
-          ))}
+    <main className="my-listings-page">
+      <section className="my-listings-shell">
+        <div className="my-listings-header">
+          <div>
+            <p className="my-listings-eyebrow">Host dashboard</p>
+            <h1>My Listings</h1>
+            <p className="my-listings-copy">
+              Manage your active, archived, and draft properties from one place.
+            </p>
+          </div>
+
+          <div className="my-listings-actions">
+            <span className="my-listings-count">{listings.length} listings</span>
+            <button onClick={handleCreate} className="upload-button">
+              Upload Listing
+            </button>
+          </div>
         </div>
-      )}
+
+        {listings.length === 0 ? (
+          <div className="my-listings-empty">
+            <h2>No listings yet</h2>
+            <p>
+              Upload your first property to start managing bookings and availability.
+            </p>
+            <button onClick={handleCreate} className="upload-button">
+              Create Your First Listing
+            </button>
+          </div>
+        ) : (
+          <div className="listings-container">
+            {listings.map((listing) => (
+              <ListingCard
+                key={listing.id}
+                listing={listing}
+                onEdit={handleEdit}
+                onArchive={handleArchive}
+                onDelete={handleDelete}
+              />
+            ))}
+          </div>
+        )}
+      </section>
 
       <EditListingModal
         isOpen={showModal}
