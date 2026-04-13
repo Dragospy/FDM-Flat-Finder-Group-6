@@ -1,4 +1,4 @@
-/* HostApplications.css */
+/* HostApplications.css — dark theme */
 
 .host-applications-page {
   max-width: 1000px;
@@ -14,25 +14,36 @@
   margin-bottom: 16px;
 }
 
+.host-applications-page h1 {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
 .host-applications-subtitle {
   margin: 6px 0 0;
-  opacity: 0.8;
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
 .host-applications-alert {
   margin: 10px 0;
   padding: 10px 12px;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
 }
 
 .host-applications-alert--error {
-  background: rgba(220, 38, 38, 0.12);
-  border: 1px solid rgba(220, 38, 38, 0.25);
+  background: rgba(220, 38, 38, 0.18);
+  color: #fecaca;
+  border: 1px solid rgba(248, 113, 113, 0.35);
 }
 
 .host-applications-alert--success {
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.25);
+  background: rgba(34, 197, 94, 0.15);
+  color: #bbf7d0;
+  border: 1px solid rgba(74, 222, 128, 0.35);
 }
 
 .host-applications-list {
@@ -42,10 +53,11 @@
 }
 
 .host-applications-item {
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 14px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
   padding: 14px;
-  background: #fff;
+  background: var(--surface-card);
+  box-shadow: var(--shadow-card);
 }
 
 .host-applications-item-top {
@@ -58,11 +70,13 @@
 .host-applications-title {
   margin: 0;
   font-size: 16px;
+  color: var(--text-primary);
+  font-weight: 700;
 }
 
 .host-applications-meta {
   margin: 4px 0 0;
-  opacity: 0.75;
+  color: var(--text-subtle);
   font-size: 13px;
 }
 
@@ -72,39 +86,54 @@
   gap: 12px;
   align-items: center;
   margin-top: 12px;
+  flex-wrap: wrap;
 }
 
 .host-applications-dates {
-  opacity: 0.75;
+  color: var(--text-subtle);
   font-size: 13px;
 }
 
 .host-applications-actions {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .host-applications-button {
   padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  background: #111827;
-  color: white;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
   cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
 }
 
 .host-applications-button--secondary {
-  background: white;
-  color: #111827;
+  background: var(--surface-inner);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+}
+
+.host-applications-button--secondary:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--surface-inner);
+}
+
+.host-applications-button:not(.host-applications-button--secondary):hover:not(:disabled) {
+  background: var(--accent-hover);
 }
 
 .host-applications-button:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
 .host-applications-empty {
-  opacity: 0.75;
+  color: var(--text-subtle);
   padding: 16px;
 }
-

@@ -18,11 +18,15 @@
 
 .dashboard-title {
   margin: 0;
+  color: var(--text-primary);
+  font-size: 1.75rem;
+  font-weight: 700;
 }
 
 .dashboard-subtitle {
   margin: 6px 0 0;
-  opacity: 0.8;
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
 .dashboard-cards {
@@ -33,20 +37,31 @@
 
 .dashboard-card {
   display: block;
-  padding: 14px;
-  border-radius: 14px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  background: #fff;
-  color: inherit;
+  padding: 1rem 1.1rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-card);
+  color: var(--text-primary);
   text-decoration: none;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.dashboard-card:hover {
+  border-color: rgba(119, 255, 0, 0.35);
+  background: #3a3a3a;
 }
 
 .dashboard-card h2 {
   margin: 0;
-  font-size: 16px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .dashboard-card p {
   margin: 6px 0 0;
-  opacity: 0.75;
+  color: var(--text-subtle);
+  font-size: 0.9rem;
+  line-height: 1.35;
 }

@@ -2,7 +2,6 @@
  * Login.css — Styles for the Login page.
  */
 
-
 /* ─── Layout ───────────────────────────────────────────────────────────────── */
 
 .login-page {
@@ -10,14 +9,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f5f5f5;
   padding: 1rem;
 }
 
 .login-card {
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  background: var(--surface-card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
   padding: 2.5rem;
   width: 100%;
   max-width: 400px;
@@ -29,18 +27,18 @@
   gap: 1rem;
 }
 
-
 /* ─── Typography ───────────────────────────────────────────────────────────── */
 
 .login-title {
   margin: 0 0 0.25rem;
   font-size: 1.75rem;
   font-weight: 700;
+  color: var(--text-primary);
 }
 
 .login-subtitle {
   margin: 0 0 1.5rem;
-  color: #666;
+  color: var(--text-muted);
   font-size: 0.95rem;
 }
 
@@ -50,63 +48,80 @@
   gap: 0.35rem;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #333;
+  color: var(--text-muted);
 }
 
 .login-footer {
   margin-top: 1.25rem;
   text-align: center;
   font-size: 0.9rem;
-  color: #555;
+  color: var(--text-primary);
 }
 
 .login-hint {
   margin-top: 1rem;
   text-align: center;
   font-size: 0.8rem;
-  color: #888;
-  background: #f9fafb;
+  color: var(--text-muted);
+  background: var(--surface-inner);
   border-radius: 6px;
   padding: 0.5rem;
 }
-
 
 /* ─── Inputs & controls ────────────────────────────────────────────────────── */
 
 .login-input {
   padding: 0.65rem 0.85rem;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-input);
   font-size: 1rem;
   outline: none;
+  background: var(--surface-inner);
+  color: var(--text-primary);
+}
+
+.login-input::placeholder {
+  color: var(--text-subtle);
 }
 
 .login-button {
   margin-top: 0.5rem;
   padding: 0.75rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: none;
-  background: #2563eb;
-  color: #fff;
+  background: var(--accent);
+  color: var(--accent-ink);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
 }
 
+.login-button:hover {
+  background: var(--accent-hover);
+}
+
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 .login-link {
-  color: #2563eb;
+  color: var(--accent);
   text-decoration: none;
   font-weight: 500;
 }
 
+.login-link:hover {
+  color: var(--accent-hover);
+}
 
 /* ─── Feedback ─────────────────────────────────────────────────────────────── */
 
 .login-error {
-  background: #fef2f2;
-  color: #dc2626;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
+  background: rgba(220, 38, 38, 0.18);
+  color: #fecaca;
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  border-radius: var(--radius-sm);
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
   font-size: 0.9rem;
