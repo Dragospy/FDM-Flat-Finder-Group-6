@@ -1,0 +1,132 @@
+/* EditListingModal.css — Styles for the edit listing modal */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 100%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal label {
+  margin-bottom: 10px;
+}
+
+.modal input,
+.modal textarea {
+  margin-top: 5px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.modal button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.modal button[type="submit"] {
+  background-color: #28a745;
+  color: white;
+}
+
+.modal button[type="button"] {
+  background-color: #6c757d;
+  color: white;
+}
+
+.amenities-editor {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.image-upload-preview-grid {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.image-upload-preview-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.image-upload-preview-item img {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.image-upload-preview-item button {
+  margin-top: 0;
+  padding: 6px 8px;
+  font-size: 0.8rem;
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.add-amenity {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.add-amenity input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.amenities-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.amenity-item {
+  background-color: #f8f9fa;
+  padding: 5px 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.amenity-item button {
+  background: none;
+  border: none;
+  color: red;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0;
+}
