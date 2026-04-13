@@ -86,8 +86,13 @@ function DisplayListings({listings}){
 
 
     const displayListings = listings.map(listing => <DisplayListing listing={listing}/>);
-
-    return <ul>{displayListings}</ul>
+    if (listings.length>0){
+        return <ul>{displayListings}</ul>;
+    }
+    else{
+        return <div><p>No results found</p></div>;
+    }
+    
 }
 
 // Open weather API key. 437218189febbb7451a26102eb3ef8af
@@ -154,6 +159,16 @@ export function SearchListings() {
     }
 
     let ascending = sortOrder;
+
+    const filter = {
+        city: "London",
+        minPrice: 0,
+        maxPrice: 5,
+        bedrooms: undefined,
+        available: true
+    };
+
+
     let listings = getListings();
     console.log(listings);
 
@@ -176,6 +191,24 @@ export function SearchListings() {
     return (
         <>
             <form name="searchForm" method="post" onSubmit={handleSearchSubmit}>
+                <label for="city">City</label>
+                <input type ="text" name="city"></input>
+
+                <label for="location">Location</label>
+                <input type ="text" name="location"></input>
+
+
+                <label for="minPrice">minPrice</label>
+                <input type ="number" name="minPrice"></input>
+                <label for="maxPrice">maxPrice</label>
+                <input type ="number" name="maxPrice"></input>
+
+                <label for="bedrooms">bedrooms</label>
+                <input type ="number" name="bedrooms"></input>      
+
+                <label for="unavailable">unavailable</label>
+                <input type ="checkbox" name="unavailable"></input>                         
+
                 <label for="sort-by">Sort by</label>
                 <select id="sort-by" name="order">
                     <option value ="cost">Cost</option>
@@ -189,6 +222,8 @@ export function SearchListings() {
                     <option value ="descending">Descending</option>
                 </select>
                 <input type="submit" value="Search"></input>
+                    
+
             </form>
 
             <div>
