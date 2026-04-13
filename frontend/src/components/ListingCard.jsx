@@ -65,10 +65,10 @@ export default function ListingCard({ listing, onEdit, onArchive, onDelete }) {
       <div className="listing-header">
         <h3 className="listing-title">{listing.title}</h3>
         <div className="listing-rating">
-          {listing.rating == 0 ? 'No reviews yet' : 
-          `⭐ ${listing.rating} (${listing.reviewCount} reviews)`
-        }
-          </div>
+          {listing.rating == 0
+            ? 'No reviews yet'
+            : `⭐ ${listing.rating} (${listing.reviewCount} reviews)`}
+        </div>
       </div>
 
       {/* Type and Location */}

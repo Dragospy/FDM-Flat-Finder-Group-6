@@ -111,22 +111,23 @@
 
 .listing-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 0.55rem;
+  gap: 0.25rem;
+  margin-bottom: 0.8rem;
 }
 
 .listing-title {
   margin: 0;
-  font-size: 1.35rem;
-  line-height: 1.2;
+  font-size: 4rem;
+  line-height: 1.1;
   color: #fff;
 }
 
 .listing-rating {
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.84rem;
+  font-weight: 400;
   white-space: nowrap;
 }
 
@@ -289,6 +290,10 @@
 @media (max-width: 768px) {
   .listing-card {
     min-height: auto;
+  }
+
+  .listing-title {
+    font-size: 2rem;
   }
 
   .listing-header {
