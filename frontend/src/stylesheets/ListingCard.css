@@ -153,13 +153,14 @@
 }
 
 .listing-description {
-  flex-grow: 1;
+  flex-grow: 0;
   margin: 0 0 1rem;
   color: rgba(255, 255, 255, 0.82);
   line-height: 1.55;
+  max-height: calc(2 * 1.55em);
   display: -webkit-box;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -216,7 +217,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 0.25rem;
+  margin-top: auto;
+  padding-top: 1rem;
   margin-bottom: 0.9rem;
 }
 
@@ -281,7 +283,7 @@
 }
 
 .listing-created {
-  margin-top: auto;
+  margin-top: 0;
   text-align: right;
   color: rgba(255, 255, 255, 0.55);
   font-size: 0.78rem;
