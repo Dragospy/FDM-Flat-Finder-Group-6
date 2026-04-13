@@ -80,7 +80,15 @@ export default function EditListingModal({ isOpen, onClose, listing, onSave, isC
   return (
     <div className="modal-overlay">
       <div className="modal">
-      <h2>{isCreate ? 'Create Listing' : 'Edit Listing'}</h2>
+        <div className="modal-header">
+          <div>
+            <p className="modal-eyebrow">My listings</p>
+            <h2>{isCreate ? 'Create Listing' : 'Edit Listing'}</h2>
+          </div>
+          <p className="modal-subtitle">
+            Update listing details, media, and amenities from one place.
+          </p>
+        </div>
         <form onSubmit={handleSubmit}>
           <label>
             Title:
@@ -200,6 +208,7 @@ export default function EditListingModal({ isOpen, onClose, listing, onSave, isC
           <label>
             Images:
             <input
+              className="modal-file-input"
               type="file"
               accept="image/*"
               multiple
@@ -226,7 +235,9 @@ export default function EditListingModal({ isOpen, onClose, listing, onSave, isC
                   value={newAmenity}
                   onChange={(e) => setNewAmenity(e.target.value)}
                 />
-                <button type="button" onClick={addAmenity}>Add</button>
+                <button type="button" className="amenity-add-button" onClick={addAmenity}>
+                  Add
+                </button>
               </div>
               <div className="amenities-list">
                 {(editedListing.amenities || []).map((amenity, index) => (
@@ -238,8 +249,10 @@ export default function EditListingModal({ isOpen, onClose, listing, onSave, isC
               </div>
             </div>
           </label>
-          <button type="submit">Save</button>
-          <button type="button" onClick={onClose}>Cancel</button>
+          <div className="modal-actions">
+            <button type="submit">Save</button>
+            <button type="button" onClick={onClose}>Cancel</button>
+          </div>
         </form>
       </div>
     </div>
