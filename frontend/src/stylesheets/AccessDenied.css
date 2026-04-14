@@ -1,10 +1,6 @@
 /**
- * AccessDenied.css — Styles for the Access Denied screen
- * rendered by ProtectedRoute when a user's role is not permitted.
+ * AccessDenied.css — matches app dark / lime theme.
  */
-
-
-/* ─── Layout ───────────────────────────────────────────────────────────────── */
 
 .access-denied-page {
   min-height: 100vh;
@@ -22,10 +18,8 @@
   max-width: 420px;
   width: 100%;
   text-align: center;
+  border: 1px solid var(--border-subtle);
 }
-
-
-/* ─── Typography ───────────────────────────────────────────────────────────── */
 
 .access-denied-icon {
   font-size: 3rem;
@@ -55,4 +49,8 @@
   text-decoration: none;
   font-weight: 500;
   font-size: 0.95rem;
+}
+
+.access-denied-link:hover {
+  color: var(--accent-hover);
 }

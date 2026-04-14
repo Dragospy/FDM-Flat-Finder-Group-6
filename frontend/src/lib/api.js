@@ -9,7 +9,209 @@
  */
 
 import { db } from "./db";
-import { LISTING_STATUS } from "../constants/listingStatus";
+
+// ─── Applications ──────────────────────────────────────────────────────────────
+
+export const APPLICATION_STATUS = Object.freeze({
+  SUBMITTED: "submitted",
+  ACCEPTED: "accepted",
+  REJECTED: "rejected",
+  WITHDRAWN: "withdrawn",
+});
+
+function isFinalStatus(status) {
+  return status === APPLICATION_STATUS.ACCEPTED
+    || status === APPLICATION_STATUS.REJECTED
+    || status === APPLICATION_STATUS.WITHDRAWN;
+}
+
+/**
+ * Create a new application for a listing.
+ * Throws if required fields are missing or an active application already exists.
+ *
+ * @param {{
+ *   listingId: string,
+ *   consultantId: string,
+ *   lengthOfStayMonths: number,
+ *   moveInDate: string,
+ *   occupants: number,
+ *   employmentStatus: string,
+ *   monthlyIncome: number,
+ *   notes?: string
+ * }} data
+ * @returns {object}
+ */
+export function applyForListing({
+  listingId,
+  consultantId,
+  lengthOfStayMonths,
+  moveInDate,
+  occupants,
+  employmentStatus,
+  monthlyIncome,
+  notes = "",
+}) {
+  if (!listingId) throw new Error("listingId is required to apply.");
+  if (!consultantId) throw new Error("consultantId is required to apply.");
+  if (!lengthOfStayMonths || lengthOfStayMonths < 1) {
+    throw new Error("Length of stay must be at least 1 month.");
+  }
+  if (!moveInDate) throw new Error("Move-in date is required.");
+  if (!occupants || occupants < 1) throw new Error("At least 1 occupant is required.");
+  if (!employmentStatus?.trim()) throw new Error("Employment status is required.");
+  const normalizedIncome = Number(monthlyIncome);
+  if (Number.isNaN(normalizedIncome) || normalizedIncome < 0) {
+    throw new Error("Monthly income must be 0 or higher.");
+  }
+
+  const listing = db.getById("listings", listingId);
+  if (!listing) throw new Error("Listing not found.");
+  if (!listing.available) throw new Error("This listing is not currently available.");
+
+  const hasAcceptedApplication = db.findOne(
+    "applications",
+    (a) => a.consultantId === consultantId && a.status === APPLICATION_STATUS.ACCEPTED
+  );
+  if (hasAcceptedApplication) {
+    throw new Error("You already have an accepted application and cannot apply to additional properties.");
+  }
+
+  const existing = db.findOne(
+    "applications",
+    (a) =>
+      a.listingId === listingId
+      && a.consultantId === consultantId
+      && !isFinalStatus(a.status)
+  );
+
+  if (existing) {
+    throw new Error("You already have an active application for this property.");
+  }
+
+  return db.insert("applications", {
+    listingId,
+    consultantId,
+    hostId: listing.hostId,
+    details: {
+      lengthOfStayMonths: Number(lengthOfStayMonths),
+      moveInDate,
+      occupants: Number(occupants),
+      employmentStatus: employmentStatus.trim(),
+      monthlyIncome: normalizedIncome,
+      notes: notes.trim(),
+    },
+    status: APPLICATION_STATUS.SUBMITTED,
+    updatedAt: new Date().toISOString(),
+  });
+}
+
+/**
+ * Return all applications submitted by a consultant.
+ *
+ * @param {string} consultantId
+ * @returns {Array}
+ */
+export function getApplicationsByConsultant(consultantId) {
+  if (!consultantId) return [];
+  return db
+    .find("applications", (a) => a.consultantId === consultantId)
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+}
+
+/**
+ * Return all applications for listings owned by a host.
+ *
+ * @param {string} hostId
+ * @returns {Array}
+ */
+export function getApplicationsByHost(hostId) {
+  if (!hostId) return [];
+  return db
+    .find("applications", (a) => a.hostId === hostId)
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+}
+
+/**
+ * Withdraw an application (consultant).
+ * Only allowed while status is "submitted".
+ *
+ * @param {{ applicationId: string, consultantId: string }} data
+ * @returns {object}
+ */
+export function withdrawApplication({ applicationId, consultantId }) {
+  if (!applicationId) throw new Error("applicationId is required.");
+  if (!consultantId) throw new Error("consultantId is required.");
+
+  const app = db.getById("applications", applicationId);
+  if (!app) throw new Error("Application not found.");
+  if (app.consultantId !== consultantId) throw new Error("You do not own this application.");
+  if (app.status !== APPLICATION_STATUS.SUBMITTED) {
+    throw new Error("Only submitted applications can be withdrawn.");
+  }
+
+  return db.update("applications", applicationId, {
+    status: APPLICATION_STATUS.WITHDRAWN,
+    updatedAt: new Date().toISOString(),
+  });
+}
+
+/**
+ * Accept or reject an application (host).
+ * Only allowed while status is "submitted".
+ *
+ * @param {{ applicationId: string, hostId: string, decision: "accepted"|"rejected" }} data
+ * @returns {object}
+ */
+export function decideApplication({ applicationId, hostId, decision }) {
+  if (!applicationId) throw new Error("applicationId is required.");
+  if (!hostId) throw new Error("hostId is required.");
+  if (decision !== APPLICATION_STATUS.ACCEPTED && decision !== APPLICATION_STATUS.REJECTED) {
+    throw new Error("Decision must be 'accepted' or 'rejected'.");
+  }
+
+  const app = db.getById("applications", applicationId);
+  if (!app) throw new Error("Application not found.");
+  if (app.hostId !== hostId) throw new Error("You do not own this application.");
+  if (app.status !== APPLICATION_STATUS.SUBMITTED) {
+    throw new Error("Only submitted applications can be processed.");
+  }
+
+  if (decision === APPLICATION_STATUS.ACCEPTED) {
+    const listing = db.getById("listings", app.listingId);
+    if (!listing) throw new Error("Listing not found for this application.");
+
+    if (listing.available === false) {
+      throw new Error("This listing is no longer available.");
+    }
+  }
+
+  const decidedApplication = db.update("applications", applicationId, {
+    status: decision,
+    updatedAt: new Date().toISOString(),
+  });
+
+  if (decision === APPLICATION_STATUS.ACCEPTED) {
+    db.update("listings", app.listingId, { available: false });
+
+    const competingSubmittedApplications = db.find(
+      "applications",
+      (candidate) =>
+        candidate.listingId === app.listingId
+        && candidate.id !== applicationId
+        && candidate.status === APPLICATION_STATUS.SUBMITTED
+    );
+
+    competingSubmittedApplications.forEach((candidate) => {
+      db.update("applications", candidate.id, {
+        status: APPLICATION_STATUS.REJECTED,
+        updatedAt: new Date().toISOString(),
+      });
+    });
+  }
+
+  return decidedApplication;
+}
+
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -110,6 +312,8 @@ export function createListing(data) {
     reviewCount: 0,
     images:      [],
     amenities:   [],
+    reports:     [],
+    status:      APPLICATION_STATUS.SUBMITTED,
     ...data,
   });
 }
@@ -148,7 +352,7 @@ export function deleteListing(id) {
  * @returns the approved listing
  */
 export function approveListing(id) {
-  const approved = updateListing(id,  {status: LISTING_STATUS.APPROVED});
+  const approved = updateListing(id,  {status: APPLICATION_STATUS.ACCEPTED});
   return approved;
 }
 
@@ -159,7 +363,7 @@ export function approveListing(id) {
  * @returns the approved listing
  */
 export function rejectListing(id) {
-  const rejected = updateListing(id,  {status: LISTING_STATUS.REJECTED});
+  const rejected = updateListing(id,  {status: APPLICATION_STATUS.REJECTED});
   return rejected;
 }
 
@@ -170,8 +374,48 @@ export function rejectListing(id) {
  * @returns the pending listing
  */
 export function revertListingToPending(id) {
-  const pending = updateListing(id, {status: LISTING_STATUS.PENDING})
+  const pending = updateListing(id, {status: APPLICATION_STATUS.SUBMITTED});
   return pending;
+}
+
+/**
+ * Add a report to a listing.
+ * Throws if the listing does not exist or the reason is empty.
+ *
+ * @param {string} id        listing id
+ * @param {string} userId    id of the reporting user
+ * @param {string} reason    reason text from the user
+ * @returns {object} the updated listing
+ */
+export function reportListing(id, userId, reason) {
+  const trimmed = (reason ?? "").trim();
+  if (!trimmed) throw new Error("A reason is required to report a listing.");
+
+  const listing = getListing(id);
+  const reports = [
+    ...(listing.reports ?? []),
+    { userId, reason: trimmed, createdAt: new Date().toISOString() },
+  ];
+  return updateListing(id, { reports });
+}
+
+/**
+ * Remove all reports from a listing (admin dismisses the report as wrongful).
+ *
+ * @param {string} id  listing id
+ * @returns {object} the updated listing
+ */
+export function dismissReports(id) {
+  return updateListing(id, { reports: [] });
+}
+
+/**
+ * Return all listings that currently have at least one report.
+ *
+ * @returns {Array}
+ */
+export function getReportedListings() {
+  return db.find("listings", (l) => Array.isArray(l.reports) && l.reports.length > 0);
 }
 
 // ─── Accounts ─────────────────────────────────────────────────────────────────

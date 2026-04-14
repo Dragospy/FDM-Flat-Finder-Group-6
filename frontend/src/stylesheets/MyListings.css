@@ -1,3 +1,152 @@
 /**
- * MyListings.css — Styles for the My Listings page.
+ * MyListings.css — uses .app-simple-page from main.css
  */
+
+.my-listings-page {
+  min-height: 100vh;
+  padding: 2rem 1rem 3rem;
+  background:
+    radial-gradient(circle at top left, rgba(119, 255, 0, 0.14), transparent 28%),
+    radial-gradient(circle at top right, rgba(119, 255, 0, 0.08), transparent 22%),
+    linear-gradient(180deg, #1c1c1c 0%, #151515 100%);
+}
+
+.my-listings-shell {
+  width: min(1200px, 100%);
+  margin: 0 auto;
+}
+
+.my-listings-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(119, 255, 0, 0.15);
+  border-radius: 1.25rem;
+  background: rgba(49, 49, 49, 0.9);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(8px);
+}
+
+.my-listings-eyebrow {
+  margin: 0 0 0.35rem;
+  color: #77ff00;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.my-listings-header h1 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+}
+
+.my-listings-copy {
+  max-width: 42rem;
+  margin: 0.65rem 0 0;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+.my-listings-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.my-listings-count {
+  padding: 0.6rem 0.85rem;
+  border: 1px solid rgba(119, 255, 0, 0.2);
+  border-radius: 999px;
+  background: rgba(28, 28, 28, 0.85);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.listings-container {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.my-listings-empty {
+  display: grid;
+  gap: 0.85rem;
+  place-items: start;
+  padding: 2rem;
+  border: 1px dashed rgba(119, 255, 0, 0.22);
+  border-radius: 1.25rem;
+  background: rgba(49, 49, 49, 0.72);
+  color: #fff;
+}
+
+.my-listings-empty h2 {
+  margin: 0;
+  color: #77ff00;
+  font-size: 1.35rem;
+}
+
+.my-listings-empty p {
+  margin: 0;
+  max-width: 36rem;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+}
+
+.upload-button {
+  padding: 0.8rem 1.15rem;
+  border: 1px solid rgba(119, 255, 0, 0.2);
+  border-radius: 999px;
+  background: #77ff00;
+  color: #111;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  box-shadow: 0 10px 20px rgba(119, 255, 0, 0.16);
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.upload-button:hover {
+  background-color: #64d104;
+  box-shadow: 0 12px 24px rgba(119, 255, 0, 0.2);
+  transform: translateY(-1px);
+}
+
+.upload-button:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 1100px) {
+  .listings-container {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .my-listings-page {
+    padding: 1rem 0.75rem 2rem;
+  }
+
+  .my-listings-header {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 1.25rem;
+  }
+
+  .my-listings-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .listings-container {
+    grid-template-columns: 1fr;
+  }
+}

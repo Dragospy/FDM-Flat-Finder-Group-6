@@ -15,9 +15,12 @@ import {
   getAccounts,
   deactivateAccount,
   activateAccount,
+  getReportedListings,
+  dismissReports,
+  updateListing,
+  APPLICATION_STATUS
 } from "../lib/api";
 import { useAuth } from "../context/AuthContext";
-import { LISTING_STATUS } from "../constants/listingStatus";
 import "../stylesheets/Admin.css";
 
 /**
@@ -31,12 +34,12 @@ function Listing({id, setDisplayedListing, displayedListing, setPopUp}) {
 
   return (
     <div className={listing.id === displayedListing ? "active-listing-container" : " listing-container"} onClick={() => setDisplayedListing(id)}>
-      <img className="listing-image" src={listing.images[0]}></img>
-      <h3 className={listing.id === displayedListing ? "active-listing-title" : "listing-title"}>{listing.title}</h3>
+      <img className="admin-listing-image" src={listing.images[0]}></img>
+      <h3 className={listing.id === displayedListing ? "active-admin-listing-title" : "admin-listing-title"}>{listing.title}</h3>
       <div className={listing.id === displayedListing ? "active-listing-info" : "listing-info"}>
-        <p className="listing-type">{listing.type}</p>
+        <p className={listing.id === displayedListing ? "active-admin-listing-type" :"admin-listing-type"}>{listing.type}</p>
         <p>&#8226;</p>
-        <p>£{listing.price}</p>
+        <p className="listing-price">£{listing.price}</p>
       </div>
     </div>
   )
@@ -68,6 +71,7 @@ function ListingDetails({id, setCurrentImage, currentImage, showPopUp, toggleDis
   function handleApprove(id) {
     approveListing(id);
     setListings(getListings());
+    console.log(getListings());
   }
 
   function handleReject(id) {
@@ -110,7 +114,7 @@ function ListingDetails({id, setCurrentImage, currentImage, showPopUp, toggleDis
 
       <section>
         <h3 className="listing-amenities-heading">Amenities</h3>
-        <ul className="listing-amenities">
+        <ul className="admin-listing-amenities">
           {
             listing.amenities.map((amenity, index) => {
               return (
@@ -131,9 +135,9 @@ function ListingDetails({id, setCurrentImage, currentImage, showPopUp, toggleDis
         </ul>
       </section>
       
-      {listing.status === LISTING_STATUS.PENDING && <button className="approve-button" onClick={() => {showPopUp("Are you sure you want to approve this listing?", "approve", handleApprove, listing.id, toggleDisplayedListing);}}>Approve</button>}
-      {listing.status === LISTING_STATUS.PENDING && <button className="reject-button" onClick={() => {showPopUp("Are you sure you want to reject this listing?", "reject", handleReject, listing.id, toggleDisplayedListing);}}>Reject</button>}
-      {listing.status != LISTING_STATUS.PENDING && <button className="revert-button" onClick={() => {showPopUp("Are you sure you want to revert this listing to pending?", "revert", handleRevert, listing.id, toggleDisplayedListing);}}>Revert to Pending</button>}
+      {listing.status === APPLICATION_STATUS.SUBMITTED && <button className="approve-button" onClick={() => {showPopUp("Are you sure you want to approve this listing?", "approve", handleApprove, listing.id, toggleDisplayedListing);}}>Approve</button>}
+      {listing.status === APPLICATION_STATUS.SUBMITTED && <button className="reject-button" onClick={() => {showPopUp("Are you sure you want to reject this listing?", "reject", handleReject, listing.id, toggleDisplayedListing);}}>Reject</button>}
+      {listing.status != APPLICATION_STATUS.SUBMITTED && <button className="revert-button" onClick={() => {showPopUp("Are you sure you want to revert this listing to pending?", "revert", handleRevert, listing.id, toggleDisplayedListing);}}>Revert to Pending</button>}
       <button className="delete-button" onClick={() => {showPopUp("Are you sure you want to delete this listing? This action cannot be undone.", "delete", handleDelete, listing.id, toggleDisplayedListing);}}>Delete</button>      
     </div>
   )
@@ -158,9 +162,9 @@ function StatusSelection({displayedStatus, setSearch, setDisplayedStatus, setLis
       {
         open && (
           <div className="status-dropdown">
-            <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.PENDING); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Pending</button>
-            <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.APPROVED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Approved</button>
-            <button className="status-option bottom-status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.REJECTED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Rejected</button>
+            <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(APPLICATION_STATUS.SUBMITTED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Submitted</button>
+            <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(APPLICATION_STATUS.ACCEPTED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Accepted</button>
+            <button className="status-option bottom-status-option" onClick={() => {setOpen(false); setDisplayedStatus(APPLICATION_STATUS.REJECTED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Rejected</button>
           </div>
 
         )
@@ -179,7 +183,7 @@ function StatusSelection({displayedStatus, setSearch, setDisplayedStatus, setLis
  */
 function displayListings(listings, status, displayedListing, setDisplayedListing) {
   
-  const validStatuses = Object.values(LISTING_STATUS);
+  const validStatuses = Object.values(APPLICATION_STATUS);
   if (!validStatuses.includes(status))  throw new Error(`Status "${status}" not defined`);
 
   return listings.map((listing, index) => {
@@ -236,7 +240,7 @@ function PopUp({details, togglePopUp}) {
  * Accommodation approval sub-tab — listing moderation panel.
  */
 function AccommodationApproval({configurePopUp}) {
-  const [displayedStatus, setDisplayedStatus] = useState(LISTING_STATUS.PENDING);
+  const [displayedStatus, setDisplayedStatus] = useState(APPLICATION_STATUS.SUBMITTED);
   const [displayedListing, setDisplayedListing] = useState(null);
   const [listings, setListings] = useState(() => getListings());
   const [currentImage, setCurrentImage] = useState(0);
@@ -417,6 +421,97 @@ function AccountManagement({configurePopUp}) {
   );
 }
 
+/**
+ * Reported listings sub-tab — admins review reports and either dismiss them
+ * (wrongful report) or deactivate the listing (legitimate report).
+ */
+function ReportedListings() {
+  const [reported, setReported] = useState(() => getReportedListings());
+  const [selectedId, setSelectedId] = useState(null);
+  const [message, setMessage] = useState("");
+
+  function refresh() {
+    const next = getReportedListings();
+    setReported(next);
+    if (!next.find((l) => l.id === selectedId)) setSelectedId(null);
+  }
+
+  function handleDismiss(id) {
+    dismissReports(id);
+    setMessage("Reports dismissed.");
+    refresh();
+  }
+
+  function handleDeactivate(id) {
+    updateListing(id, { available: false, reports: [] });
+    setMessage("Listing deactivated.");
+    refresh();
+  }
+
+  const selected = selectedId ? reported.find((l) => l.id === selectedId) : null;
+
+  return (
+    <div className="admin-container">
+      <div className="left-panel">
+        <h2>Reported Listings</h2>
+        {message && <p className="reported-message">{message}</p>}
+        {reported.length === 0 ? (
+          <p>No reported listings.</p>
+        ) : (
+          <div className="listing-group">
+            {reported.map((l) => (
+              <div
+                key={l.id}
+                className="listing-container"
+                onClick={() => setSelectedId(l.id === selectedId ? null : l.id)}
+              >
+                <img className="listing-image" src={l.images[0]} />
+                <h3 className="listing-title">{l.title}</h3>
+                <div className="listing-info">
+                  <p>{l.reports.length} report(s)</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {selected && <hr className="panel-separator" />}
+
+      {selected && (
+        <div className="right-panel">
+          <button className="listing-details-close-button" onClick={() => setSelectedId(null)}>X</button>
+          <div className="listing-details-container">
+            <h2 className="listing-details-title">{selected.title}</h2>
+            <p>{selected.type} &#8226; £{selected.price}/{selected.priceUnit}</p>
+            <p>{selected.location.address}, {selected.location.city}</p>
+
+            <section>
+              <h3>Reports ({selected.reports.length})</h3>
+              <ul className="reports-list">
+                {selected.reports.map((r, i) => (
+                  <li key={i} className="report-entry">
+                    <p><strong>By:</strong> {r.userId}</p>
+                    <p><strong>At:</strong> {new Date(r.createdAt).toLocaleString()}</p>
+                    <p><strong>Reason:</strong> {r.reason}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <button className="approve-button" onClick={() => handleDismiss(selected.id)}>
+              Dismiss Reports
+            </button>
+            <button className="reject-button" onClick={() => handleDeactivate(selected.id)}>
+              Deactivate Listing
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Admin() {
   const [section, setSection] = useState("approval");
   const [popUp, setPopUp] = useState(null);
@@ -447,10 +542,18 @@ export default function Admin() {
         >
           Account Management
         </button>
+        <button
+          className={`admin-subtab ${section === "reported" ? "active" : ""}`}
+          onClick={() => setSection("reported")}
+        >
+          Reported Listings
+        </button>
       </div>
 
-      {section === "approval" ? <AccommodationApproval configurePopUp={configurePopUp}/> : <AccountManagement configurePopUp={configurePopUp}/>}
+      {section === "approval" && <AccommodationApproval configurePopUp={configurePopUp}/>}
+      {section === "accounts" && <AccountManagement configurePopUp={configurePopUp}/>}
 
+      {section === "reported" && <ReportedListings />}
       {popUp != null && <PopUp details={popUp} togglePopUp={setPopUp}/>}
     </main>
   );
