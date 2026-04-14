@@ -23,6 +23,12 @@ import {
 import { useAuth } from "../context/AuthContext";
 import "../stylesheets/Admin.css";
 
+const LISTING_STATUS = {
+  PENDING: "pending",
+  APPROVED: "approved",
+  REJECTED: "rejected",
+}
+
 /**
  * A listing card
  *
@@ -34,7 +40,13 @@ function Listing({id, setDisplayedListing, displayedListing, setPopUp}) {
 
   return (
     <div className={listing.id === displayedListing ? "active-listing-container" : " listing-container"} onClick={() => setDisplayedListing(id)}>
-      <img className="admin-listing-image" src={listing.images[0]}></img>
+      {listing.images.length === 0 ? (
+        <div className="admin-listing-no-image">
+          <p>No image available</p>
+        </div>
+      ) : (
+        <img className="admin-listing-image" src={listing.images[0]}></img>
+      )}
       <h3 className={listing.id === displayedListing ? "active-admin-listing-title" : "admin-listing-title"}>{listing.title}</h3>
       <div className={listing.id === displayedListing ? "active-listing-info" : "listing-info"}>
         <p className={listing.id === displayedListing ? "active-admin-listing-type" :"admin-listing-type"}>{listing.type}</p>
@@ -92,14 +104,19 @@ function ListingDetails({id, setCurrentImage, currentImage, showPopUp, toggleDis
   return (
     <div className="listing-details-container">
       <header className="listing-details-header">
-        <div className="listing-images-container">
-
-          <img src={listing.images[currentImage]} className="listing-details-image"></img>
-          <div className="arrow-buttons-container">
-            <button onClick={prevImage} className="image-prev-button">&lt;</button>
+        {listing.images.length === 0 ? (
+          <div className="listing-details-no-image">
+            <p>No image available</p>
+          </div>
+        ) : (
+          <div className="listing-images-container">
+            <img src={listing.images[currentImage]} className="listing-details-image"></img>
+            <div className="arrow-buttons-container">
+              <button onClick={prevImage} className="image-prev-button">&lt;</button>
             <button onClick={nextImage} className="image-next-button">&gt;</button>
           </div>
         </div>
+        )}
 
         <h2 className="listing-details-title">{listing.title}</h2>
         <p>{listing.type} &#8226; {listing.maxGuests} max guest(s) &#8226; {listing.bedrooms} bedroom(s) &#8226; {listing.bathrooms} bathroom(s)</p>
@@ -162,9 +179,9 @@ function StatusSelection({displayedStatus, setSearch, setDisplayedStatus, setLis
       {
         open && (
           <div className="status-dropdown">
-            <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(APPLICATION_STATUS.SUBMITTED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Submitted</button>
-            <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(APPLICATION_STATUS.ACCEPTED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Accepted</button>
-            <button className="status-option bottom-status-option" onClick={() => {setOpen(false); setDisplayedStatus(APPLICATION_STATUS.REJECTED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Rejected</button>
+            <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.PENDING); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Pending</button>
+            <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.APPROVED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Approved</button>
+            <button className="status-option bottom-status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.REJECTED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Rejected</button>
           </div>
 
         )
@@ -183,7 +200,7 @@ function StatusSelection({displayedStatus, setSearch, setDisplayedStatus, setLis
  */
 function displayListings(listings, status, displayedListing, setDisplayedListing) {
   
-  const validStatuses = Object.values(APPLICATION_STATUS);
+  const validStatuses = Object.values(LISTING_STATUS);
   if (!validStatuses.includes(status))  throw new Error(`Status "${status}" not defined`);
 
   return listings.map((listing, index) => {
@@ -240,16 +257,22 @@ function PopUp({details, togglePopUp}) {
  * Accommodation approval sub-tab — listing moderation panel.
  */
 function AccommodationApproval({configurePopUp}) {
-  const [displayedStatus, setDisplayedStatus] = useState(APPLICATION_STATUS.SUBMITTED);
+  const [displayedStatus, setDisplayedStatus] = useState(LISTING_STATUS.PENDING);
   const [displayedListing, setDisplayedListing] = useState(null);
   const [listings, setListings] = useState(() => getListings());
   const [currentImage, setCurrentImage] = useState(0);
   const [search, setSearch] = useState("");
 
+  function convertStatusToApplicationStatus(status) {
+    if (status === LISTING_STATUS.PENDING) return APPLICATION_STATUS.SUBMITTED;
+    if (status === LISTING_STATUS.APPROVED) return APPLICATION_STATUS.ACCEPTED;
+    if (status === LISTING_STATUS.REJECTED) return APPLICATION_STATUS.REJECTED;
+  }
+
   const filtered = useMemo(() => {
     const query = search.toLowerCase();
     return listings
-      .filter((l) => (l.status === displayedStatus))
+      .filter((l) => (l.status === convertStatusToApplicationStatus(displayedStatus)))
       .filter(
         (l) =>
           l.title.toLowerCase().includes(query) ||
@@ -293,8 +316,6 @@ function AccommodationApproval({configurePopUp}) {
           displayListings(filtered, displayedStatus, displayedListing, toggleDisplayedListing)}
         </div>
       </div>
-
-      {displayedListing != null && <hr className="panel-separator"/>}
 
       {displayedListing != null && <div className="right-panel">
         <button className="listing-details-close-button" onClick={() => toggleDisplayedListing(null)}>X</button>
