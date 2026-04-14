@@ -21,6 +21,7 @@ import Home        from "./pages/Home";
 import Login       from "./pages/Login";
 import Register    from "./pages/Register";
 import Dashboard   from "./pages/Dashboard";
+import Profile     from "./pages/Profile";
 import MyBookings  from "./pages/MyBookings";
 import MyListings  from "./pages/MyListings";
 import Admin       from "./pages/Admin";
@@ -68,6 +69,14 @@ export default function App() {
           element={
             <ProtectedLayout>
               <Dashboard />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedLayout allowedRoles={[ROLES.HOST, ROLES.RENTEE]}>
+              <Profile />
             </ProtectedLayout>
           }
         />

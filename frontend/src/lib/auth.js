@@ -44,7 +44,7 @@ export const ROLES = Object.freeze({
  */
 function sanitize(account) {
   // eslint-disable-next-line no-unused-vars
-  const { password, ...safe } = account;
+  const { password, securityAnswer, ...safe } = account;
   return safe;
 }
 
@@ -88,24 +88,60 @@ export function login(email, password) {
  * Throws an Error with a user-facing message if validation fails or the
  * email address is already in use.
  *
- * @param {{ name: string, email: string, password: string, role?: "admin"|"host"|"rentee" }} data
+ * @param {{
+ *   name: string,
+ *   email: string,
+ *   password: string,
+ *   phone: string,
+ *   securityQuestion: string,
+ *   securityAnswer: string,
+ *   role?: "admin"|"host"|"rentee"
+ * }} data
  * @returns {object} the newly created user (without password)
  */
-export function register({ name, email, password, role = ROLES.RENTEE }) {
-  if (!name || !email || !password) {
-    throw new Error("Name, email and password are required.");
+export function register({
+  name,
+  email,
+  password,
+  phone,
+  securityQuestion,
+  securityAnswer,
+  role = ROLES.RENTEE,
+}) {
+  if (!name || !email || !password || !phone || !securityQuestion || !securityAnswer) {
+    throw new Error("Name, email, password, contact number, security question and answer are required.");
+  }
+
+  const normalizedName = name.trim();
+  const normalizedEmail = email.trim().toLowerCase();
+  const normalizedPhone = phone.trim();
+  const normalizedQuestion = securityQuestion.trim();
+  const normalizedAnswer = securityAnswer.trim();
+
+  if (!normalizedName || !normalizedEmail || !normalizedPhone || !normalizedQuestion || !normalizedAnswer) {
+    throw new Error("Name, email, password, contact number, security question and answer are required.");
   }
 
   const exists = db.findOne(
     "accounts",
-    (a) => a.email.toLowerCase() === email.toLowerCase()
+    (a) => a.email.toLowerCase() === normalizedEmail
   );
 
   if (exists) {
     throw new Error("An account with this email already exists.");
   }
 
-  const newAccount = db.insert("accounts", { name, email, password, role, avatar: "", active: true });
+  const newAccount = db.insert("accounts", {
+    name: normalizedName,
+    email: normalizedEmail,
+    password,
+    role,
+    avatar: "",
+    active: true,
+    phone: normalizedPhone,
+    securityQuestion: normalizedQuestion,
+    securityAnswer: normalizedAnswer,
+  });
   const user       = sanitize(newAccount);
 
   localStorage.setItem(SESSION_KEY, JSON.stringify(user));
