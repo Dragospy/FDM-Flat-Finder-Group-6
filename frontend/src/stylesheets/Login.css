@@ -2,7 +2,6 @@
  * Login.css — Styles for the Login page.
  */
 
-
 /* ─── Layout ───────────────────────────────────────────────────────────────── */
 
 .login-page {
@@ -28,13 +27,13 @@
   gap: 1rem;
 }
 
-
 /* ─── Typography ───────────────────────────────────────────────────────────── */
 
 .login-title {
   margin: 0 0 0.25rem;
   font-size: 1.75rem;
   font-weight: 700;
+  color: var(--text-primary);
 }
 
 .login-subtitle {
@@ -49,7 +48,7 @@
   gap: 0.35rem;
   font-size: 0.9rem;
   font-weight: 500;
-  color: #333;
+  color: var(--text-muted);
 }
 
 .login-footer {
@@ -69,21 +68,26 @@
   padding: 0.5rem;
 }
 
-
 /* ─── Inputs & controls ────────────────────────────────────────────────────── */
 
 .login-input {
   padding: 0.65rem 0.85rem;
-  border-radius: 8px;
-  border: 1px solid #d1d5db;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-input);
   font-size: 1rem;
   outline: none;
+  background: var(--surface-inner);
+  color: var(--text-primary);
+}
+
+.login-input::placeholder {
+  color: var(--text-subtle);
 }
 
 .login-button {
   margin-top: 0.5rem;
   padding: 0.75rem;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: none;
   background: #77ff00;
   color: black;
@@ -102,14 +106,17 @@
   font-weight: 500;
 }
 
+.login-link:hover {
+  color: var(--accent-hover);
+}
 
 /* ─── Feedback ─────────────────────────────────────────────────────────────── */
 
 .login-error {
-  background: #fef2f2;
-  color: #dc2626;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
+  background: rgba(220, 38, 38, 0.18);
+  color: #fecaca;
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  border-radius: var(--radius-sm);
   padding: 0.75rem 1rem;
   margin-bottom: 1rem;
   font-size: 0.9rem;
