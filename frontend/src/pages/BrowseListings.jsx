@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
-import { getListings, getApplicationsByConsultant, applyForListing } from "../lib/api";
+import { getListings, getApplicationsByConsultant, applyForListing, APPLICATION_STATUS } from "../lib/api";
 
 import "../stylesheets/BrowseListings.css";
 
@@ -28,7 +28,7 @@ export default function BrowseListings() {
   });
 
   const listings = useMemo(() => {
-    return getListings({ city: city.trim() ? city.trim() : undefined });
+    return getListings({status: APPLICATION_STATUS.ACCEPTED, city: city.trim() ? city.trim() : undefined });
   }, [city]);
 
   const hasAcceptedApplication = useMemo(() => {

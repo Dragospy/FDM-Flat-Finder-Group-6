@@ -268,6 +268,10 @@ export function getListings(filters = {}) {
     listings = listings.filter((l) => l.available === filters.available);
   }
 
+  if (filters.status !== undefined) {
+    listings = listings.filter((l) => l.status === filters.status);
+  }
+
   return listings;
 }
 
