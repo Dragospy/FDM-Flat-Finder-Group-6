@@ -27,6 +27,13 @@ function DisplayAmenities({amenities}){
 }
 
 function DisplayListing({listing}){
+    let distance = listing.distance;
+    let displayDistance = ""; 
+    if (distance || distance == 0){
+        displayDistance = <p>Distance: {String(distance)+"m"}</p>;
+    }
+
+
     return(
         <>
             <div className="listing">
@@ -46,6 +53,7 @@ function DisplayListing({listing}){
                             <p>Bedrooms:{listing.bedrooms}</p>
                             <p>Bathrooms:{listing.bathrooms}</p>
                             <p>Maximum number of guests: {listing.maxGuests}</p>
+                            {displayDistance}
 
                             <h4>Amenities:</h4>
                                 <DisplayAmenities amenities={listing.amenities}/>
@@ -102,6 +110,7 @@ function Geocoding(){
 
 
 function GetDistanceBetweenCoordinates(latitude1, longitude1, latitude2, longitude2){
+
     // Haversine formula: Calculate distance between coordinates.
 
     // Earth radius in metres.
@@ -130,7 +139,7 @@ function GetDistanceBetweenCoordinates(latitude1, longitude1, latitude2, longitu
 
     const distance = SphereRadius*centralAngle;
 
-    return distance;
+    return Math.round(distance);
 }
 
 
@@ -199,19 +208,40 @@ function sortListings(listings, sortByOrder,ascending){
     let sortedListing;
     console.log(ascending, sortByOrder, listings, sortFunction);
     sortedListing = listings.toSorted(sortFunction);
-    if (ascending=="ascending"){
+    if (ascending!="ascending"){
         sortedListing = sortedListing.toReversed(sortFunction);
     } 
     console.log("Listing",sortedListing);
     return sortedListing;
 }
 
-
+function listingsAppendDistance(listings,lat,lon){
+    for(let i = 0 ;i < listings.length; i++){
+        listings[i].distance = GetDistanceBetweenCoordinates(listings[i].location.latitude, listings[i].location.longitude, lat, lon);
+    }
+    return listings;
+}
 
 export function SearchListings() {
+    console.log("Missing",getListings());
     // Allow search by location and name.
-
     
+
+    async function getGeocoding(){
+        let zipcode = "SE15 4DH"
+        try{
+            const response = await fetch(`https://api.openweathermap.org/geo/1.0/zip?zip=${zipcode},GB&appid=437218189febbb7451a26102eb3ef8af`);
+            if (!response.ok) { 
+                throw new Error(`Response status: ${response.status}`);
+            }            
+            const result = await response.json();  
+            return result;
+        } 
+        catch(error){
+
+        }
+        
+    }   
 
 
     // State:
@@ -223,7 +253,7 @@ export function SearchListings() {
     console.log(document);
     
     let searchParam = new URLSearchParams(window.location.search);
-
+    const [addressGeocode, setGeocode] = useState();
     console.log(searchParam);
 
     function handleSearchSubmit(page){
@@ -233,56 +263,32 @@ export function SearchListings() {
         const formData = new FormData(searchForm);
 
         const formJson = Object.fromEntries(formData.entries());
-        console.log(formJson);
 
         let newListingsOrder = getListings(validateParseFilter(formJson.city,formJson.minPrice,formJson.maxPrice,formJson.bedrooms,formJson.unavailable));
-        setListings(sortListings(newListingsOrder,formJson.order,formJson.sortOrder)); 
+
+        if (formJson.order == "distance"){
+            console.log("THIS",formJson, getGeocoding()
+            .then(
+                function(value){
+                    console.log(value);
+                    let newListingsSet = listingsAppendDistance(newListingsOrder,value.lat,value.lon);
+                    setListings(sortListings(newListingsSet,formJson.order,formJson.sortOrder))
+                },
+                function(){setListings(sortListings(newListingsOrder,formJson.order,formJson.sortOrder))}
+            )
+
+            );
+        }
+        else{
+            setListings(sortListings(newListingsOrder,formJson.order,formJson.sortOrder)); 
+        }
+
+        console.log(addressGeocode);
+
+        
+        
     }
     
-
-
-
-    let ascending = sortOrder;
-
-
-
-
-
-    console.log(listings);
-
-    let sortFunction;
-
-    let sortByOrder = "name";
-    // Selection based on target field
-    if(sortByOrder == "cost"){
-        sortFunction = function(a, b){return a.price > b.price};
-    }
-    else if(sortByOrder == "ratings"){
-        sortFunction = function(a, b){return a.rating > b.rating};
-    }
-    else if(sortByOrder == "reviewCount"){
-        sortFunction = function(a, b){return a.reviewCount > b.reviewCount};
-    }
-    else if(sortByOrder == "distance"){
-        console.log("DISTANCE: NOT IMPLEMENTED YET");
-        sortFunction = function(a, b){return a.distance > b.distance};
-    }
-    else if(sortByOrder == "name"){
-        sortFunction = function(a, b){return a.title > b.title};
-    }
-    else{
-        sortFunction = function(a, b){return a.id > b.id};
-    }
-    
-    // Select ascending or descending
-    let sortedListing;
-    if (ascending=="ascending"){
-        sortedListing = listings.toSorted(sortFunction);
-    } else{
-        sortedListing = listings.toReversed(sortFunction);
-    }
-
-    console.log(sortedListing)
 
     return (
         <>
@@ -326,7 +332,7 @@ export function SearchListings() {
 
             <div>
                 {/* <DisplayListing listing={listings[0]}/> */}
-                <DisplayListings listings={sortedListing}/>
+                <DisplayListings listings={listings}/>
             </div>
         </>
         

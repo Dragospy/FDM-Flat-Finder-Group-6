@@ -10,8 +10,8 @@
       "city": "London",
       "postcode": "EC2A 3DU",
       "country": "UK",
-      "latitude": 51.5260,
-      "longitude": 0.0823
+      "latitude": 51.5104,
+      "longitude": -0.1976
     },
     "price": 1650,
     "priceUnit": "month",
@@ -41,7 +41,7 @@
       "postcode": "E8 4RG",
       "country": "UK",
       "latitude": 51.5368,
-      "longitude": 0.0572
+      "longitude": -0.0572
     },
     "price": 2400,
     "priceUnit": "month",
@@ -71,7 +71,7 @@
       "postcode": "W11 3HG",
       "country": "UK",
       "latitude": 51.5104,
-      "longitude": 0.1976
+      "longitude": -0.1976
     },
     "price": 2100,
     "priceUnit": "month",
@@ -101,7 +101,7 @@
       "postcode": "SE15 4DH",
       "country": "UK",
       "latitude": 51.4669,
-      "longitude": 0.0725
+      "longitude": -0.0725
     },
     "price": 3200,
     "priceUnit": "month",
