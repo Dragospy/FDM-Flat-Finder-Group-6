@@ -313,6 +313,7 @@ export function createListing(data) {
     images:      [],
     amenities:   [],
     reports:     [],
+    status:      APPLICATION_STATUS.SUBMITTED,
     ...data,
   });
 }
@@ -351,7 +352,7 @@ export function deleteListing(id) {
  * @returns the approved listing
  */
 export function approveListing(id) {
-  const approved = updateListing(id,  {status: LISTING_STATUS.APPROVED});
+  const approved = updateListing(id,  {status: APPLICATION_STATUS.ACCEPTED});
   return approved;
 }
 
@@ -362,7 +363,7 @@ export function approveListing(id) {
  * @returns the approved listing
  */
 export function rejectListing(id) {
-  const rejected = updateListing(id,  {status: LISTING_STATUS.REJECTED});
+  const rejected = updateListing(id,  {status: APPLICATION_STATUS.REJECTED});
   return rejected;
 }
 
@@ -373,7 +374,7 @@ export function rejectListing(id) {
  * @returns the pending listing
  */
 export function revertListingToPending(id) {
-  const pending = updateListing(id, {status: LISTING_STATUS.PENDING})
+  const pending = updateListing(id, {status: APPLICATION_STATUS.SUBMITTED});
   return pending;
 }
 
