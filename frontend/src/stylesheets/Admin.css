@@ -66,6 +66,7 @@ p, h1, h2, h3 {
     width: 50%;
     display: flex;
     flex-direction: column;
+    
 }
 
 .panel-separator {
@@ -101,6 +102,40 @@ p, h1, h2, h3 {
     background-color: #464646;
     border-radius: 1rem;
     cursor: pointer;
+    transition: cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.15s;
+}
+
+.active-listing-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 15rem;
+    font-size: 0.5rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: #77ff00;
+    color: black;
+}
+
+.active-listing-container:hover {
+    background-color: #77ff00;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.15s;
+}
+
+.active-listing-title {
+    margin: 0.5rem 0 0.1rem 0;
+    font-size: 0.8rem;
+    color: black;
+}
+
+.active-listing-info {
+    display: flex;
+    justify-content: center;
+    gap: 0.3rem;
+    color: black;
+    font-size: 0.8rem;
 }
 
 .listing-image {
@@ -127,21 +162,27 @@ p, h1, h2, h3 {
 
 .status-selection-button {
     padding: 0.65rem;
-    min-width: 6rem;
+    min-width: 8rem;
     border-radius: 0.3rem;
     font-weight: bold;
     background-color: #77ff00;
     border: none;
     font-size: 0.95rem;
     cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    gap: 0.65rem;
+    align-items: center;
+}
 
+.dropdown-arrow {
+    font-size: 0.8rem;
 }
 
 .status-dropdown {
     position: absolute;
     display: flex;
     flex-direction: column;
-    border-radius: 0.3rem;
 }
 
 .status-option {
@@ -150,13 +191,19 @@ p, h1, h2, h3 {
     border: none;
     font-weight: bold;
     padding: 0.65rem;
-    width: 6rem;
+    width: 8rem;
     cursor: pointer;
+    
+}
+
+.bottom-status-option {
+    border-radius: 0 0 0.3rem 0.3rem;
 }
 
 .status-option:hover {
     background-color: #333;
     color: #fff;
+    transition: background-color 0.15s;
 }
 
 /********************************

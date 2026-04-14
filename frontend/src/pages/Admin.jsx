@@ -26,13 +26,14 @@ import "../stylesheets/Admin.css";
  * @param {string} id
  * @returns Component to display a listing
  */
-function Listing({id, setDisplayedListing, setPopUp}) {
+function Listing({id, setDisplayedListing, displayedListing, setPopUp}) {
   const listing = getListing(id);
+
   return (
-    <div className="listing-container" onClick={() => setDisplayedListing(id)}>
+    <div className={listing.id === displayedListing ? "active-listing-container" : " listing-container"} onClick={() => setDisplayedListing(id)}>
       <img className="listing-image" src={listing.images[0]}></img>
-      <h3 className="listing-title">{listing.title}</h3>
-      <div className="listing-info">
+      <h3 className={listing.id === displayedListing ? "active-listing-title" : "listing-title"}>{listing.title}</h3>
+      <div className={listing.id === displayedListing ? "active-listing-info" : "listing-info"}>
         <p className="listing-type">{listing.type}</p>
         <p>&#8226;</p>
         <p>£{listing.price}</p>
@@ -153,13 +154,13 @@ function StatusSelection({displayedStatus, setSearch, setDisplayedStatus, setLis
 
   return (
     <div className="status-selection">
-      <button className="status-selection-button" onClick={() => setOpen(open => !open)}>{displayedStatus.charAt(0).toUpperCase() + displayedStatus.slice(1)}</button>
+      <button className="status-selection-button" onClick={() => setOpen(open => !open)}><p>{displayedStatus.charAt(0).toUpperCase() + displayedStatus.slice(1)}</p><p className="dropdown-arrow">&#9660;</p></button>
       {
         open && (
           <div className="status-dropdown">
             <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.PENDING); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Pending</button>
             <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.APPROVED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Approved</button>
-            <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.REJECTED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Rejected</button>
+            <button className="status-option bottom-status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.REJECTED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Rejected</button>
           </div>
 
         )
@@ -176,14 +177,14 @@ function StatusSelection({displayedStatus, setSearch, setDisplayedStatus, setLis
  * @param {string} status Status to filter listings by
  * @returns Components of all listings that have the passed in status
  */
-function displayListings(listings, status, setDisplayedListing) {
+function displayListings(listings, status, displayedListing, setDisplayedListing) {
   
   const validStatuses = Object.values(LISTING_STATUS);
   if (!validStatuses.includes(status))  throw new Error(`Status "${status}" not defined`);
 
   return listings.map((listing, index) => {
     return (
-      <Listing key={index} id={listing.id} setDisplayedListing={setDisplayedListing}></Listing>
+      <Listing key={index} id={listing.id} displayedListing={displayedListing} setDisplayedListing={setDisplayedListing}></Listing>
     )
   })
 
@@ -285,7 +286,7 @@ function AccommodationApproval({configurePopUp}) {
           {search ? "No listings match your search." : `No ${displayedStatus} listings found.`}
         </p>
       ) : 
-          displayListings(filtered, displayedStatus, toggleDisplayedListing)}
+          displayListings(filtered, displayedStatus, displayedListing, toggleDisplayedListing)}
         </div>
       </div>
 
