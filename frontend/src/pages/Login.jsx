@@ -13,6 +13,7 @@ import {
   getSecurityQuestionByEmailAndPhone,
   persistAccountsToJson,
   resetPasswordByEmailAndPhone,
+  verifyResetSecurityAnswer,
 } from "../lib/api";
 
 import "../stylesheets/Login.css";
@@ -34,7 +35,10 @@ export default function Login() {
   const [resetMessage, setResetMessage] = useState("");
   const [resetLoading, setResetLoading] = useState(false);
   const [securityQuestion, setSecurityQuestion] = useState("");
+  const [verifiedName, setVerifiedName] = useState("");
+  const [resetStep, setResetStep] = useState("identity");
   const [resetForm, setResetForm] = useState({
+    fullName: "",
     email: "",
     phone: "",
     securityAnswer: "",
@@ -73,13 +77,31 @@ export default function Login() {
     setError("");
     setResetMessage("");
 
-    if (!securityQuestion) {
+    if (resetStep === "identity") {
       try {
-        const question = getSecurityQuestionByEmailAndPhone({
+        const { securityQuestion: question, name } = getSecurityQuestionByEmailAndPhone({
+          fullName: resetForm.fullName,
           email: resetForm.email,
           phone: resetForm.phone,
         });
         setSecurityQuestion(question);
+        setVerifiedName(name);
+        setResetStep("security");
+      } catch (err) {
+        setError(err.message);
+      }
+      return;
+    }
+
+    if (resetStep === "security") {
+      try {
+        verifyResetSecurityAnswer({
+          fullName: resetForm.fullName,
+          email: resetForm.email,
+          phone: resetForm.phone,
+          securityAnswer: resetForm.securityAnswer,
+        });
+        setResetStep("password");
       } catch (err) {
         setError(err.message);
       }
@@ -95,6 +117,7 @@ export default function Login() {
 
     try {
       resetPasswordByEmailAndPhone({
+        fullName: resetForm.fullName,
         email: resetForm.email,
         phone: resetForm.phone,
         securityAnswer: resetForm.securityAnswer,
@@ -103,7 +126,10 @@ export default function Login() {
       await persistAccountsToJson();
       setResetMessage("Password reset successfully. You can now sign in.");
       setSecurityQuestion("");
+      setVerifiedName("");
+      setResetStep("identity");
       setResetForm({
+        fullName: "",
         email: "",
         phone: "",
         securityAnswer: "",
@@ -170,6 +196,8 @@ export default function Login() {
             setError("");
             setResetMessage("");
             setSecurityQuestion("");
+            setVerifiedName("");
+            setResetStep("identity");
             setShowReset((prev) => !prev);
           }}
         >
@@ -178,36 +206,61 @@ export default function Login() {
 
         {showReset && (
           <form onSubmit={handleResetSubmit} className="login-reset-form">
-            <label className="login-label">
-              Email
-              <input
-                className="login-input"
-                type="email"
-                name="email"
-                value={resetForm.email}
-                onChange={handleResetChange}
-                required
-              />
-            </label>
-
-            <label className="login-label">
-              Phone Number
-              <input
-                className="login-input"
-                type="text"
-                name="phone"
-                value={resetForm.phone}
-                onChange={handleResetChange}
-                required
-              />
-            </label>
-
-            <button className="login-button" type="submit" disabled={resetLoading}>
-              {securityQuestion ? "Continue" : "Verify Account"}
-            </button>
-
-            {securityQuestion && (
+            {resetStep === "identity" && (
               <>
+                <label className="login-label">
+                  Full Name
+                  <input
+                    className="login-input"
+                    type="text"
+                    name="fullName"
+                    value={resetForm.fullName}
+                    onChange={handleResetChange}
+                    required
+                  />
+                </label>
+
+                <label className="login-label">
+                  Email
+                  <input
+                    className="login-input"
+                    type="email"
+                    name="email"
+                    value={resetForm.email}
+                    onChange={handleResetChange}
+                    required
+                  />
+                </label>
+
+                <label className="login-label">
+                  Phone Number
+                  <input
+                    className="login-input"
+                    type="tel"
+                    name="phone"
+                    value={resetForm.phone}
+                    onChange={(e) => handleResetChange({
+                      target: { name: "phone", value: e.target.value.replace(/\D/g, "") },
+                    })}
+                    inputMode="numeric"
+                    pattern="[0-9]*"
+                    required
+                  />
+                </label>
+
+                <button className="login-button" type="submit" disabled={resetLoading}>
+                  Verify Account
+                </button>
+              </>
+            )}
+
+            {(resetStep === "security" || resetStep === "password") && (
+              <>
+                <label className="login-label">
+                  Name
+                  <input className="login-input" type="text" value={verifiedName} readOnly />
+                </label>
+
                 <label className="login-label">
                   Security Question
                   <input
@@ -227,9 +280,20 @@ export default function Login() {
                     value={resetForm.securityAnswer}
                     onChange={handleResetChange}
                     required
+                    readOnly={resetStep === "password"}
                   />
                 </label>
+              </>
+            )}
 
+            {resetStep === "security" && (
+              <button className="login-button" type="submit" disabled={resetLoading}>
+                Verify Security Answer
+              </button>
+            )}
+
+            {resetStep === "password" && (
+              <>
                 <label className="login-label">
                   New Password
                   <input

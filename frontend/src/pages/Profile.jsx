@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import {
   deleteAccount,
-  getAccount,
   getAccountWithPassword,
   persistAccountsToJson,
   updateAccount,
@@ -114,90 +113,97 @@ export default function Profile() {
 
   return (
     <main className="profile-page">
-      <h1>My Profile</h1>
-      <p className="profile-subtitle">Update your personal and profile details.</p>
+      <section className="profile-card">
+        <h1 className="profile-title">My Profile</h1>
+        <p className="profile-subtitle">Update your personal and profile details.</p>
 
-      {error && <p className="profile-alert profile-alert--error">{error}</p>}
-      {success && <p className="profile-alert profile-alert--success">{success}</p>}
+        {error && <p className="profile-alert profile-alert--error">{error}</p>}
+        {success && <p className="profile-alert profile-alert--success">{success}</p>}
 
-      <form className="profile-form" onSubmit={handleSubmit}>
-        <label className="profile-field">
-          Full Name
-          <input
-            type="text"
-            value={form.name}
-            onChange={(e) => handleChange("name", e.target.value)}
-            required
-          />
-        </label>
+        <form className="profile-form" onSubmit={handleSubmit}>
+          <label className="profile-field">
+            Full Name
+            <input
+              type="text"
+              value={form.name}
+              onChange={(e) => handleChange("name", e.target.value)}
+              required
+            />
+          </label>
 
-        <label className="profile-field">
-          Email
-          <input
-            type="email"
-            value={form.email}
-            onChange={(e) => handleChange("email", e.target.value)}
-            required
-          />
-        </label>
+          <label className="profile-field">
+            Email
+            <input
+              type="email"
+              value={form.email}
+              onChange={(e) => handleChange("email", e.target.value)}
+              placeholder="Please enter your email"
+              required
+            />
+          </label>
 
-        <label className="profile-field">
-          Contact Number
-          <input
-            type="text"
-            value={form.phone}
-            onChange={(e) => handleChange("phone", e.target.value)}
-            placeholder="Optional"
-          />
-        </label>
+          <label className="profile-field">
+            Contact Number
+            <input
+              type="tel"
+              value={form.phone}
+              onChange={(e) => handleChange("phone", e.target.value.replace(/\D/g, ""))}
+              inputMode="numeric"
+              pattern="[0-9]*"
+              placeholder="Please enter your new phone number"
+              required
+            />
+          </label>
 
-        <label className="profile-field">
-          Password
-          <input
-            type="text"
-            value={form.password}
-            onChange={(e) => handleChange("password", e.target.value)}
-            minLength={6}
-            placeholder="Leave blank to keep current password"
-          />
-        </label>
+          <label className="profile-field">
+            Password
+            <input
+              type="text"
+              value={form.password}
+              onChange={(e) => handleChange("password", e.target.value)}
+              minLength={6}
+              placeholder="Please enter a password"
+              required
+            />
+          </label>
 
-        <label className="profile-field">
-          Security Question
-          <select
-            value={form.securityQuestion}
-            onChange={(e) => handleChange("securityQuestion", e.target.value)}
-          >
-            <option value="">Select a security question</option>
-            {SECURITY_QUESTIONS.map((question) => (
-              <option key={question} value={question}>
-                {question}
-              </option>
-            ))}
-          </select>
-        </label>
+          <label className="profile-field">
+            Security Question
+            <select
+              value={form.securityQuestion}
+              onChange={(e) => handleChange("securityQuestion", e.target.value)}
+            >
+              <option value="">Select a security question</option>
+              {SECURITY_QUESTIONS.map((question) => (
+                <option key={question} value={question}>
+                  {question}
+                </option>
+              ))}
+            </select>
+          </label>
 
-        <label className="profile-field">
-          Security Answer
-          <input
-            type="text"
-            value={form.securityAnswer}
-            onChange={(e) => handleChange("securityAnswer", e.target.value)}
-            placeholder="Enter your answer"
-          />
-        </label>
+          <label className="profile-field">
+            Security Answer
+            <input
+              type="text"
+              value={form.securityAnswer}
+              onChange={(e) => handleChange("securityAnswer", e.target.value)}
+              placeholder="Please enter your security answer"
+            />
+          </label>
 
-        <button className="profile-save" type="submit">Save Changes</button>
-      </form>
+          <button className="profile-save" type="submit">Save Changes</button>
+        </form>
 
-      <section className="profile-danger-zone">
-        <h2 className="profile-danger-title">Warning</h2>
-        <p className="profile-danger-copy">
-          Deleting your account is permanent and cannot be undone.
-        </p>
-        <button className="profile-delete" type="button" onClick={handleDeleteAccount}>
-          Delete Account
-        </button>
+        <section className="profile-danger-zone">
+          <h2 className="profile-danger-title">Warning</h2>
+          <p className="profile-danger-copy">
+            Deleting your account is permanent and cannot be undone.
+          </p>
+          <button className="profile-delete" type="button" onClick={handleDeleteAccount}>
+            Delete Account
+          </button>
+        </section>
       </section>
     </main>
   );

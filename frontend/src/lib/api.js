@@ -573,28 +573,30 @@ export function changePassword(id, currentPassword, newPassword) {
 }
 
 /**
- * Reset a password by matching email + phone number.
+ * Look up reset details by matching full name + email + phone number.
  *
- * @param {{ email: string, phone: string, newPassword: string }} data
- * @returns {true}
+ * @param {{ fullName: string, email: string, phone: string }} data
+ * @returns {{ securityQuestion: string, name: string }}
  */
-export function getSecurityQuestionByEmailAndPhone({ email, phone }) {
+export function getSecurityQuestionByEmailAndPhone({ fullName, email, phone }) {
+  const normalizedName = (fullName ?? "").trim().toLowerCase();
   const normalizedEmail = (email ?? "").trim().toLowerCase();
   const normalizedPhone = (phone ?? "").trim();
 
-  if (!normalizedEmail || !normalizedPhone) {
-    throw new Error("Email and phone number are required.");
+  if (!normalizedName || !normalizedEmail || !normalizedPhone) {
+    throw new Error("Full name, email and phone number are required.");
   }
 
   const matches = db.find(
     "accounts",
     (a) =>
-      a.email?.trim().toLowerCase() === normalizedEmail
+      a.name?.trim().toLowerCase() === normalizedName
+      && a.email?.trim().toLowerCase() === normalizedEmail
       && (a.phone ?? "").trim() === normalizedPhone
   );
 
   if (matches.length === 0) {
-    throw new Error("No account matched that email and phone number.");
+    throw new Error("No account matched that name, email and phone number.");
   }
 
   if (matches.length > 1) {
@@ -606,27 +608,20 @@ export function getSecurityQuestionByEmailAndPhone({ email, phone }) {
     throw new Error("No security question is set for this account. Please update your profile first.");
   }
 
-  return account.securityQuestion;
+  return {
+    securityQuestion: account.securityQuestion,
+    name: account.name,
+  };
 }
 
 /**
- * Reset a password by matching email + phone number + security answer.
+ * Verify security answer for a reset flow using full name + email + phone.
  *
- * @param {{
- *   email: string,
- *   phone: string,
- *   securityAnswer: string,
- *   newPassword: string
- * }} data
+ * @param {{ fullName: string, email: string, phone: string, securityAnswer: string }} data
  * @returns {true}
  */
-export function resetPasswordByEmailAndPhone({ email, phone, securityAnswer, newPassword }) {
-  const securityQuestion = getSecurityQuestionByEmailAndPhone({ email, phone });
-
-  if (!newPassword || newPassword.length < 6) {
-    throw new Error("New password must be at least 6 characters.");
-  }
-
+export function verifyResetSecurityAnswer({ fullName, email, phone, securityAnswer }) {
+  const normalizedName = (fullName ?? "").trim().toLowerCase();
   const normalizedEmail = (email ?? "").trim().toLowerCase();
   const normalizedPhone = (phone ?? "").trim();
   const normalizedAnswer = (securityAnswer ?? "").trim().toLowerCase();
@@ -638,17 +633,62 @@ export function resetPasswordByEmailAndPhone({ email, phone, securityAnswer, new
   const account = db.findOne(
     "accounts",
     (a) =>
-      a.email?.trim().toLowerCase() === normalizedEmail
+      a.name?.trim().toLowerCase() === normalizedName
+      && a.email?.trim().toLowerCase() === normalizedEmail
       && (a.phone ?? "").trim() === normalizedPhone
   );
 
-  if (!account || account.securityQuestion !== securityQuestion) {
+  if (!account) {
     throw new Error("Unable to verify account details.");
   }
 
   const savedAnswer = (account.securityAnswer ?? "").trim().toLowerCase();
   if (savedAnswer !== normalizedAnswer) {
     throw new Error("Security answer did not match.");
+  }
+
+  return true;
+}
+
+/**
+ * Reset a password by matching full name + email + phone + security answer.
+ *
+ * @param {{
+ *   fullName: string,
+ *   email: string,
+ *   phone: string,
+ *   securityAnswer: string,
+ *   newPassword: string
+ * }} data
+ * @returns {true}
+ */
+export function resetPasswordByEmailAndPhone({
+  fullName,
+  email,
+  phone,
+  securityAnswer,
+  newPassword,
+}) {
+  verifyResetSecurityAnswer({ fullName, email, phone, securityAnswer });
+
+  if (!newPassword || newPassword.length < 6) {
+    throw new Error("New password must be at least 6 characters.");
+  }
+
+  const normalizedName = (fullName ?? "").trim().toLowerCase();
+  const normalizedEmail = (email ?? "").trim().toLowerCase();
+  const normalizedPhone = (phone ?? "").trim();
+
+  const account = db.findOne(
+    "accounts",
+    (a) =>
+      a.name?.trim().toLowerCase() === normalizedName
+      && a.email?.trim().toLowerCase() === normalizedEmail
+      && (a.phone ?? "").trim() === normalizedPhone
+  );
+
+  if (!account) {
+    throw new Error("Unable to verify account details.");
   }
 
   db.update("accounts", account.id, { password: newPassword });

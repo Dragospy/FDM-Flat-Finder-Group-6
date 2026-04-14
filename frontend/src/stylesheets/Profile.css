@@ -1,24 +1,41 @@
 .profile-page {
-  max-width: 760px;
+  max-width: 720px;
   margin: 0 auto;
+  padding: 24px 16px 32px;
+}
+
+.profile-card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 2rem;
+}
+
+.profile-title {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .profile-subtitle {
-  margin-top: 0.3rem;
-  margin-bottom: 1rem;
-  color: #4d4d4d;
+  margin: 0 0 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
 }
 
 .profile-alert {
-  border-radius: 8px;
-  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
   margin: 0.5rem 0 1rem;
+  font-size: 0.9rem;
 }
 
 .profile-alert--error {
-  background: #fff1f1;
-  border: 1px solid #f0c0c0;
-  color: #7a1f1f;
+  background: rgba(220, 38, 38, 0.18);
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  color: #fecaca;
 }
 
 .profile-alert--success {
@@ -29,71 +46,76 @@
 
 .profile-form {
   display: grid;
-  gap: 0.8rem;
+  gap: 1rem;
 }
 
 .profile-field {
   display: grid;
   gap: 0.35rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
 }
 
-.profile-field input {
-  padding: 0.55rem 0.6rem;
-  border: 1px solid #cfcfcf;
-  border-radius: 6px;
+.profile-field input,
+.profile-field select {
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  background: var(--surface-inner);
+  color: var(--text-primary);
+  font: inherit;
+}
+
+.profile-field input::placeholder {
+  color: var(--text-subtle);
 }
 
 .profile-save {
   width: fit-content;
-  border: 1px solid #bdbdbd;
-  border-radius: 6px;
-  background: #f7f7f7;
-  padding: 0.55rem 0.8rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--accent-ink);
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
 }
 
 .profile-save:hover {
-  background: #efefef;
-}
-
-.profile-password-zone {
-  margin-top: 1.4rem;
-  border-top: 1px solid #dcdcdc;
-  padding-top: 1rem;
-}
-
-.profile-password-title {
-  margin: 0 0 0.75rem;
-  font-size: 1.1rem;
+  background: var(--accent-hover);
 }
 
 .profile-danger-zone {
   margin-top: 1.4rem;
-  border-top: 1px solid #ebd0d0;
+  border-top: 1px solid rgba(248, 113, 113, 0.35);
   padding-top: 1rem;
 }
 
 .profile-danger-title {
   margin: 0;
-  color: #8c1f1f;
+  color: #fecaca;
   font-size: 1.1rem;
 }
 
 .profile-danger-copy {
   margin-top: 0.4rem;
-  color: #6b3636;
+  margin-bottom: 0.4rem;
+  color: #fca5a5;
 }
 
 .profile-delete {
   width: fit-content;
-  border: 1px solid #df9b9b;
-  border-radius: 6px;
-  background: #fff1f1;
-  color: #8c1f1f;
-  padding: 0.55rem 0.8rem;
+  border: 1px solid rgba(248, 113, 113, 0.35);
+  border-radius: var(--radius-sm);
+  background: rgba(220, 38, 38, 0.18);
+  color: #fecaca;
+  padding: 0.65rem 0.9rem;
   cursor: pointer;
 }
 
 .profile-delete:hover {
-  background: #ffe6e6;
+  background: rgba(220, 38, 38, 0.28);
 }
