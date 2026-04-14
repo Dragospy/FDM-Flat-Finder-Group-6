@@ -314,6 +314,7 @@ export function createListing(data) {
     amenities:   [],
     reports:     [],
     status:      APPLICATION_STATUS.SUBMITTED,
+    priceUnit:    "month",
     ...data,
   });
 }
