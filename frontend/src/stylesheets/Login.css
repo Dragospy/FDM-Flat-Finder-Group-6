@@ -13,9 +13,9 @@
 }
 
 .login-card {
-  background: var(--surface-card);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-card);
+  background: #313131;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   padding: 2.5rem;
   width: 100%;
   max-width: 400px;
@@ -38,7 +38,7 @@
 
 .login-subtitle {
   margin: 0 0 1.5rem;
-  color: var(--text-muted);
+  color: white;
   font-size: 0.95rem;
 }
 
@@ -55,15 +55,15 @@
   margin-top: 1.25rem;
   text-align: center;
   font-size: 0.9rem;
-  color: var(--text-primary);
+  color: white;
 }
 
 .login-hint {
   margin-top: 1rem;
   text-align: center;
   font-size: 0.8rem;
-  color: var(--text-muted);
-  background: var(--surface-inner);
+  color: white;
+  background: #1c1c1c;
   border-radius: 6px;
   padding: 0.5rem;
 }
@@ -89,24 +89,19 @@
   padding: 0.75rem;
   border-radius: var(--radius-sm);
   border: none;
-  background: var(--accent);
-  color: var(--accent-ink);
+  background: #77ff00;
+  color: black;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
 }
 
 .login-button:hover {
-  background: var(--accent-hover);
-}
-
-.login-button:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+  background-color: #64d104;
 }
 
 .login-link {
-  color: var(--accent);
+  color: #77ff00;
   text-decoration: none;
   font-weight: 500;
 }

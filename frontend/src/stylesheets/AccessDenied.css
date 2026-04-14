@@ -11,9 +11,9 @@
 }
 
 .access-denied-card {
-  background: var(--surface-card);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-card);
+  background: #313131;
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   padding: 2.5rem;
   max-width: 420px;
   width: 100%;
@@ -29,23 +29,23 @@
   margin: 0.75rem 0 0.5rem;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: rgb(247, 42, 42);
 }
 
 .access-denied-message {
-  color: var(--text-muted);
+  color: white;
   font-size: 0.95rem;
   margin: 0 0 0.5rem;
 }
 
 .access-denied-hint {
-  color: var(--text-subtle);
+  color: rgb(207, 207, 207);
   font-size: 0.85rem;
   margin: 0 0 1.5rem;
 }
 
 .access-denied-link {
-  color: var(--accent);
+  color: #77ff00;
   text-decoration: none;
   font-weight: 500;
   font-size: 0.95rem;

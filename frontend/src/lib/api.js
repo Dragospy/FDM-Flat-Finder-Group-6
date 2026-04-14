@@ -274,6 +274,7 @@ export function createListing(data) {
     reviewCount: 0,
     images:      [],
     amenities:   [],
+    reports:     [],
     ...data,
   });
 }
@@ -305,6 +306,78 @@ export function deleteListing(id) {
   return true;
 }
 
+/**
+ * Sets a listing's status to "approved"
+ * 
+ * @param {string} id 
+ * @returns the approved listing
+ */
+export function approveListing(id) {
+  const approved = updateListing(id,  {status: LISTING_STATUS.APPROVED});
+  return approved;
+}
+
+/**
+ * Sets a listing's status to "rejected"
+ * 
+ * @param {string} id 
+ * @returns the approved listing
+ */
+export function rejectListing(id) {
+  const rejected = updateListing(id,  {status: LISTING_STATUS.REJECTED});
+  return rejected;
+}
+
+/**
+ * Reverts a listing's status to pending
+ * 
+ * @param {string} id 
+ * @returns the pending listing
+ */
+export function revertListingToPending(id) {
+  const pending = updateListing(id, {status: LISTING_STATUS.PENDING})
+  return pending;
+}
+
+/**
+ * Add a report to a listing.
+ * Throws if the listing does not exist or the reason is empty.
+ *
+ * @param {string} id        listing id
+ * @param {string} userId    id of the reporting user
+ * @param {string} reason    reason text from the user
+ * @returns {object} the updated listing
+ */
+export function reportListing(id, userId, reason) {
+  const trimmed = (reason ?? "").trim();
+  if (!trimmed) throw new Error("A reason is required to report a listing.");
+
+  const listing = getListing(id);
+  const reports = [
+    ...(listing.reports ?? []),
+    { userId, reason: trimmed, createdAt: new Date().toISOString() },
+  ];
+  return updateListing(id, { reports });
+}
+
+/**
+ * Remove all reports from a listing (admin dismisses the report as wrongful).
+ *
+ * @param {string} id  listing id
+ * @returns {object} the updated listing
+ */
+export function dismissReports(id) {
+  return updateListing(id, { reports: [] });
+}
+
+/**
+ * Return all listings that currently have at least one report.
+ *
+ * @returns {Array}
+ */
+export function getReportedListings() {
+  return db.find("listings", (l) => Array.isArray(l.reports) && l.reports.length > 0);
+}
 
 // ─── Accounts ─────────────────────────────────────────────────────────────────
 
@@ -382,4 +455,30 @@ export function deleteAccount(id) {
   const removed = db.remove("accounts", id);
   if (!removed) throw new Error(`Account "${id}" not found.`);
   return true;
+}
+
+/**
+ * Deactivate an account, preventing the user from logging in.
+ * Throws if the account does not exist.
+ *
+ * @param {string} id
+ * @returns {object} the updated account (password stripped)
+ */
+export function deactivateAccount(id) {
+  const updated = db.update("accounts", id, { active: false });
+  if (!updated) throw new Error(`Account "${id}" not found.`);
+  return sanitizeAccount(updated);
+}
+
+/**
+ * Reactivate a previously deactivated account.
+ * Throws if the account does not exist.
+ *
+ * @param {string} id
+ * @returns {object} the updated account (password stripped)
+ */
+export function activateAccount(id) {
+  const updated = db.update("accounts", id, { active: true });
+  if (!updated) throw new Error(`Account "${id}" not found.`);
+  return sanitizeAccount(updated);
 }
