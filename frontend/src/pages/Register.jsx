@@ -2,7 +2,7 @@
  * Register.jsx — New account registration page.
  *
  * Validates passwords client-side before calling register(), then redirects
- * the newly created user to the home page.
+ * the newly created user to the dashboard (they are logged in immediately).
  */
 
 import { useState }              from "react";
@@ -90,7 +90,7 @@ export default function Register() {
         role:             form.role,
       });
       await persistAccountsToJson();
-      navigate("/", { replace: true });
+      navigate("/dashboard", { replace: true });
     } catch (err) {
       setError(err.message);
     } finally {

@@ -27,6 +27,9 @@ import MyListings  from "./pages/MyListings";
 import Admin       from "./pages/Admin";
 import Moderation  from "./pages/Moderation";
 import PublicOnlyRoute from "./components/PublicOnlyRoute";
+import BrowseListings from "./pages/BrowseListings";
+import MyApplications from "./pages/MyApplications";
+import HostApplications from "./pages/HostApplications";
 
 
 export default function App() {
@@ -74,6 +77,34 @@ export default function App() {
           element={
             <ProtectedLayout allowedRoles={[ROLES.HOST, ROLES.RENTEE]}>
               <Profile />
+            </ProtectedLayout>
+          }
+        />
+
+        {/* ── Rentee (Consultant) applications ─────────────────────────────── */}
+        <Route
+          path="/listings"
+          element={
+            <ProtectedLayout allowedRoles={[ROLES.RENTEE]}>
+              <BrowseListings />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path="/applications"
+          element={
+            <ProtectedLayout allowedRoles={[ROLES.RENTEE]}>
+              <MyApplications />
+            </ProtectedLayout>
+          }
+        />
+
+        {/* ── Host (Landlord) processing ──────────────────────────────────── */}
+        <Route
+          path="/applications/manage"
+          element={
+            <ProtectedLayout allowedRoles={[ROLES.HOST]}>
+              <HostApplications />
             </ProtectedLayout>
           }
         />

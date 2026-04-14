@@ -74,6 +74,10 @@ export function login(email, password) {
     throw new Error("Invalid email or password.");
   }
 
+  if (account.active === false) {
+    throw new Error("This account has been deactivated. Please contact an administrator.");
+  }
+
   const user = sanitize(account);
   localStorage.setItem(SESSION_KEY, JSON.stringify(user));
   return user;
@@ -133,6 +137,7 @@ export function register({
     password,
     role,
     avatar: "",
+    active: true,
     phone: normalizedPhone,
     securityQuestion: normalizedQuestion,
     securityAnswer: normalizedAnswer,

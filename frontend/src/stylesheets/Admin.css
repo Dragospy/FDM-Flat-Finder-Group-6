@@ -1,3 +1,647 @@
 /**
- * Admin.css — Styles for the Admin page.
+ * Admin.css — uses .app-simple-page from main.css
  */
+
+/********************************
+          Main Styles
+********************************/
+p, h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+}
+
+.admin-heading {
+    margin: 1rem;
+}
+
+/********************************
+            Sub Tabs
+********************************/
+
+.admin-subtabs {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0 1rem 1rem 1rem;
+    border-bottom: 1px solid #333;
+}
+
+.admin-subtab {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.admin-subtab:hover {
+    color: #fff;
+}
+
+.admin-subtab.active {
+    color: #77ff00;
+    border-bottom-color: #77ff00;
+}
+
+/********************************
+        Main Listings Styles
+********************************/
+
+.manage-listings-container {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.left-panel {
+    margin-left: 1rem;
+    min-width: 40rem;
+}
+
+.right-panel {
+    margin-right: 1rem;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.panel-separator {
+    margin-right: 1rem;
+    margin-left: 1rem;
+    border-color: #000000;
+}
+
+.listing-filtering {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/********************************
+        Listing Card Styles
+********************************/
+
+.listing-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.listing-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.3rem;
+    width: 15rem;
+    font-size: 0.5rem;
+    padding: 1rem;
+    border: 1px solid rgba(119, 255, 0, 0.14);
+    border-radius: 1.1rem;
+    background: linear-gradient(180deg, rgba(49, 49, 49, 0.96) 0%, rgba(36, 36, 36, 0.96) 100%);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+}
+
+.listing-container:hover {
+    cursor: pointer;
+    transform: translateY(-2px);
+    border-color: rgba(119, 255, 0, 0.24);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.34);
+}
+
+.active-listing-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.3rem;
+    width: 15rem;
+    font-size: 0.5rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(119, 255, 0, 0.14);
+    background: rgba(119, 255, 0, 0.14);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+    color: black;
+}
+
+.active-listing-container:hover {
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.15s;
+}
+
+.admin-listing-image {
+    border-radius: 1rem;
+}
+
+.admin-listing-type {
+    padding: 0.25rem 0.55rem 0.35rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(119, 255, 0, 0.12);
+    color: #77ff00;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.active-admin-listing-type {
+    padding: 0.25rem 0.55rem 0.35rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(119, 255, 0, 0.12);
+    color: #77ff00;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.admin-listing-title {
+    margin: 0.5rem 0 0.1rem 0;
+    font-size: 0.8rem;
+    color: #77ff00;
+}
+
+.active-admin-listing-title {
+    margin: 0.5rem 0 0.1rem 0;
+    font-size: 0.8rem;
+    color: #77ff00;
+
+}
+
+.listing-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.active-listing-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.listing-price {
+    font-weight: bold;
+}
+
+/********************************
+     Status Selection Styles
+********************************/
+
+.status-selection-button {
+    padding: 0.65rem;
+    min-width: 8rem;
+    border-radius: 0.3rem;
+    font-weight: bold;
+    background-color: #77ff00;
+    border: none;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    gap: 0.65rem;
+    align-items: center;
+}
+
+.dropdown-arrow {
+    font-size: 0.8rem;
+}
+
+.status-dropdown {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+}
+
+.status-option {
+    background-color: black;
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: 0.65rem;
+    width: 8rem;
+    cursor: pointer;
+    
+}
+
+.bottom-status-option {
+    border-radius: 0 0 0.3rem 0.3rem;
+}
+
+.status-option:hover {
+    background-color: #333;
+    color: #fff;
+    transition: background-color 0.15s;
+}
+
+/********************************
+     Listing Details Styles
+********************************/
+
+.listing-details-container {
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    margin-top: 2rem;
+    color: white;
+}
+
+.listing-details-close-button {
+    width: 4rem;
+    height: 4rem;
+    margin-top: 1rem;
+    background: #77ff00;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #77ff00;
+
+    border: 1px solid rgba(119, 255, 0, 0.14);
+    background: linear-gradient(180deg, rgba(49, 49, 49, 0.96) 0%, rgba(36, 36, 36, 0.96) 100%);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+}
+
+.listing-details-close-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.34);
+}
+
+.listing-images-container {
+    position: relative;
+}
+
+.listing-details-image {
+    width: 100%;
+    max-height: 30rem;
+}
+
+.listing-images-container:hover .arrow-buttons-container {
+    opacity: 1;
+}
+
+.arrow-buttons-container {
+    opacity: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+}
+
+.image-prev-button, .image-next-button {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 3rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin: 0 0.5rem 0 0.5rem;
+    cursor: pointer;
+    color: #77ff00;
+    transform: translateY(-50%);
+    background: rgba(28, 28, 28, 0.82);
+    border: 1px solid rgba(119, 255, 0, 0.18);
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.image-prev-button:hover, .image-next-button:hover {
+    background: #77ff00;
+    color: #111;
+    transform: translateY(-50%) scale(1.04);
+}
+
+.listing-details-title {
+    margin-top: 1rem;
+}
+
+.listing-details-price {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+.listing-description-container {
+    width: 40rem;
+}
+
+.listing-details-desc-heading {
+    margin-bottom: 0.5rem;
+}
+
+.admin-listing-amenities, .listing-location {
+    margin: 0;
+}
+
+.listing-location {
+    list-style: none;
+    padding: 0;
+}
+
+.admin-listing-amenities-heading, .listing-location-heading {
+    margin: 0;
+    margin-bottom: 0.25rem;
+}
+
+.approve-button, .reject-button, .revert-button, .delete-button {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+
+    border: 1px solid rgba(119, 255, 0, 0.14);
+    background: linear-gradient(180deg, rgba(49, 49, 49, 0.96) 0%, rgba(36, 36, 36, 0.96) 100%);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+}
+
+.approve-button {
+    background-color: rgb(37, 206, 37);
+    border: solid 1px rgb(29, 184, 29);
+}
+
+.approve-button:hover {
+    border-color: rgba(119, 255, 0, 0.534);
+}
+
+.reject-button {
+    background-color: rgb(247, 182, 42);
+    border: solid 1px rgb(230, 166, 28);
+}
+
+.reject-button:hover {
+    background-color: rgb(230, 166, 28);;
+}
+
+.revert-button {
+    background-color: rgb(0, 119, 255);
+    border: solid 1px rgb(1, 109, 231);
+}
+
+.revert-button:hover {
+    background-color: rgb(1, 109, 231);
+}
+
+.delete-button {
+    background-color: rgb(247, 42, 42);
+    border: solid 1px rgb(223, 32, 32);
+}
+
+.delete-button:hover {
+    background-color: rgb(223, 32, 32);
+}
+
+.approve-button:hover, .reject-button:hover, .revert-button:hover, .delete-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.34);
+}
+
+/********************************
+          Pop Up Styles
+********************************/
+
+.overlay-container {
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(93, 93, 93, 0.686)
+}
+
+.pop-up-container {
+    width: 30rem;
+    height: 12rem;
+    padding: 1.5rem 1rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    align-items: center;
+    text-align: center;
+    border-radius: 0.25rem;
+    color: white;
+    font-size: 1.25rem;
+    font-weight: bold;
+
+    border: 2px solid rgba(119, 255, 0, 0.14);
+    background: linear-gradient(180deg, rgba(27, 27, 27, 0.96) 0%, rgba(22, 22, 22, 0.96) 100%);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.507);
+}
+
+.pop-up-approve, .pop-up-activate {
+    color: rgb(37, 206, 37);
+}
+
+.pop-up-reject {
+    color: rgb(247, 182, 42);
+}
+
+.pop-up-revert {
+    color: rgb(0, 119, 255);
+}
+
+.pop-up-delete, .pop-up-deactivate {
+    color: rgb(247, 42, 42);
+}
+
+.pop-up-button-container {
+    display: flex;
+    gap: 1rem;
+}
+
+.pop-up-ok, .pop-up-cancel {
+    padding: 1rem 2rem 1rem 2rem;
+    cursor: pointer;
+    border-radius: 0.5rem;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+
+    border: 1px solid rgba(119, 255, 0, 0.14);
+    background: linear-gradient(180deg, rgba(49, 49, 49, 0.96) 0%, rgba(36, 36, 36, 0.96) 100%);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+}
+
+.pop-up-ok {
+    background-color: rgb(37, 206, 37);
+    border-color: rgb(29, 184, 29);
+}
+
+.pop-up-ok:hover {
+    background-color: rgb(29, 184, 29);
+}
+
+.pop-up-cancel {
+    background-color: rgb(247, 42, 42);
+    border-color: rgb(223, 32, 32);
+}
+
+.pop-up-cancel:hover {
+    background-color: rgb(223, 32, 32);
+}
+
+.pop-up-ok:hover, .pop-up-cancel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.34);
+}
+
+/********************************
+      Account Management Styles
+********************************/
+
+.account-management {
+    margin: 0 1rem;
+    color: white;
+}
+
+.account-tabs {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.account-tab {
+    padding: 0.5rem 1.25rem;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background: #2a2a2a;
+    color: #ccc;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: bold;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.account-tab:hover {
+    background: #333;
+    color: #fff;
+}
+
+.account-tab.active {
+    background: #77ff00;
+    color: #000;
+    border-color: #77ff00;
+}
+
+.account-search {
+    width: 100%;
+    max-width: 40rem;
+    padding: 0.65rem 0.85rem;
+    background: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: white;
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+}
+
+.account-search::placeholder {
+    color: #888;
+}
+
+.account-search:focus {
+    outline: none;
+    border-color: #77ff00;
+    box-shadow: 0 0 0 2px rgba(119, 255, 0, 0.2);
+}
+
+.account-error {
+    color: #ff5555;
+    margin-bottom: 1rem;
+}
+
+.account-empty {
+    color: #888;
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.account-table {
+    width: 100%;
+    max-width: 60rem;
+    border-collapse: collapse;
+}
+
+.account-table th,
+.account-table td {
+    text-align: left;
+    padding: 0.75rem 0.85rem;
+    border-bottom: 1px solid #333;
+}
+
+.account-table th {
+    font-weight: 600;
+    color: #77ff00;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.account-role {
+    text-transform: capitalize;
+}
+
+.account-btn {
+    padding: 0.45rem 1rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    transition: opacity 0.15s;
+}
+
+.account-btn:hover {
+    opacity: 0.85;
+}
+
+.account-btn.deactivate {
+    background: rgb(247, 42, 42);
+    border: solid 1px rgb(223, 32, 32);
+}
+
+.account-btn.activate {
+    background: rgb(37, 206, 37);
+    border: solid 1px rgb(29, 184, 29);
+}
+
+.reported-message {
+    margin: 0.5rem 0;
+    padding: 0.75rem 1rem;
+    background-color: #1a3d0a;
+    border: 1px solid #77ff00;
+    border-radius: 0.25rem;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.reports-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.report-entry {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    background-color: #fafafa;
+}
+
+.report-entry p {
+    margin: 0.25rem 0;
+}

@@ -2,7 +2,7 @@
  * Login.jsx — Sign-in page.
  *
  * After a successful login the user is sent back to wherever they came from
- * (preserved in location state by ProtectedRoute), or to "/" by default.
+ * (preserved in location state by ProtectedRoute), or to "/dashboard" by default.
  */
 
 import { useState }                          from "react";
@@ -25,7 +25,7 @@ export default function Login() {
   const navigate   = useNavigate();
   const location   = useLocation();
 
-  const redirectTo = location.state?.from?.pathname ?? "/";
+  const redirectTo = location.state?.from?.pathname ?? "/dashboard";
 
   const [form,    setForm]    = useState({ email: "", password: "" });
   const [error,   setError]   = useState("");

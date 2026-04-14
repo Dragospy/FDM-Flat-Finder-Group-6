@@ -14,42 +14,67 @@ export default function Dashboard() {
 
   return (
     <main className="dashboard-page">
-      <h1 className="dashboard-title">Dashboard</h1>
-      <p className="dashboard-subtitle">
-        Welcome, <strong>{user?.name}</strong> ({user?.role})
-      </p>
+      <header className="dashboard-header">
+        <div>
+          <h1 className="dashboard-title">Dashboard</h1>
+          <p className="dashboard-subtitle">
+            Signed in as <strong>{user?.name}</strong> ({user?.role})
+          </p>
+        </div>
+      </header>
 
-      <section className="dashboard-links">
-        {user?.role !== ROLES.ADMIN && (
-          <Link className="dashboard-link-card" to="/profile">
-            My Profile
-          </Link>
-        )}
-
+      <section className="dashboard-cards">
         {user?.role === ROLES.RENTEE && (
-          <Link className="dashboard-link-card" to="/my-bookings">
-            My Bookings
-          </Link>
+          <>
+            <Link to="/listings" className="dashboard-card">
+              <h2>Apply for accommodation</h2>
+              <p>Browse properties and submit an application.</p>
+            </Link>
+            <Link to="/applications" className="dashboard-card">
+              <h2>Manage applications</h2>
+              <p>Track status and withdraw submitted applications.</p>
+            </Link>
+            <Link to="/my-bookings" className="dashboard-card">
+              <h2>My bookings</h2>
+              <p>See confirmed accommodation bookings.</p>
+            </Link>
+            <Link to="/profile" className="dashboard-card">
+              <h2>Profile</h2>
+              <p>Update your contact details and account information.</p>
+            </Link>
+          </>
         )}
 
         {user?.role === ROLES.HOST && (
           <>
-            <Link className="dashboard-link-card" to="/my-listings">
-              My Listings
+            <Link to="/applications/manage" className="dashboard-card">
+              <h2>Process applications</h2>
+              <p>Accept or reject accommodation applications.</p>
             </Link>
-            <Link className="dashboard-link-card" to="/moderation">
-              Moderation
+            <Link to="/my-listings" className="dashboard-card">
+              <h2>My listings</h2>
+              <p>Create, edit, and archive your properties.</p>
+            </Link>
+            <Link to="/moderation" className="dashboard-card">
+              <h2>Moderation</h2>
+              <p>Review listing reports and moderation queue items.</p>
+            </Link>
+            <Link to="/profile" className="dashboard-card">
+              <h2>Profile</h2>
+              <p>Update your contact details and account information.</p>
             </Link>
           </>
         )}
 
         {user?.role === ROLES.ADMIN && (
           <>
-            <Link className="dashboard-link-card" to="/admin">
-              Admin
+            <Link to="/admin" className="dashboard-card">
+              <h2>Admin</h2>
+              <p>Administrative tools.</p>
             </Link>
-            <Link className="dashboard-link-card" to="/moderation">
-              Moderation
+            <Link to="/moderation" className="dashboard-card">
+              <h2>Moderation</h2>
+              <p>Review reports and moderation queue items.</p>
             </Link>
           </>
         )}

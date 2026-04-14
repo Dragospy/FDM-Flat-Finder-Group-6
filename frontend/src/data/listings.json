@@ -24,7 +24,8 @@
     "available": true,
     "rating": 4.7,
     "reviewCount": 12,
-    "createdAt": "2024-04-01T08:00:00.000Z"
+    "createdAt": "2024-04-01T08:00:00.000Z",
+    "status": "submitted" 
   },
   {
     "id": "lst-002",
@@ -51,7 +52,8 @@
     "available": true,
     "rating": 4.5,
     "reviewCount": 8,
-    "createdAt": "2024-04-10T10:30:00.000Z"
+    "createdAt": "2024-04-10T10:30:00.000Z",
+    "status": "accepted" 
   },
   {
     "id": "lst-003",
@@ -78,7 +80,8 @@
     "available": true,
     "rating": 4.9,
     "reviewCount": 21,
-    "createdAt": "2024-05-02T11:00:00.000Z"
+    "createdAt": "2024-05-02T11:00:00.000Z",
+    "status": "rejected" 
   },
   {
     "id": "lst-004",
@@ -105,6 +108,7 @@
     "available": false,
     "rating": 4.6,
     "reviewCount": 5,
-    "createdAt": "2024-05-20T14:00:00.000Z"
+    "createdAt": "2024-05-20T14:00:00.000Z",
+    "status": "submitted"
   }
 ]

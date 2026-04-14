@@ -2,7 +2,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import AuthShell from "./AuthShell";
 
 /**
- * Authenticated route with optional role guard and shared page shell.
+ * Authenticated route with role guard (optional) and shared navigation shell.
  *
  * @param {{ children: React.ReactNode, allowedRoles?: string[] }} props
  */
