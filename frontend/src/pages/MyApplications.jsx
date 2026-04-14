@@ -48,21 +48,26 @@ export default function MyApplications() {
 
   return (
     <main className="my-applications-page">
-      <header className="my-applications-header">
-        <div>
-          <h1>My applications</h1>
-          <p className="my-applications-subtitle">
-            Track your status here, or{" "}
-            <Link to="/listings" className="my-applications-link">apply to another property</Link>.
-          </p>
-        </div>
-      </header>
+      <div className="my-applications-shell">
+        <header className="my-applications-header">
+          <div>
+            <p className="my-applications-eyebrow">Consultant Area</p>
+            <h1>My Applications</h1>
+            <p className="my-applications-copy">
+              Track statuses and withdraw submitted applications, or{" "}
+              <Link to="/listings" className="my-applications-link">apply to another property</Link>.
+            </p>
+          </div>
+          <div className="my-applications-actions">
+            <span className="my-applications-count">{applications.length} Applications</span>
+          </div>
+        </header>
 
-      {error && <p className="my-applications-alert my-applications-alert--error">{error}</p>}
-      {success && <p className="my-applications-alert my-applications-alert--success">{success}</p>}
+        {error && <p className="my-applications-alert my-applications-alert--error">{error}</p>}
+        {success && <p className="my-applications-alert my-applications-alert--success">{success}</p>}
 
-      <section className="my-applications-list">
-        {applications.map((a) => {
+        <section className="my-applications-list">
+          {applications.map((a) => {
           const listing = listingsById[a.listingId];
 
           return (
@@ -116,15 +121,19 @@ export default function MyApplications() {
               </div>
             </article>
           );
-        })}
+          })}
 
-        {applications.length === 0 && (
-          <div className="my-applications-empty">
-            You haven&apos;t applied to any properties yet.{" "}
-            <Link to="/listings" className="my-applications-link">Browse listings</Link>.
-          </div>
-        )}
-      </section>
+          {applications.length === 0 && (
+            <div className="my-applications-empty">
+              <h2>No applications yet</h2>
+              <p>
+                You haven&apos;t applied to any properties yet.{" "}
+                <Link to="/listings" className="my-applications-link">Browse listings</Link>.
+              </p>
+            </div>
+          )}
+        </section>
+      </div>
     </main>
   );
 }

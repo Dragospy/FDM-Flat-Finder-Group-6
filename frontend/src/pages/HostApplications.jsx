@@ -42,20 +42,25 @@ export default function HostApplications() {
 
   return (
     <main className="host-applications-page">
-      <header className="host-applications-header">
-        <div>
-          <h1>Process applications</h1>
-          <p className="host-applications-subtitle">
-            Accept or reject accommodation applications for your properties.
-          </p>
-        </div>
-      </header>
+      <div className="host-applications-shell">
+        <header className="host-applications-header">
+          <div>
+            <p className="host-applications-eyebrow">Landlord Area</p>
+            <h1>Process Applications</h1>
+            <p className="host-applications-copy">
+              Review consultant details and decide whether to accept or reject each accommodation request.
+            </p>
+          </div>
+          <div className="host-applications-actions-top">
+            <span className="host-applications-count">{applications.length} Applications</span>
+          </div>
+        </header>
 
-      {error && <p className="host-applications-alert host-applications-alert--error">{error}</p>}
-      {success && <p className="host-applications-alert host-applications-alert--success">{success}</p>}
+        {error && <p className="host-applications-alert host-applications-alert--error">{error}</p>}
+        {success && <p className="host-applications-alert host-applications-alert--success">{success}</p>}
 
-      <section className="host-applications-list">
-        {applications.map((a) => {
+        <section className="host-applications-list">
+          {applications.map((a) => {
           const listing = listingsById[a.listingId];
           return (
             <article key={a.id} className="host-applications-item">
@@ -111,14 +116,16 @@ export default function HostApplications() {
               </div>
             </article>
           );
-        })}
+          })}
 
-        {applications.length === 0 && (
-          <div className="host-applications-empty">
-            No applications yet.
-          </div>
-        )}
-      </section>
+          {applications.length === 0 && (
+            <div className="host-applications-empty">
+              <h2>No applications yet</h2>
+              <p>Applications from consultants will appear here.</p>
+            </div>
+          )}
+        </section>
+      </div>
     </main>
   );
 }
