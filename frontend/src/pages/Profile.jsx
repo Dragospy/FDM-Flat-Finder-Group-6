@@ -12,6 +12,14 @@ import {
 
 import "../stylesheets/Profile.css";
 
+const SECURITY_QUESTIONS = [
+  "What is your mother's maiden name?",
+  "What was the name of your first pet?",
+  "What was the name of your first school?",
+  "What city were you born in?",
+  "What is your favorite childhood nickname?",
+];
+
 export default function Profile() {
   const { user, logout, refresh } = useAuth();
   const navigate = useNavigate();
@@ -21,6 +29,8 @@ export default function Profile() {
     email: "",
     phone: "",
     password: "",
+    securityQuestion: "",
+    securityAnswer: "",
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -34,6 +44,8 @@ export default function Profile() {
       email: account.email ?? "",
       phone: account.phone ?? "",
       password: account.password ?? "",
+      securityQuestion: account.securityQuestion ?? "",
+      securityAnswer: account.securityAnswer ?? "",
     });
   }, [user?.id]);
 
@@ -47,11 +59,19 @@ export default function Profile() {
     setSuccess("");
 
     try {
+      const trimmedQuestion = form.securityQuestion.trim();
+      const trimmedAnswer = form.securityAnswer.trim();
+      if ((trimmedQuestion && !trimmedAnswer) || (!trimmedQuestion && trimmedAnswer)) {
+        throw new Error("Please choose a security question and provide an answer.");
+      }
+
       const updated = updateAccount(user.id, {
         name: form.name.trim(),
         email: form.email.trim(),
         phone: form.phone.trim(),
         ...(form.password.trim() ? { password: form.password } : {}),
+        securityQuestion: trimmedQuestion,
+        securityAnswer: trimmedAnswer,
       });
 
       await persistAccountsToJson();
@@ -63,6 +83,8 @@ export default function Profile() {
         email: updated.email ?? freshAccount.email ?? "",
         phone: updated.phone ?? freshAccount.phone ?? "",
         password: freshAccount.password ?? "",
+        securityQuestion: freshAccount.securityQuestion ?? "",
+        securityAnswer: freshAccount.securityAnswer ?? "",
       });
       setSuccess("Profile details updated.");
     } catch (err) {
@@ -137,6 +159,31 @@ export default function Profile() {
             onChange={(e) => handleChange("password", e.target.value)}
             minLength={6}
             placeholder="Leave blank to keep current password"
+          />
+        </label>
+
+        <label className="profile-field">
+          Security Question
+          <select
+            value={form.securityQuestion}
+            onChange={(e) => handleChange("securityQuestion", e.target.value)}
+          >
+            <option value="">Select a security question</option>
+            {SECURITY_QUESTIONS.map((question) => (
+              <option key={question} value={question}>
+                {question}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="profile-field">
+          Security Answer
+          <input
+            type="text"
+            value={form.securityAnswer}
+            onChange={(e) => handleChange("securityAnswer", e.target.value)}
+            placeholder="Enter your answer"
           />
         </label>
 

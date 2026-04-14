@@ -23,7 +23,7 @@ import { db } from "./db";
 function sanitizeAccount(account) {
   if (!account) return null;
   // eslint-disable-next-line no-unused-vars
-  const { password, ...safe } = account;
+  const { password, securityAnswer, ...safe } = account;
   return safe;
 }
 
@@ -225,6 +225,26 @@ export function updateAccount(id, data) {
     delete safeData.password;
   }
 
+  if (safeData.securityQuestion !== undefined) {
+    safeData.securityQuestion = safeData.securityQuestion.trim();
+  }
+
+  if (safeData.securityAnswer !== undefined) {
+    const answer = safeData.securityAnswer.trim();
+    if (answer.length === 0) {
+      throw new Error("Security answer cannot be empty.");
+    }
+    safeData.securityAnswer = answer;
+  }
+
+  if (
+    safeData.securityQuestion !== undefined
+    && safeData.securityQuestion.length > 0
+    && safeData.securityAnswer === undefined
+  ) {
+    throw new Error("Please provide an answer for your security question.");
+  }
+
   const updated = db.update("accounts", id, safeData);
   if (!updated) throw new Error(`Account "${id}" not found.`);
   return sanitizeAccount(updated);
@@ -282,16 +302,12 @@ export function changePassword(id, currentPassword, newPassword) {
  * @param {{ email: string, phone: string, newPassword: string }} data
  * @returns {true}
  */
-export function resetPasswordByEmailAndPhone({ email, phone, newPassword }) {
+export function getSecurityQuestionByEmailAndPhone({ email, phone }) {
   const normalizedEmail = (email ?? "").trim().toLowerCase();
   const normalizedPhone = (phone ?? "").trim();
 
   if (!normalizedEmail || !normalizedPhone) {
     throw new Error("Email and phone number are required.");
-  }
-
-  if (!newPassword || newPassword.length < 6) {
-    throw new Error("New password must be at least 6 characters.");
   }
 
   const matches = db.find(
@@ -309,7 +325,57 @@ export function resetPasswordByEmailAndPhone({ email, phone, newPassword }) {
     throw new Error("Multiple accounts matched. Contact support.");
   }
 
-  db.update("accounts", matches[0].id, { password: newPassword });
+  const account = matches[0];
+  if (!account.securityQuestion || !account.securityAnswer) {
+    throw new Error("No security question is set for this account. Please update your profile first.");
+  }
+
+  return account.securityQuestion;
+}
+
+/**
+ * Reset a password by matching email + phone number + security answer.
+ *
+ * @param {{
+ *   email: string,
+ *   phone: string,
+ *   securityAnswer: string,
+ *   newPassword: string
+ * }} data
+ * @returns {true}
+ */
+export function resetPasswordByEmailAndPhone({ email, phone, securityAnswer, newPassword }) {
+  const securityQuestion = getSecurityQuestionByEmailAndPhone({ email, phone });
+
+  if (!newPassword || newPassword.length < 6) {
+    throw new Error("New password must be at least 6 characters.");
+  }
+
+  const normalizedEmail = (email ?? "").trim().toLowerCase();
+  const normalizedPhone = (phone ?? "").trim();
+  const normalizedAnswer = (securityAnswer ?? "").trim().toLowerCase();
+
+  if (!normalizedAnswer) {
+    throw new Error("Security answer is required.");
+  }
+
+  const account = db.findOne(
+    "accounts",
+    (a) =>
+      a.email?.trim().toLowerCase() === normalizedEmail
+      && (a.phone ?? "").trim() === normalizedPhone
+  );
+
+  if (!account || account.securityQuestion !== securityQuestion) {
+    throw new Error("Unable to verify account details.");
+  }
+
+  const savedAnswer = (account.securityAnswer ?? "").trim().toLowerCase();
+  if (savedAnswer !== normalizedAnswer) {
+    throw new Error("Security answer did not match.");
+  }
+
+  db.update("accounts", account.id, { password: newPassword });
   return true;
 }
 

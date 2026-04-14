@@ -13,6 +13,14 @@ import { persistAccountsToJson } from "../lib/api";
 
 import "../stylesheets/Register.css";
 
+const SECURITY_QUESTIONS = [
+  "What is your mother's maiden name?",
+  "What was the name of your first pet?",
+  "What was the name of your first school?",
+  "What city were you born in?",
+  "What is your favorite childhood nickname?",
+];
+
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -23,6 +31,9 @@ export default function Register() {
   const [form, setForm] = useState({
     name:            "",
     email:           "",
+    phone:           "",
+    securityQuestion:"",
+    securityAnswer:  "",
     password:        "",
     confirmPassword: "",
     role:            "rentee",
@@ -51,14 +62,32 @@ export default function Register() {
       return;
     }
 
+    if (!form.phone.trim()) {
+      setError("Contact number is required.");
+      return;
+    }
+
+    if (!form.securityQuestion.trim()) {
+      setError("Please select a security question.");
+      return;
+    }
+
+    if (!form.securityAnswer.trim()) {
+      setError("Please provide a security answer.");
+      return;
+    }
+
     setLoading(true);
 
     try {
       register({
-        name:     form.name,
-        email:    form.email,
-        password: form.password,
-        role:     form.role,
+        name:             form.name,
+        email:            form.email,
+        phone:            form.phone,
+        securityQuestion: form.securityQuestion,
+        securityAnswer:   form.securityAnswer,
+        password:         form.password,
+        role:             form.role,
       });
       await persistAccountsToJson();
       navigate("/", { replace: true });
@@ -120,6 +149,51 @@ export default function Register() {
               onChange={handleChange}
               placeholder="Min. 6 characters"
               autoComplete="new-password"
+              required
+            />
+          </label>
+
+          <label className="register-label">
+            Contact number
+            <input
+              className="register-input"
+              type="text"
+              name="phone"
+              value={form.phone}
+              onChange={handleChange}
+              placeholder="07xxxxxxxxx"
+              autoComplete="tel"
+              required
+            />
+          </label>
+
+          <label className="register-label">
+            Security question
+            <select
+              className="register-input"
+              name="securityQuestion"
+              value={form.securityQuestion}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Select a security question</option>
+              {SECURITY_QUESTIONS.map((question) => (
+                <option key={question} value={question}>
+                  {question}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="register-label">
+            Security answer
+            <input
+              className="register-input"
+              type="text"
+              name="securityAnswer"
+              value={form.securityAnswer}
+              onChange={handleChange}
+              placeholder="Your answer"
               required
             />
           </label>

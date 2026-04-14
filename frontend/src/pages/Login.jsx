@@ -9,7 +9,11 @@ import { useState }                          from "react";
 import { Link, useNavigate, useLocation }    from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
-import { persistAccountsToJson, resetPasswordByEmailAndPhone } from "../lib/api";
+import {
+  getSecurityQuestionByEmailAndPhone,
+  persistAccountsToJson,
+  resetPasswordByEmailAndPhone,
+} from "../lib/api";
 
 import "../stylesheets/Login.css";
 
@@ -29,9 +33,11 @@ export default function Login() {
   const [showReset, setShowReset] = useState(false);
   const [resetMessage, setResetMessage] = useState("");
   const [resetLoading, setResetLoading] = useState(false);
+  const [securityQuestion, setSecurityQuestion] = useState("");
   const [resetForm, setResetForm] = useState({
     email: "",
     phone: "",
+    securityAnswer: "",
     newPassword: "",
     confirmNewPassword: "",
   });
@@ -67,6 +73,19 @@ export default function Login() {
     setError("");
     setResetMessage("");
 
+    if (!securityQuestion) {
+      try {
+        const question = getSecurityQuestionByEmailAndPhone({
+          email: resetForm.email,
+          phone: resetForm.phone,
+        });
+        setSecurityQuestion(question);
+      } catch (err) {
+        setError(err.message);
+      }
+      return;
+    }
+
     if (resetForm.newPassword !== resetForm.confirmNewPassword) {
       setError("Reset passwords do not match.");
       return;
@@ -78,13 +97,16 @@ export default function Login() {
       resetPasswordByEmailAndPhone({
         email: resetForm.email,
         phone: resetForm.phone,
+        securityAnswer: resetForm.securityAnswer,
         newPassword: resetForm.newPassword,
       });
       await persistAccountsToJson();
       setResetMessage("Password reset successfully. You can now sign in.");
+      setSecurityQuestion("");
       setResetForm({
         email: "",
         phone: "",
+        securityAnswer: "",
         newPassword: "",
         confirmNewPassword: "",
       });
@@ -147,6 +169,7 @@ export default function Login() {
           onClick={() => {
             setError("");
             setResetMessage("");
+            setSecurityQuestion("");
             setShowReset((prev) => !prev);
           }}
         >
@@ -179,35 +202,65 @@ export default function Login() {
               />
             </label>
 
-            <label className="login-label">
-              New Password
-              <input
-                className="login-input"
-                type="password"
-                name="newPassword"
-                value={resetForm.newPassword}
-                onChange={handleResetChange}
-                minLength={6}
-                required
-              />
-            </label>
-
-            <label className="login-label">
-              Confirm New Password
-              <input
-                className="login-input"
-                type="password"
-                name="confirmNewPassword"
-                value={resetForm.confirmNewPassword}
-                onChange={handleResetChange}
-                minLength={6}
-                required
-              />
-            </label>
-
             <button className="login-button" type="submit" disabled={resetLoading}>
-              {resetLoading ? "Resetting…" : "Reset Password"}
+              {securityQuestion ? "Continue" : "Verify Account"}
             </button>
+
+            {securityQuestion && (
+              <>
+                <label className="login-label">
+                  Security Question
+                  <input
+                    className="login-input"
+                    type="text"
+                    value={securityQuestion}
+                    readOnly
+                  />
+                </label>
+
+                <label className="login-label">
+                  Security Answer
+                  <input
+                    className="login-input"
+                    type="text"
+                    name="securityAnswer"
+                    value={resetForm.securityAnswer}
+                    onChange={handleResetChange}
+                    required
+                  />
+                </label>
+
+                <label className="login-label">
+                  New Password
+                  <input
+                    className="login-input"
+                    type="password"
+                    name="newPassword"
+                    value={resetForm.newPassword}
+                    onChange={handleResetChange}
+                    minLength={6}
+                    required
+                  />
+                </label>
+
+                <label className="login-label">
+                  Confirm New Password
+                  <input
+                    className="login-input"
+                    type="password"
+                    name="confirmNewPassword"
+                    value={resetForm.confirmNewPassword}
+                    onChange={handleResetChange}
+                    minLength={6}
+                    required
+                  />
+                </label>
+
+                <button className="login-button" type="submit" disabled={resetLoading}>
+                  {resetLoading ? "Resetting…" : "Reset Password"}
+                </button>
+              </>
+            )}
           </form>
         )}
 
