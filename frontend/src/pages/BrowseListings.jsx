@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
-import { getListings, applyForListing } from "../lib/api";
+import { getListings, getApplicationsByConsultant, applyForListing } from "../lib/api";
 
 import "../stylesheets/BrowseListings.css";
 
@@ -31,6 +31,10 @@ export default function BrowseListings() {
     return getListings({ city: city.trim() ? city.trim() : undefined });
   }, [city]);
 
+  const hasAcceptedApplication = useMemo(() => {
+    return getApplicationsByConsultant(user.id).some((a) => a.status === "accepted");
+  }, [user.id]);
+
   function handleChange(e) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -40,6 +44,11 @@ export default function BrowseListings() {
     e.preventDefault();
     setError("");
     setSuccess("");
+
+    if (hasAcceptedApplication) {
+      setError("You already have an accepted application. The host will contact you with the next steps.");
+      return;
+    }
 
     try {
       applyForListing({
@@ -96,6 +105,12 @@ export default function BrowseListings() {
           </label>
         </section>
 
+        {hasAcceptedApplication && (
+          <p className="browse-listings-alert browse-listings-alert--success">
+            You already have an accepted application. New applications are disabled until your current booking is resolved.
+          </p>
+        )}
+
         {error && <p className="browse-listings-alert browse-listings-alert--error">{error}</p>}
         {success && <p className="browse-listings-alert browse-listings-alert--success">{success}</p>}
 
@@ -118,10 +133,16 @@ export default function BrowseListings() {
               <button
                 className="browse-listings-button"
                 onClick={() => setOpenFormFor((curr) => (curr === l.id ? null : l.id))}
-                disabled={!l.available}
-                title={!l.available ? "Not available" : "Submit an application"}
+                disabled={!l.available || hasAcceptedApplication}
+                title={
+                  hasAcceptedApplication
+                    ? "You already have an accepted application."
+                    : (!l.available ? "Not available" : "Submit an application")
+                }
               >
-                {l.available ? (openFormFor === l.id ? "Close form" : "Apply") : "Unavailable"}
+                {hasAcceptedApplication
+                  ? "Application locked"
+                  : (l.available ? (openFormFor === l.id ? "Close form" : "Apply") : "Unavailable")}
               </button>
             </div>
 

@@ -68,6 +68,14 @@ export function applyForListing({
   if (!listing) throw new Error("Listing not found.");
   if (!listing.available) throw new Error("This listing is not currently available.");
 
+  const hasAcceptedApplication = db.findOne(
+    "applications",
+    (a) => a.consultantId === consultantId && a.status === APPLICATION_STATUS.ACCEPTED
+  );
+  if (hasAcceptedApplication) {
+    throw new Error("You already have an accepted application and cannot apply to additional properties.");
+  }
+
   const existing = db.findOne(
     "applications",
     (a) =>
