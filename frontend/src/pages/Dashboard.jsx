@@ -9,8 +9,6 @@ import { ROLES } from "../lib/auth";
 
 import "../stylesheets/Dashboard.css";
 
-import {SearchListings} from  "../components/SearchListing.jsx";
-
 export default function Dashboard() {
   const { user } = useAuth();
 
@@ -44,6 +42,10 @@ export default function Dashboard() {
               <h2>Profile</h2>
               <p>Update your contact details and account information.</p>
             </Link>
+            <Link to="/search" className="dashboard-card">
+              <h2>Search</h2>
+              <p>Search accommodation listings.</p>
+            </Link>
           </>
         )}
 
@@ -65,6 +67,10 @@ export default function Dashboard() {
               <h2>Profile</h2>
               <p>Update your contact details and account information.</p>
             </Link>
+            <Link to="/search" className="dashboard-card">
+              <h2>Search</h2>
+              <p>Search accommodation listings.</p>
+            </Link>
           </>
         )}
 
@@ -77,6 +83,10 @@ export default function Dashboard() {
             <Link to="/moderation" className="dashboard-card">
               <h2>Moderation</h2>
               <p>Review reports and moderation queue items.</p>
+            </Link>
+            <Link to="/search" className="dashboard-card">
+              <h2>Search</h2>
+              <p>Search accommodation listings.</p>
             </Link>
           </>
         )}

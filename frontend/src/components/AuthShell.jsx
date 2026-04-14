@@ -63,6 +63,9 @@ export default function AuthShell({ children }) {
               <NavLink to="/moderation" className={navClass}>Moderation</NavLink>
             </>
           )}
+          <NavLink to="/search" className={navClass} end>
+            Search
+          </NavLink>
         </nav>
 
         <button type="button" className="auth-shell-logout" onClick={handleLogout}>
