@@ -110,6 +110,7 @@ export function createListing(data) {
     reviewCount: 0,
     images:      [],
     amenities:   [],
+    reports:     [],
     ...data,
   });
 }
@@ -172,6 +173,46 @@ export function rejectListing(id) {
 export function revertListingToPending(id) {
   const pending = updateListing(id, {status: LISTING_STATUS.PENDING})
   return pending;
+}
+
+/**
+ * Add a report to a listing.
+ * Throws if the listing does not exist or the reason is empty.
+ *
+ * @param {string} id        listing id
+ * @param {string} userId    id of the reporting user
+ * @param {string} reason    reason text from the user
+ * @returns {object} the updated listing
+ */
+export function reportListing(id, userId, reason) {
+  const trimmed = (reason ?? "").trim();
+  if (!trimmed) throw new Error("A reason is required to report a listing.");
+
+  const listing = getListing(id);
+  const reports = [
+    ...(listing.reports ?? []),
+    { userId, reason: trimmed, createdAt: new Date().toISOString() },
+  ];
+  return updateListing(id, { reports });
+}
+
+/**
+ * Remove all reports from a listing (admin dismisses the report as wrongful).
+ *
+ * @param {string} id  listing id
+ * @returns {object} the updated listing
+ */
+export function dismissReports(id) {
+  return updateListing(id, { reports: [] });
+}
+
+/**
+ * Return all listings that currently have at least one report.
+ *
+ * @returns {Array}
+ */
+export function getReportedListings() {
+  return db.find("listings", (l) => Array.isArray(l.reports) && l.reports.length > 0);
 }
 
 // ─── Accounts ─────────────────────────────────────────────────────────────────

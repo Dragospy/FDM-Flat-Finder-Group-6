@@ -15,6 +15,9 @@ import {
   getAccounts,
   deactivateAccount,
   activateAccount,
+  getReportedListings,
+  dismissReports,
+  updateListing,
 } from "../lib/api";
 import { useAuth } from "../context/AuthContext";
 import { LISTING_STATUS } from "../constants/listingStatus";
@@ -351,6 +354,97 @@ function AccountManagement() {
   );
 }
 
+/**
+ * Reported listings sub-tab — admins review reports and either dismiss them
+ * (wrongful report) or deactivate the listing (legitimate report).
+ */
+function ReportedListings() {
+  const [reported, setReported] = useState(() => getReportedListings());
+  const [selectedId, setSelectedId] = useState(null);
+  const [message, setMessage] = useState("");
+
+  function refresh() {
+    const next = getReportedListings();
+    setReported(next);
+    if (!next.find((l) => l.id === selectedId)) setSelectedId(null);
+  }
+
+  function handleDismiss(id) {
+    dismissReports(id);
+    setMessage("Reports dismissed.");
+    refresh();
+  }
+
+  function handleDeactivate(id) {
+    updateListing(id, { available: false, reports: [] });
+    setMessage("Listing deactivated.");
+    refresh();
+  }
+
+  const selected = selectedId ? reported.find((l) => l.id === selectedId) : null;
+
+  return (
+    <div className="admin-container">
+      <div className="left-panel">
+        <h2>Reported Listings</h2>
+        {message && <p className="reported-message">{message}</p>}
+        {reported.length === 0 ? (
+          <p>No reported listings.</p>
+        ) : (
+          <div className="listing-group">
+            {reported.map((l) => (
+              <div
+                key={l.id}
+                className="listing-container"
+                onClick={() => setSelectedId(l.id === selectedId ? null : l.id)}
+              >
+                <img className="listing-image" src={l.images[0]} />
+                <h3 className="listing-title">{l.title}</h3>
+                <div className="listing-info">
+                  <p>{l.reports.length} report(s)</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {selected && <hr className="panel-separator" />}
+
+      {selected && (
+        <div className="right-panel">
+          <button className="listing-details-close-button" onClick={() => setSelectedId(null)}>X</button>
+          <div className="listing-details-container">
+            <h2 className="listing-details-title">{selected.title}</h2>
+            <p>{selected.type} &#8226; £{selected.price}/{selected.priceUnit}</p>
+            <p>{selected.location.address}, {selected.location.city}</p>
+
+            <section>
+              <h3>Reports ({selected.reports.length})</h3>
+              <ul className="reports-list">
+                {selected.reports.map((r, i) => (
+                  <li key={i} className="report-entry">
+                    <p><strong>By:</strong> {r.userId}</p>
+                    <p><strong>At:</strong> {new Date(r.createdAt).toLocaleString()}</p>
+                    <p><strong>Reason:</strong> {r.reason}</p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <button className="approve-button" onClick={() => handleDismiss(selected.id)}>
+              Dismiss Reports
+            </button>
+            <button className="reject-button" onClick={() => handleDeactivate(selected.id)}>
+              Deactivate Listing
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Admin() {
   const [section, setSection] = useState("approval");
 
@@ -371,9 +465,17 @@ export default function Admin() {
         >
           Account Management
         </button>
+        <button
+          className={`admin-subtab ${section === "reported" ? "active" : ""}`}
+          onClick={() => setSection("reported")}
+        >
+          Reported Listings
+        </button>
       </div>
 
-      {section === "approval" ? <AccommodationApproval /> : <AccountManagement />}
+      {section === "approval" && <AccommodationApproval />}
+      {section === "accounts" && <AccountManagement />}
+      {section === "reported" && <ReportedListings />}
     </main>
   );
 }
