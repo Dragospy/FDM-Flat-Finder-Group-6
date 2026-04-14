@@ -15,7 +15,7 @@ import { useState } from "react";
 //      location : Will require lat+lon to compare distance?
 
 function DisplayImages({images}){
-    const listImages = images.map(image => <img src={image} key={image} />);
+    const listImages = images.map(image => <img className="listingImage" src={image} key={image} />);
 
     return <div>{listImages}</div>
 }
@@ -135,12 +135,90 @@ function GetDistanceBetweenCoordinates(latitude1, longitude1, latitude2, longitu
 
 
 
+function fetchListings(){
+
+}
+
+function validateParseFilter(city,minPrice,maxPrice, bedrooms, unavailable){
+    let filter = {};
+
+    if(Number.isInteger(parseInt(minPrice))){
+        filter.minPrice = parseInt(minPrice);
+    }
+    
+    if(Number.isInteger(parseInt(maxPrice))){
+        filter.maxPrice = parseInt(maxPrice);
+    }
+
+    if(Number.isInteger(parseInt(bedrooms))){
+        filter.bedrooms = parseInt(bedrooms);
+    }
+
+    if(unavailable == "on" || unavailable == true){
+        filter.available = false;
+    
+    }
+    // else{
+    //     filter.available = true;
+    // }
+
+    const parseCity = city.trim().toLowerCase();
+   
+    if(parseCity != ""){
+        filter.city = parseCity;
+    }
+
+    return filter;
+}
+
+function sortListings(listings, sortByOrder,ascending){
+
+    let sortFunction;
+    // Selection based on target field
+
+    if(sortByOrder == "cost"){
+        sortFunction = function(a, b){return a.price > b.price};
+    }
+    else if(sortByOrder == "ratings"){
+        sortFunction = function(a, b){return a.rating > b.rating};
+    }
+    else if(sortByOrder == "reviewCount"){
+        sortFunction = function(a, b){return a.reviewCount > b.reviewCount};
+    }
+    else if(sortByOrder == "distance"){
+        sortFunction = function(a, b){return a.distance > b.distance};
+    }
+    else if(sortByOrder == "name"){
+        sortFunction = function(a, b){return a.title > b.title};
+    }
+    else{
+        sortFunction = function(a, b){return a.id > b.id};
+    }
+    
+    // Select ascending or descending
+    let sortedListing;
+    console.log(ascending, sortByOrder, listings, sortFunction);
+    sortedListing = listings.toSorted(sortFunction);
+    if (ascending=="ascending"){
+        sortedListing = sortedListing.toReversed(sortFunction);
+    } 
+    console.log("Listing",sortedListing);
+    return sortedListing;
+}
+
+
+
 export function SearchListings() {
     // Allow search by location and name.
 
+    
+
 
     // State:
+    const [listings, setListings] = useState(getListings());
+
     const [sortOrder, setSortOrder] = useState(true);
+    
 
     console.log(document);
     
@@ -156,31 +234,49 @@ export function SearchListings() {
 
         const formJson = Object.fromEntries(formData.entries());
         console.log(formJson);
+
+        let newListingsOrder = getListings(validateParseFilter(formJson.city,formJson.minPrice,formJson.maxPrice,formJson.bedrooms,formJson.unavailable));
+        setListings(sortListings(newListingsOrder,formJson.order,formJson.sortOrder)); 
     }
+    
+
+
 
     let ascending = sortOrder;
 
-    const filter = {
-        city: "London",
-        minPrice: 0,
-        maxPrice: 5,
-        bedrooms: undefined,
-        available: true
-    };
 
 
-    let listings = getListings();
+
+
     console.log(listings);
 
     let sortFunction;
 
-
+    let sortByOrder = "name";
     // Selection based on target field
-    sortFunction = function(a, b){return a.price > b.price};
-
+    if(sortByOrder == "cost"){
+        sortFunction = function(a, b){return a.price > b.price};
+    }
+    else if(sortByOrder == "ratings"){
+        sortFunction = function(a, b){return a.rating > b.rating};
+    }
+    else if(sortByOrder == "reviewCount"){
+        sortFunction = function(a, b){return a.reviewCount > b.reviewCount};
+    }
+    else if(sortByOrder == "distance"){
+        console.log("DISTANCE: NOT IMPLEMENTED YET");
+        sortFunction = function(a, b){return a.distance > b.distance};
+    }
+    else if(sortByOrder == "name"){
+        sortFunction = function(a, b){return a.title > b.title};
+    }
+    else{
+        sortFunction = function(a, b){return a.id > b.id};
+    }
+    
     // Select ascending or descending
     let sortedListing;
-    if (ascending){
+    if (ascending=="ascending"){
         sortedListing = listings.toSorted(sortFunction);
     } else{
         sortedListing = listings.toReversed(sortFunction);
@@ -193,6 +289,7 @@ export function SearchListings() {
             <form name="searchForm" method="post" onSubmit={handleSearchSubmit}>
                 <label for="city">City</label>
                 <input type ="text" name="city"></input>
+                
 
                 <label for="location">Location</label>
                 <input type ="text" name="location"></input>
@@ -212,6 +309,7 @@ export function SearchListings() {
                 <label for="sort-by">Sort by</label>
                 <select id="sort-by" name="order">
                     <option value ="cost">Cost</option>
+                    <option value ="name">Name</option>
                     <option value ="ratings">Ratings</option>
                     <option value ="reviewCount">Review count</option>
                     <option value ="distance">Distance</option>
