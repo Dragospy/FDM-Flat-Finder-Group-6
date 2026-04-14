@@ -29,12 +29,40 @@ function isFinalStatus(status) {
  * Create a new application for a listing.
  * Throws if required fields are missing or an active application already exists.
  *
- * @param {{ listingId: string, consultantId: string }} data
+ * @param {{
+ *   listingId: string,
+ *   consultantId: string,
+ *   lengthOfStayMonths: number,
+ *   moveInDate: string,
+ *   occupants: number,
+ *   employmentStatus: string,
+ *   monthlyIncome: number,
+ *   notes?: string
+ * }} data
  * @returns {object}
  */
-export function applyForListing({ listingId, consultantId }) {
+export function applyForListing({
+  listingId,
+  consultantId,
+  lengthOfStayMonths,
+  moveInDate,
+  occupants,
+  employmentStatus,
+  monthlyIncome,
+  notes = "",
+}) {
   if (!listingId) throw new Error("listingId is required to apply.");
   if (!consultantId) throw new Error("consultantId is required to apply.");
+  if (!lengthOfStayMonths || lengthOfStayMonths < 1) {
+    throw new Error("Length of stay must be at least 1 month.");
+  }
+  if (!moveInDate) throw new Error("Move-in date is required.");
+  if (!occupants || occupants < 1) throw new Error("At least 1 occupant is required.");
+  if (!employmentStatus?.trim()) throw new Error("Employment status is required.");
+  const normalizedIncome = Number(monthlyIncome);
+  if (Number.isNaN(normalizedIncome) || normalizedIncome < 0) {
+    throw new Error("Monthly income must be 0 or higher.");
+  }
 
   const listing = db.getById("listings", listingId);
   if (!listing) throw new Error("Listing not found.");
@@ -56,6 +84,14 @@ export function applyForListing({ listingId, consultantId }) {
     listingId,
     consultantId,
     hostId: listing.hostId,
+    details: {
+      lengthOfStayMonths: Number(lengthOfStayMonths),
+      moveInDate,
+      occupants: Number(occupants),
+      employmentStatus: employmentStatus.trim(),
+      monthlyIncome: normalizedIncome,
+      notes: notes.trim(),
+    },
     status: APPLICATION_STATUS.SUBMITTED,
     updatedAt: new Date().toISOString(),
   });

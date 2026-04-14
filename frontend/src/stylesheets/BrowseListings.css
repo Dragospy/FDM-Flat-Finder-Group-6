@@ -163,3 +163,16 @@
   color: var(--text-subtle);
   padding: 16px;
 }
+
+.browse-listings-form {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-subtle);
+  display: grid;
+  gap: 10px;
+}
+
+.browse-listings-textarea {
+  min-width: 100%;
+  resize: vertical;
+}

@@ -17,18 +17,51 @@ export default function BrowseListings() {
   const [city, setCity] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [openFormFor, setOpenFormFor] = useState(null);
+  const [form, setForm] = useState({
+    lengthOfStayMonths: "",
+    moveInDate: "",
+    occupants: 1,
+    employmentStatus: "",
+    monthlyIncome: "",
+    notes: "",
+  });
 
   const listings = useMemo(() => {
     return getListings({ city: city.trim() ? city.trim() : undefined });
   }, [city]);
 
-  function handleApply(listingId) {
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function handleApply(e, listingId) {
+    e.preventDefault();
     setError("");
     setSuccess("");
 
     try {
-      applyForListing({ listingId, consultantId: user.id });
+      applyForListing({
+        listingId,
+        consultantId: user.id,
+        lengthOfStayMonths: Number(form.lengthOfStayMonths),
+        moveInDate: form.moveInDate,
+        occupants: Number(form.occupants),
+        employmentStatus: form.employmentStatus,
+        monthlyIncome: Number(form.monthlyIncome),
+        notes: form.notes,
+      });
       setSuccess("Application submitted.");
+      setOpenFormFor(null);
+      setForm({
+        lengthOfStayMonths: "",
+        moveInDate: "",
+        occupants: 1,
+        employmentStatus: "",
+        monthlyIncome: "",
+        notes: "",
+      });
     } catch (err) {
       setError(err.message);
     }
@@ -79,13 +112,97 @@ export default function BrowseListings() {
             <div className="browse-listings-actions">
               <button
                 className="browse-listings-button"
-                onClick={() => handleApply(l.id)}
+                onClick={() => setOpenFormFor((curr) => (curr === l.id ? null : l.id))}
                 disabled={!l.available}
                 title={!l.available ? "Not available" : "Submit an application"}
               >
-                {l.available ? "Apply" : "Unavailable"}
+                {l.available ? (openFormFor === l.id ? "Close form" : "Apply") : "Unavailable"}
               </button>
             </div>
+
+            {openFormFor === l.id && (
+              <form className="browse-listings-form" onSubmit={(e) => handleApply(e, l.id)}>
+                <label className="browse-listings-label">
+                  Length of stay (months)
+                  <input
+                    className="browse-listings-input"
+                    type="number"
+                    min="1"
+                    name="lengthOfStayMonths"
+                    value={form.lengthOfStayMonths}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+
+                <label className="browse-listings-label">
+                  Move-in date
+                  <input
+                    className="browse-listings-input"
+                    type="date"
+                    name="moveInDate"
+                    value={form.moveInDate}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+
+                <label className="browse-listings-label">
+                  Number of occupants
+                  <input
+                    className="browse-listings-input"
+                    type="number"
+                    min="1"
+                    name="occupants"
+                    value={form.occupants}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+
+                <label className="browse-listings-label">
+                  Employment status
+                  <input
+                    className="browse-listings-input"
+                    type="text"
+                    name="employmentStatus"
+                    placeholder="e.g. Full-time employed"
+                    value={form.employmentStatus}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+
+                <label className="browse-listings-label">
+                  Monthly income (GBP)
+                  <input
+                    className="browse-listings-input"
+                    type="number"
+                    name="monthlyIncome"
+                    placeholder="e.g. 1200"
+                    value={form.monthlyIncome}
+                    onChange={handleChange}
+                    required
+                  />
+                </label>
+
+                <label className="browse-listings-label">
+                  Relevant details
+                  <textarea
+                    className="browse-listings-input browse-listings-textarea"
+                    name="notes"
+                    placeholder="Share any useful info for the landlord..."
+                    value={form.notes}
+                    onChange={handleChange}
+                    rows={3}
+                  />
+                </label>
+
+                <button className="browse-listings-button" type="submit">
+                  Submit application
+                </button>
+              </form>
+            )}
           </article>
         ))}
 

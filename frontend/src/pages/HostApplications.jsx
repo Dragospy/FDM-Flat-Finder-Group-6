@@ -72,10 +72,22 @@ export default function HostApplications() {
               </div>
 
               <div className="host-applications-item-bottom">
-                <div className="host-applications-dates">
-                  <span>Submitted: {new Date(a.createdAt).toLocaleString()}</span>
-                  {" · "}
-                  <span>Updated: {new Date(a.updatedAt ?? a.createdAt).toLocaleString()}</span>
+                <div className="host-applications-details">
+                  <div className="host-applications-dates">
+                    <span>Submitted: {new Date(a.createdAt).toLocaleString()}</span>
+                    {" · "}
+                    <span>Updated: {new Date(a.updatedAt ?? a.createdAt).toLocaleString()}</span>
+                  </div>
+                  {a.details && (
+                    <ul className="host-applications-facts">
+                      <li>Stay: {a.details.lengthOfStayMonths} month(s)</li>
+                      <li>Move-in: {a.details.moveInDate}</li>
+                      <li>Occupants: {a.details.occupants}</li>
+                      <li>Employment: {a.details.employmentStatus}</li>
+                      <li>Income: GBP {Number(a.details.monthlyIncome).toLocaleString()}</li>
+                      {a.details.notes && <li>Details: {a.details.notes}</li>}
+                    </ul>
+                  )}
                 </div>
 
                 <div className="host-applications-actions">

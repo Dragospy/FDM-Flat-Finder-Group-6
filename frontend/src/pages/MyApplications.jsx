@@ -30,6 +30,11 @@ export default function MyApplications() {
   }, [user.id, refreshKey]);
 
   function handleWithdraw(applicationId) {
+    const confirmed = window.confirm(
+      "Are you sure you want to withdraw this application?"
+    );
+    if (!confirmed) return;
+
     setError("");
     setSuccess("");
     try {
@@ -80,10 +85,22 @@ export default function MyApplications() {
               </div>
 
               <div className="my-applications-item-bottom">
-                <div className="my-applications-dates">
-                  <span>Submitted: {new Date(a.createdAt).toLocaleString()}</span>
-                  {" · "}
-                  <span>Updated: {new Date(a.updatedAt ?? a.createdAt).toLocaleString()}</span>
+                <div className="my-applications-details">
+                  <div className="my-applications-dates">
+                    <span>Submitted: {new Date(a.createdAt).toLocaleString()}</span>
+                    {" · "}
+                    <span>Updated: {new Date(a.updatedAt ?? a.createdAt).toLocaleString()}</span>
+                  </div>
+                  {a.details && (
+                    <ul className="my-applications-facts">
+                      <li>Stay: {a.details.lengthOfStayMonths} month(s)</li>
+                      <li>Move-in: {a.details.moveInDate}</li>
+                      <li>Occupants: {a.details.occupants}</li>
+                      <li>Employment: {a.details.employmentStatus}</li>
+                      <li>Income: GBP {Number(a.details.monthlyIncome).toLocaleString()}</li>
+                      {a.details.notes && <li>Details: {a.details.notes}</li>}
+                    </ul>
+                  )}
                 </div>
 
                 <div className="my-applications-actions">
