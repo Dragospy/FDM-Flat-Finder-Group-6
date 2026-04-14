@@ -5,11 +5,12 @@
  * src/data/. All subsequent reads and writes use localStorage so changes
  * persist across page refreshes during development.
  *
- * Available collections: "accounts" | "listings"
+ * Available collections: "accounts" | "listings" | "applications"
  */
 
 import initialAccounts from "../data/accounts.json";
 import initialListings  from "../data/listings.json";
+import initialApplications from "../data/applications.json";
 
 
 // ─── Storage keys ─────────────────────────────────────────────────────────────
@@ -17,6 +18,7 @@ import initialListings  from "../data/listings.json";
 const KEYS = {
   accounts: "fdm_db_accounts",
   listings: "fdm_db_listings",
+  applications: "fdm_db_applications",
 };
 
 
@@ -28,12 +30,28 @@ const KEYS = {
  * never overwritten by a page refresh.
  */
 function seed() {
-  if (!localStorage.getItem(KEYS.accounts)) {
+  const rawAccounts = localStorage.getItem(KEYS.accounts);
+  let shouldSeedAccounts = !rawAccounts;
+
+  if (rawAccounts) {
+    try {
+      const parsed = JSON.parse(rawAccounts);
+      shouldSeedAccounts = !Array.isArray(parsed) || parsed.length === 0;
+    } catch {
+      shouldSeedAccounts = true;
+    }
+  }
+
+  if (shouldSeedAccounts) {
     localStorage.setItem(KEYS.accounts, JSON.stringify(initialAccounts));
   }
 
   if (!localStorage.getItem(KEYS.listings)) {
     localStorage.setItem(KEYS.listings, JSON.stringify(initialListings));
+  }
+
+  if (!localStorage.getItem(KEYS.applications)) {
+    localStorage.setItem(KEYS.applications, JSON.stringify(initialApplications));
   }
 }
 
@@ -45,7 +63,7 @@ seed();
 /**
  * Return every document in a collection.
  *
- * @param {"accounts"|"listings"} collection
+ * @param {"accounts"|"listings"|"applications"} collection
  * @returns {Array}
  */
 function getAll(collection) {
@@ -56,7 +74,7 @@ function getAll(collection) {
 /**
  * Return a single document by id, or null if not found.
  *
- * @param {"accounts"|"listings"} collection
+ * @param {"accounts"|"listings"|"applications"} collection
  * @param {string} id
  * @returns {object|null}
  */
@@ -67,7 +85,7 @@ function getById(collection, id) {
 /**
  * Return all documents that satisfy a predicate function.
  *
- * @param {"accounts"|"listings"} collection
+ * @param {"accounts"|"listings"|"applications"} collection
  * @param {(doc: object) => boolean} predicate
  * @returns {Array}
  */
@@ -79,7 +97,7 @@ function find(collection, predicate) {
  * Return the first document that satisfies a predicate function,
  * or null if none match.
  *
- * @param {"accounts"|"listings"} collection
+ * @param {"accounts"|"listings"|"applications"} collection
  * @param {(doc: object) => boolean} predicate
  * @returns {object|null}
  */
@@ -115,7 +133,7 @@ function insert(collection, doc) {
 /**
  * Merge `data` into an existing document, identified by `id`.
  *
- * @param {"accounts"|"listings"} collection
+ * @param {"accounts"|"listings"|"applications"} collection
  * @param {string} id
  * @param {object} data  partial fields to merge
  * @returns {object|null} the updated document, or null if not found
@@ -134,7 +152,7 @@ function update(collection, id, data) {
 /**
  * Remove a document from a collection by id.
  *
- * @param {"accounts"|"listings"} collection
+ * @param {"accounts"|"listings"|"applications"} collection
  * @param {string} id
  * @returns {boolean} true if a document was removed, false if not found
  */
@@ -158,6 +176,7 @@ function remove(collection, id) {
 function reset() {
   localStorage.removeItem(KEYS.accounts);
   localStorage.removeItem(KEYS.listings);
+  localStorage.removeItem(KEYS.applications);
   seed();
 }
 

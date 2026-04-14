@@ -3,8 +3,9 @@
     "id": "acc-000",
     "name": "Admin User",
     "email": "admin@example.com",
-    "password": "admin123",
+    "password": "password123",
     "role": "admin",
+    "phone": "02070000000",
     "avatar": "https://i.pravatar.cc/150?u=admin",
     "active": true,
     "createdAt": "2024-01-01T00:00:00.000Z"
@@ -12,31 +13,40 @@
   {
     "id": "acc-001",
     "name": "Alice Johnson",
-    "email": "alice@example.com",
+    "email": "host@example.com",
     "password": "password123",
     "role": "host",
+    "phone": "07111111111",
     "avatar": "https://i.pravatar.cc/150?u=alice",
     "active": true,
-    "createdAt": "2024-01-15T10:00:00.000Z"
+    "createdAt": "2024-01-15T10:00:00.000Z",
+    "securityQuestion": "What was the name of your first pet?",
+    "securityAnswer": "alice"
   },
   {
     "id": "acc-002",
     "name": "Bob Smith",
-    "email": "bob@example.com",
+    "email": "rentee@example.com",
     "password": "password123",
     "role": "rentee",
+    "phone": "07222222222",
     "avatar": "https://i.pravatar.cc/150?u=bob",
     "active": true,
-    "createdAt": "2024-02-20T14:30:00.000Z"
+    "createdAt": "2024-02-20T14:30:00.000Z",
+    "securityQuestion": "What was the name of your first pet?",
+    "securityAnswer": "bob"
   },
   {
     "id": "acc-003",
     "name": "Carol White",
-    "email": "carol@example.com",
+    "email": "host2@example.com",
     "password": "password123",
     "role": "host",
+    "phone": "07333333333",
     "avatar": "https://i.pravatar.cc/150?u=carol",
     "active": true,
-    "createdAt": "2024-03-05T09:15:00.000Z"
+    "createdAt": "2024-03-05T09:15:00.000Z",
+    "securityQuestion": "What was the name of your first pet?",
+    "securityAnswer": "carol"
   }
 ]

@@ -15,17 +15,21 @@ import { Routes, Route } from "react-router-dom";
 
 import { AuthProvider }  from "./context/AuthContext";
 import { ROLES }         from "./lib/auth";
-import ProtectedRoute    from "./components/ProtectedRoute";
+import ProtectedLayout   from "./components/ProtectedLayout";
 
 import Home        from "./pages/Home";
 import Login       from "./pages/Login";
 import Register    from "./pages/Register";
 import Dashboard   from "./pages/Dashboard";
+import Profile     from "./pages/Profile";
 import MyBookings  from "./pages/MyBookings";
 import MyListings  from "./pages/MyListings";
 import Admin       from "./pages/Admin";
 import Moderation  from "./pages/Moderation";
 import PublicOnlyRoute from "./components/PublicOnlyRoute";
+import BrowseListings from "./pages/BrowseListings";
+import MyApplications from "./pages/MyApplications";
+import HostApplications from "./pages/HostApplications";
 import Search  from "./pages/Search";
 
 export default function App() {
@@ -71,9 +75,45 @@ export default function App() {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute>
+            <ProtectedLayout>
               <Dashboard />
-            </ProtectedRoute>
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedLayout allowedRoles={[ROLES.HOST, ROLES.RENTEE]}>
+              <Profile />
+            </ProtectedLayout>
+          }
+        />
+
+        {/* ── Rentee (Consultant) applications ─────────────────────────────── */}
+        <Route
+          path="/listings"
+          element={
+            <ProtectedLayout allowedRoles={[ROLES.RENTEE]}>
+              <BrowseListings />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path="/applications"
+          element={
+            <ProtectedLayout allowedRoles={[ROLES.RENTEE]}>
+              <MyApplications />
+            </ProtectedLayout>
+          }
+        />
+
+        {/* ── Host (Landlord) processing ──────────────────────────────────── */}
+        <Route
+          path="/applications/manage"
+          element={
+            <ProtectedLayout allowedRoles={[ROLES.HOST]}>
+              <HostApplications />
+            </ProtectedLayout>
           }
         />
 
@@ -82,9 +122,9 @@ export default function App() {
         <Route
           path="/my-bookings"
           element={
-            <ProtectedRoute allowedRoles={[ROLES.RENTEE]}>
+            <ProtectedLayout allowedRoles={[ROLES.RENTEE]}>
               <MyBookings />
-            </ProtectedRoute>
+            </ProtectedLayout>
           }
         />
 
@@ -93,9 +133,9 @@ export default function App() {
         <Route
           path="/my-listings"
           element={
-            <ProtectedRoute allowedRoles={[ROLES.HOST]}>
+            <ProtectedLayout allowedRoles={[ROLES.HOST]}>
               <MyListings />
-            </ProtectedRoute>
+            </ProtectedLayout>
           }
         />
 
@@ -104,9 +144,9 @@ export default function App() {
         <Route
           path="/admin"
           element={
-            <ProtectedRoute allowedRoles={[ROLES.ADMIN]}>
+            <ProtectedLayout allowedRoles={[ROLES.ADMIN]}>
               <Admin />
-            </ProtectedRoute>
+            </ProtectedLayout>
           }
         />
 
@@ -115,9 +155,9 @@ export default function App() {
         <Route
           path="/moderation"
           element={
-            <ProtectedRoute allowedRoles={[ROLES.ADMIN, ROLES.HOST]}>
+            <ProtectedLayout allowedRoles={[ROLES.ADMIN, ROLES.HOST]}>
               <Moderation />
-            </ProtectedRoute>
+            </ProtectedLayout>
           }
         />
 

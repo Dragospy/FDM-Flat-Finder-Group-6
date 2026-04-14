@@ -1,8 +1,20 @@
 /**
- * Admin.css — Styles for the Admin page.
+ * Admin.css — uses .app-simple-page from main.css
  */
 
- /********************************
+/********************************
+          Main Styles
+********************************/
+p, h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+}
+
+.admin-heading {
+    margin: 1rem;
+}
+
+/********************************
             Sub Tabs
 ********************************/
 
@@ -34,18 +46,20 @@
     border-bottom-color: #77ff00;
 }
 
- /********************************
-            Main Styles
+/********************************
+        Main Listings Styles
 ********************************/
 
-.admin-container {
+.manage-listings-container {
     display: flex;
     justify-content: space-between;
+    gap: 2rem;
 
 }
 
 .left-panel {
     margin-left: 1rem;
+    min-width: 40rem;
 }
 
 .right-panel {
@@ -53,15 +67,18 @@
     width: 50%;
     display: flex;
     flex-direction: column;
+
+    padding: 1rem;
+    border: 1px solid rgba(119, 255, 0, 0.14);
+    border-radius: 1.1rem;
+    background: linear-gradient(180deg, rgba(49, 49, 49, 0.96) 0%, rgba(36, 36, 36, 0.96) 100%);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+    
 }
 
-.panel-separator {
-    margin-right: 1rem;
-}
-
-p, h1, h2, h3 {
-    margin: 0;
-    padding: 0;
+.listing-filtering {
+    display: flex;
+    gap: 0.5rem;
 }
 
 /********************************
@@ -71,49 +88,168 @@ p, h1, h2, h3 {
 .listing-group {
     display: flex;
     flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .listing-container {
     display: flex;
     flex-direction: column;
     text-align: center;
+    gap: 0.3rem;
     width: 15rem;
     font-size: 0.5rem;
     padding: 1rem;
+    border: 1px solid rgba(119, 255, 0, 0.14);
+    border-radius: 1.1rem;
+    background: linear-gradient(180deg, rgba(49, 49, 49, 0.96) 0%, rgba(36, 36, 36, 0.96) 100%);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
 }
 
 .listing-container:hover {
-    background-color: #464646;
+    cursor: pointer;
+    transform: translateY(-2px);
+    border-color: rgba(119, 255, 0, 0.24);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.34);
+}
+
+.active-listing-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.3rem;
+    width: 15rem;
+    font-size: 0.5rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(119, 255, 0, 0.14);
+    background: rgba(119, 255, 0, 0.14);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+    color: black;
+}
+
+.active-listing-container:hover {
     border-radius: 1rem;
     cursor: pointer;
+    transition: cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.15s;
 }
 
-.listing-image {
+.admin-listing-image {
     border-radius: 1rem;
+    height: 8rem;
 }
 
-.listing-title {
+.admin-listing-no-image {
+    height: 8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(119, 255, 0, 0, 0.08);
+}
+
+.admin-listing-type {
+    padding: 0.25rem 0.55rem 0.35rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(119, 255, 0, 0.12);
+    color: #77ff00;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.active-admin-listing-type {
+    padding: 0.25rem 0.55rem 0.35rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(119, 255, 0, 0.12);
+    color: #77ff00;
+    font-weight: 700;
+    font-size: 0.8rem;
+}
+
+.admin-listing-title {
     margin: 0.5rem 0 0.1rem 0;
     font-size: 0.8rem;
     color: #77ff00;
 }
 
+.active-admin-listing-title {
+    margin: 0.5rem 0 0.1rem 0;
+    font-size: 0.8rem;
+    color: #77ff00;
+
+}
+
 .listing-info {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 0.3rem;
     color: white;
     font-size: 0.8rem;
+}
+
+.active-listing-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.3rem;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.listing-price {
+    font-weight: bold;
 }
 
 /********************************
      Status Selection Styles
 ********************************/
 
-.status-selection {
-    padding: 0.5rem;
+.status-selection-button {
+    padding: 0.65rem;
+    min-width: 8rem;
     border-radius: 0.3rem;
     font-weight: bold;
+    background-color: #77ff00;
+    border: none;
+    font-size: 0.95rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    gap: 0.65rem;
+    align-items: center;
+}
+
+.dropdown-arrow {
+    font-size: 0.8rem;
+}
+
+.status-dropdown {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    z-index: 5;
+}
+
+.status-option {
+    background-color: black;
+    color: white;
+    border: none;
+    font-weight: bold;
+    padding: 0.65rem;
+    width: 8rem;
+    cursor: pointer;
+    
+}
+
+.bottom-status-option {
+    border-radius: 0 0 0.3rem 0.3rem;
+}
+
+.status-option:hover {
+    background-color: #333;
+    color: #fff;
+    transition: background-color 0.15s;
 }
 
 /********************************
@@ -140,10 +276,27 @@ p, h1, h2, h3 {
     cursor: pointer;
     font-size: 1.5rem;
     font-weight: bold;
+    color: #77ff00;
+
+    border: 1px solid rgba(119, 255, 0, 0.14);
+    background: linear-gradient(180deg, rgba(49, 49, 49, 0.96) 0%, rgba(36, 36, 36, 0.96) 100%);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
 }
 
 .listing-details-close-button:hover {
-    background: #64d104;
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.34);
+}
+
+.listing-details-no-image {
+    height: 30rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(28, 28, 28, 0.95);
+    color: rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(119, 255, 0, 0.08);
+    border-radius: 0.5rem;
 }
 
 .listing-images-container {
@@ -153,6 +306,7 @@ p, h1, h2, h3 {
 .listing-details-image {
     width: 100%;
     max-height: 30rem;
+    border-radius: 0.5rem;
 }
 
 .listing-images-container:hover .arrow-buttons-container {
@@ -176,16 +330,22 @@ p, h1, h2, h3 {
     font-size: 1.5rem;
     margin: 0 0.5rem 0 0.5rem;
     cursor: pointer;
-    background-color: #77ff00;
-    border: solid 1px rgba(175, 173, 173, 0.301);
+    color: #77ff00;
+    transform: translateY(-50%);
+    background: rgba(28, 28, 28, 0.82);
+    border: 1px solid rgba(119, 255, 0, 0.18);
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 
 .image-prev-button:hover, .image-next-button:hover {
-    background-color: #64d104;
+    background: #77ff00;
+    color: #111;
+    transform: translateY(-50%) scale(1.04);
 }
 
 .listing-details-title {
     margin-top: 1rem;
+    color: #77ff00;
 }
 
 .listing-details-price {
@@ -201,7 +361,7 @@ p, h1, h2, h3 {
     margin-bottom: 0.5rem;
 }
 
-.listing-amenities, .listing-location {
+.admin-listing-amenities, .listing-location {
     margin: 0;
 }
 
@@ -210,8 +370,9 @@ p, h1, h2, h3 {
     padding: 0;
 }
 
-.listing-amenities-heading, .listing-location-heading {
+.admin-listing-amenities-heading, .listing-location-heading {
     margin: 0;
+    margin-bottom: 0.25rem;
 }
 
 .approve-button, .reject-button, .revert-button, .delete-button {
@@ -222,6 +383,10 @@ p, h1, h2, h3 {
     font-weight: bold;
     font-size: 1rem;
     cursor: pointer;
+
+    border: 1px solid rgba(119, 255, 0, 0.14);
+    background: linear-gradient(180deg, rgba(49, 49, 49, 0.96) 0%, rgba(36, 36, 36, 0.96) 100%);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
 }
 
 .approve-button {
@@ -230,7 +395,7 @@ p, h1, h2, h3 {
 }
 
 .approve-button:hover {
-    background-color: rgb(29, 184, 29);
+    border-color: rgba(119, 255, 0, 0.534);
 }
 
 .reject-button {
@@ -260,13 +425,19 @@ p, h1, h2, h3 {
     background-color: rgb(223, 32, 32);
 }
 
+.approve-button:hover, .reject-button:hover, .revert-button:hover, .delete-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.34);
+}
+
 /********************************
           Pop Up Styles
 ********************************/
 
 .overlay-container {
     position: fixed;
-    overflow: hidden;
+    top: 0;
+    z-index: 1000;
     display: flex;
     justify-content: center;
     width: 100%;
@@ -283,15 +454,17 @@ p, h1, h2, h3 {
     gap: 3rem;
     align-items: center;
     text-align: center;
-    background-color: black;
-    border: 2px solid #77ff00;
-    border-radius: 0.5rem;
+    border-radius: 0.25rem;
     color: white;
     font-size: 1.25rem;
     font-weight: bold;
+
+    border: 2px solid rgba(119, 255, 0, 0.14);
+    background: linear-gradient(180deg, rgba(27, 27, 27, 0.96) 0%, rgba(22, 22, 22, 0.96) 100%);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.507);
 }
 
-.pop-up-approve {
+.pop-up-approve, .pop-up-activate {
     color: rgb(37, 206, 37);
 }
 
@@ -303,7 +476,7 @@ p, h1, h2, h3 {
     color: rgb(0, 119, 255);
 }
 
-.pop-up-delete {
+.pop-up-delete, .pop-up-deactivate {
     color: rgb(247, 42, 42);
 }
 
@@ -319,6 +492,10 @@ p, h1, h2, h3 {
     color: white;
     font-size: 1rem;
     font-weight: bold;
+
+    border: 1px solid rgba(119, 255, 0, 0.14);
+    background: linear-gradient(180deg, rgba(49, 49, 49, 0.96) 0%, rgba(36, 36, 36, 0.96) 100%);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
 }
 
 .pop-up-ok {
@@ -337,6 +514,11 @@ p, h1, h2, h3 {
 
 .pop-up-cancel:hover {
     background-color: rgb(223, 32, 32);
+}
+
+.pop-up-ok:hover, .pop-up-cancel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.34);
 }
 
 /********************************
@@ -459,4 +641,33 @@ p, h1, h2, h3 {
 .account-btn.activate {
     background: rgb(37, 206, 37);
     border: solid 1px rgb(29, 184, 29);
+}
+
+.reported-message {
+    margin: 0.5rem 0;
+    padding: 0.75rem 1rem;
+    background-color: #1a3d0a;
+    border: 1px solid #77ff00;
+    border-radius: 0.25rem;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.reports-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.report-entry {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    background-color: #fafafa;
+}
+
+.report-entry p {
+    margin: 0.25rem 0;
 }

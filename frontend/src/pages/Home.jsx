@@ -9,11 +9,15 @@ import "../stylesheets/Home.css";
 
 export default function Home() {
   return (
-    <main>
-      <h1>Home</h1>
-      <Link to="/login"><button>Sign in</button></Link>
-      <Link to="/register"><button>Register</button></Link>
-      <SearchListings/>
+    <main className="home-page">
+      <div className="home-card">
+        <h1 className="home-title">Flat Finder</h1>
+        <p className="home-subtitle">Sign in or create an account to continue.</p>
+        <div className="home-actions">
+          <Link to="/login" className="home-button">Sign in</Link>
+          <Link to="/register" className="home-button home-button--ghost">Register</Link>
+        </div>
+      </div>
     </main>
   );
 }
