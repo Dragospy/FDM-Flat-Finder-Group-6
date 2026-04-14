@@ -168,10 +168,40 @@ export function decideApplication({ applicationId, hostId, decision }) {
     throw new Error("Only submitted applications can be processed.");
   }
 
-  return db.update("applications", applicationId, {
+  if (decision === APPLICATION_STATUS.ACCEPTED) {
+    const listing = db.getById("listings", app.listingId);
+    if (!listing) throw new Error("Listing not found for this application.");
+
+    if (listing.available === false) {
+      throw new Error("This listing is no longer available.");
+    }
+  }
+
+  const decidedApplication = db.update("applications", applicationId, {
     status: decision,
     updatedAt: new Date().toISOString(),
   });
+
+  if (decision === APPLICATION_STATUS.ACCEPTED) {
+    db.update("listings", app.listingId, { available: false });
+
+    const competingSubmittedApplications = db.find(
+      "applications",
+      (candidate) =>
+        candidate.listingId === app.listingId
+        && candidate.id !== applicationId
+        && candidate.status === APPLICATION_STATUS.SUBMITTED
+    );
+
+    competingSubmittedApplications.forEach((candidate) => {
+      db.update("applications", candidate.id, {
+        status: APPLICATION_STATUS.REJECTED,
+        updatedAt: new Date().toISOString(),
+      });
+    });
+  }
+
+  return decidedApplication;
 }
 
 

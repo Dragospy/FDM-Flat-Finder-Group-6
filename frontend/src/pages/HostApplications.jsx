@@ -33,7 +33,13 @@ export default function HostApplications() {
     setSuccess("");
     try {
       decideApplication({ applicationId, hostId: user.id, decision });
-      setSuccess(`Application ${decision}.`);
+      if (decision === "accepted") {
+        setSuccess(
+          "Application accepted. The listing is now unavailable and other submitted applications were automatically rejected."
+        );
+      } else {
+        setSuccess("Application rejected.");
+      }
       setRefreshKey((k) => k + 1);
     } catch (err) {
       setError(err.message);

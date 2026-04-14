@@ -13,6 +13,19 @@ function statusBadgeClass(status) {
   return "status-badge status-badge--submitted";
 }
 
+function statusExplanation(status) {
+  if (status === "accepted") {
+    return "Accepted: this property has been reserved for you. The host will contact you with the next steps.";
+  }
+  if (status === "rejected") {
+    return "Rejected: the host selected another application for this property.";
+  }
+  if (status === "withdrawn") {
+    return "Withdrawn: you cancelled this application.";
+  }
+  return "Submitted: your application is under review by the host.";
+}
+
 export default function MyApplications() {
   const { user } = useAuth();
 
@@ -88,6 +101,7 @@ export default function MyApplications() {
                   {a.status}
                 </span>
               </div>
+              <p className="my-applications-meta">{statusExplanation(a.status)}</p>
 
               <div className="my-applications-item-bottom">
                 <div className="my-applications-details">
