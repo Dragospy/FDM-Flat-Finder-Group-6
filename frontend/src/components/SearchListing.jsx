@@ -2,17 +2,6 @@ import { getListings, getListing, getListingsByHost } from "../lib/api.js";
 import "../stylesheets/Search.css";
 import { useState } from "react";
 
-// Sort by, 
-//     0 CreatedAt
-//     1 bedroom count
-//     2 bathroom count
-//     3 maxGuests
-//     4 price / (Priceunit)
-//     5 rating
-//     6 reviewCount
-//     7 title
-
-//      location : Will require lat+lon to compare distance?
 
 function DisplayImages({images}){
     const listImages = images.map(image => <img className="listingImage" src={image} key={image} />);
@@ -89,9 +78,6 @@ function DisplayListing({listing}){
 function DisplayListings({listings}){
     console.log("listings");
     console.log(listings);
-    //let listOfListing = [];
-    //listOfListing.push(DisplayListing(listings[0]));
-
 
     const displayListings = listings.map(listing => <DisplayListing listing={listing}/>);
     if (listings.length>0){
@@ -103,7 +89,6 @@ function DisplayListings({listings}){
     
 }
 
-// Open weather API key. 437218189febbb7451a26102eb3ef8af
 function Geocoding(){
 
 }
@@ -292,43 +277,54 @@ export function SearchListings() {
 
     return (
         <>
-            <form name="searchForm" method="post" onSubmit={handleSearchSubmit}>
-                <label for="city">City</label>
-                <input type ="text" name="city"></input>
-                
+            <div>
+                <form className="form-container" name="searchForm" method="post" onSubmit={handleSearchSubmit}>
+                    <div className="sub-form-section">
+                        <label for="city">City</label>
+                        <input placeholder="Search city" type ="text" name="city"></input>
+                        
+                        <label for="location">Location</label>
+                        <input placeholder="Search address" type ="text" name="location"></input>                        
+                    </div>
 
-                <label for="location">Location</label>
-                <input type ="text" name="location"></input>
+
+                    <div className="sub-form-section">
+                        <label for="minPrice">minPrice</label>
+                        <input type ="number" name="minPrice"></input>
+                        <label for="maxPrice">maxPrice</label>
+                        <input type ="number" name="maxPrice"></input>
+                    </div>
+
+                    <label for="bedrooms">bedrooms</label>
+                    <input type ="number" name="bedrooms"></input>      
+
+                    <label for="unavailable">unavailable</label>
+                    <input type ="checkbox" name="unavailable"></input> 
+
+                    <select id="available" name="availability">
+                        <option value ="available">Available</option>
+                        <option value ="unavailable">Unavailable</option>
+                        <option value ="all">All</option>
+                    </select>
 
 
-                <label for="minPrice">minPrice</label>
-                <input type ="number" name="minPrice"></input>
-                <label for="maxPrice">maxPrice</label>
-                <input type ="number" name="maxPrice"></input>
 
-                <label for="bedrooms">bedrooms</label>
-                <input type ="number" name="bedrooms"></input>      
-
-                <label for="unavailable">unavailable</label>
-                <input type ="checkbox" name="unavailable"></input>                         
-
-                <label for="sort-by">Sort by</label>
-                <select id="sort-by" name="order">
-                    <option value ="cost">Cost</option>
-                    <option value ="name">Name</option>
-                    <option value ="ratings">Ratings</option>
-                    <option value ="reviewCount">Review count</option>
-                    <option value ="distance">Distance</option>
-                </select>
-                <label for="sort-order">Sort order</label>
-                <select id="sort-order" name="sortOrder">
-                    <option value ="ascending">Ascending</option>
-                    <option value ="descending">Descending</option>
-                </select>
-                <input type="submit" value="Search"></input>
-                    
-
-            </form>
+                    <label for="sort-by">Sort by</label>
+                    <select id="sort-by" name="order">
+                        <option value ="cost">Cost</option>
+                        <option value ="name">Name</option>
+                        <option value ="ratings">Ratings</option>
+                        <option value ="reviewCount">Review count</option>
+                        <option value ="distance">Distance</option>
+                    </select>
+                    <label for="sort-order">Sort order</label>
+                    <select id="sort-order" name="sortOrder">
+                        <option value ="ascending">Ascending</option>
+                        <option value ="descending">Descending</option>
+                    </select>
+                    <input className="search-button" type="submit" value="Search"></input>
+                </form>
+            </div>
 
             <div>
                 {/* <DisplayListing listing={listings[0]}/> */}
