@@ -279,49 +279,69 @@ export function SearchListings() {
         <>
             <div>
                 <form className="form-container" name="searchForm" method="post" onSubmit={handleSearchSubmit}>
+                    <h1>Search</h1>
                     <div className="sub-form-section">
-                        <label for="city">City</label>
-                        <input placeholder="Search city" type ="text" name="city"></input>
-                        
-                        <label for="location">Location</label>
-                        <input placeholder="Search address" type ="text" name="location"></input>                        
+                        <div className="input-set">
+                            <label className="sub-form-item" for="city">City</label>
+                            <input className="sub-form-item" placeholder="Search city" type ="text" name="city"></input>
+                        </div>
+                        <div className="input-set">
+                            <label className="sub-form-item" for="location">Location</label>
+                            <input className="sub-form-item" placeholder="Search address" type ="text" name="location"></input> 
+                        </div>
+                    
+                        <div className="input-set">
+                            <label className="sub-form-item" for="minPrice">Minimum price</label>
+                            <input className="sub-form-item" placeholder="Enter minimum price" type ="number" name="minPrice"></input>
+                        </div>
+
+                        <div className="input-set">
+                            <label className="sub-form-item" for="maxPrice">Maximum price</label>
+                            <input className="sub-form-item" placeholder="Enter maximum price" type ="number" name="maxPrice"></input>
+                        </div>
+
+                        <div className="input-set">
+                            <label className="sub-form-item"for="bedrooms">Number of bedrooms</label>
+                            <input className="sub-form-item" type ="number" name="bedrooms"></input>      
+                        </div>
                     </div>
 
 
-                    <div className="sub-form-section">
-                        <label for="minPrice">minPrice</label>
-                        <input type ="number" name="minPrice"></input>
-                        <label for="maxPrice">maxPrice</label>
-                        <input type ="number" name="maxPrice"></input>
-                    </div>
-
-                    <label for="bedrooms">bedrooms</label>
-                    <input type ="number" name="bedrooms"></input>      
 
                     <label for="unavailable">unavailable</label>
                     <input type ="checkbox" name="unavailable"></input> 
 
-                    <select id="available" name="availability">
-                        <option value ="available">Available</option>
-                        <option value ="unavailable">Unavailable</option>
-                        <option value ="all">All</option>
-                    </select>
+                    <div className="sub-form-section">
+                        <div className="input-set">
+                            <label className="sub-form-item" for="available">Availability</label>
+                            <select className="sub-form-item" id="available" name="availability">
+                                <option value ="available">Available</option>
+                                <option value ="unavailable">Unavailable</option>
+                                <option value ="all">All</option>
+                            </select>
+                        </div>
+
+                        <div className="input-set">
+                            <label className="sub-form-item" for="sort-by">Sort by</label>
+                            <select className="sub-form-item" id="sort-by" name="order">
+                                <option value ="cost">Cost</option>
+                                <option value ="name">Name</option>
+                                <option value ="ratings">Ratings</option>
+                                <option value ="reviewCount">Review count</option>
+                                <option value ="distance">Distance</option>
+                            </select>
+                        </div>
+
+                        <div className="input-set">
+                            <label className="sub-form-item" for="sort-order">Sort order</label>
+                            <select className="sub-form-item" id="sort-order" name="sortOrder">
+                                <option value ="ascending">Ascending</option>
+                                <option value ="descending">Descending</option>
+                            </select>
+                        </div>
 
 
-
-                    <label for="sort-by">Sort by</label>
-                    <select id="sort-by" name="order">
-                        <option value ="cost">Cost</option>
-                        <option value ="name">Name</option>
-                        <option value ="ratings">Ratings</option>
-                        <option value ="reviewCount">Review count</option>
-                        <option value ="distance">Distance</option>
-                    </select>
-                    <label for="sort-order">Sort order</label>
-                    <select id="sort-order" name="sortOrder">
-                        <option value ="ascending">Ascending</option>
-                        <option value ="descending">Descending</option>
-                    </select>
+                </div>
                     <input className="search-button" type="submit" value="Search"></input>
                 </form>
             </div>

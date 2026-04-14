@@ -39,7 +39,8 @@
 .form-container{
   display: flex;
   flex-flow: column wrap;
-  padding: 2rem;
+  padding: 1rem;
+  padding-left: 1.5rem;
   border: 0.1rem;
   border-color: rgb(255, 255, 255);
   border-style: solid;
@@ -50,7 +51,12 @@
 
 .sub-form-section{
   display: flex;
-  flex-flow: row wrap; 
+  flex-flow: row wrap;
+}
+
+.sub-form-item{
+  margin: 0.25rem;
+  margin-right: 2rem;
 }
 
 input{
@@ -61,8 +67,17 @@ input{
   outline: none;
 }
 
+select{
+  padding: 0.65rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+  outline: none;
+}
+
 .search-button{
   margin-top: 0.5rem;
+  margin-right: 0.5rem;
   padding: 0.75rem;
   border-radius: 8px;
   border: none;
@@ -71,4 +86,13 @@ input{
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
+  width: 33%;
+  align-self: center;
+  /* align-self:last baseline; */
+}
+
+.input-set{
+  display: flex;
+  flex-flow: column wrap; 
+  flex-grow: 1;
 }
