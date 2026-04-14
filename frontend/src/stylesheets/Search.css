@@ -1,17 +1,86 @@
 /**
  * Search.css — Styles for the Search page.
  */
+.search-page{
+  min-height: 100vh;
+  padding: 2rem 1rem 3rem;
+  background:
+    radial-gradient(circle at top left, rgba(119, 255, 0, 0.14), transparent 28%),
+    radial-gradient(circle at top right, rgba(119, 255, 0, 0.08), transparent 22%),
+    linear-gradient(180deg, #1c1c1c 0%, #151515 100%);
+}
+
+.search-page-shell{
+  width: min(1200px, 100%);
+  margin: 0 auto;
+}
+
+.search-page-header{
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(119, 255, 0, 0.15);
+  border-radius: 1.25rem;
+  background: rgba(49, 49, 49, 0.9);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(8px);  
+}
+
+.search-page-header h1 {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.05;
+}
+
+/* Form styling */
+.search-field {
+  display: grid;
+  gap: 0.35rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
 
 
- .listing{
-   padding: 1rem;
-   border: 0.1rem;
-   border-color: rgb(255, 255, 255);
-   border-style: solid;
-   border-radius: 2.5rem;
-   margin-bottom: 1rem;
-   background-color: rgba(70, 70, 70, 0.5);
- }
+.search-field .search-button{
+  width: fit-content;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--accent-ink);
+  margin-top: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.search-field input,
+.search-field select {
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  background: var(--surface-inner);
+  color: var(--text-primary);
+  font: inherit;
+}
+
+
+
+
+.listing{
+  padding: 1rem;
+  border: 0.1rem;
+  border-color: rgb(255, 255, 255);
+  border-style: solid;
+  border-radius: 2.5rem;
+  margin-bottom: 1rem;
+  background-color: rgba(70, 70, 70, 0.5);
+}
 
  .listing-contents{
    display: flex;
@@ -36,7 +105,7 @@
    transition: border-color 0.5s , border 0.5s;
 }
 
-.form-container{
+/* .form-container{
   display: flex;
   flex-flow: column wrap;
   padding: 1rem;
@@ -47,7 +116,7 @@
   border-radius: 2.5rem;
   margin: 1rem;
   background-color: rgba(70, 70, 70, 0.5);
-}
+} */
 
 .sub-form-section{
   display: flex;
@@ -75,7 +144,7 @@ select{
   outline: none;
 }
 
-.search-button{
+/* .search-button{
   margin-top: 0.5rem;
   margin-right: 0.5rem;
   padding: 0.75rem;
@@ -88,8 +157,8 @@ select{
   cursor: pointer;
   width: 33%;
   align-self: center;
-  /* align-self:last baseline; */
-}
+  
+} */
 
 .input-set{
   display: flex;
