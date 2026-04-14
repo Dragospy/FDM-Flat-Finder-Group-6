@@ -89,13 +89,8 @@ function DisplayListings({listings}){
     
 }
 
-function Geocoding(){
-
-}
-
 
 function GetDistanceBetweenCoordinates(latitude1, longitude1, latitude2, longitude2){
-
     // Haversine formula: Calculate distance between coordinates.
 
     // Earth radius in metres.
@@ -128,12 +123,7 @@ function GetDistanceBetweenCoordinates(latitude1, longitude1, latitude2, longitu
 }
 
 
-
-function fetchListings(){
-
-}
-
-function validateParseFilter(city,minPrice,maxPrice, bedrooms, unavailable){
+function validateParseFilter(city,minPrice,maxPrice, bedrooms, availability){
     let filter = {};
 
     if(Number.isInteger(parseInt(minPrice))){
@@ -148,10 +138,13 @@ function validateParseFilter(city,minPrice,maxPrice, bedrooms, unavailable){
         filter.bedrooms = parseInt(bedrooms);
     }
 
-    if(unavailable == "on" || unavailable == true){
-        filter.available = false;
-    
+    if(availability == "available"){
+        filter.available = true;
     }
+    else if(availability == "unavailable"){
+        filter.available = false;
+    }
+
     // else{
     //     filter.available = true;
     // }
@@ -207,39 +200,28 @@ function listingsAppendDistance(listings,lat,lon){
     return listings;
 }
 
+// API call to fetch
+async function getGeocoding(){
+    let zipcode = "SE15 4DH"
+    try{
+        const response = await fetch(`https://api.openweathermap.org/geo/1.0/zip?zip=${zipcode},GB&appid=437218189febbb7451a26102eb3ef8af`);
+        if (!response.ok) { 
+            throw new Error(`Response status: ${response.status}`);
+        }            
+        const result = await response.json();  
+        return result;
+    } 
+    catch(error){
+
+    }
+    
+}   
+
 export function SearchListings() {
-    console.log("Missing",getListings());
-    // Allow search by location and name.
-    
-
-    async function getGeocoding(){
-        let zipcode = "SE15 4DH"
-        try{
-            const response = await fetch(`https://api.openweathermap.org/geo/1.0/zip?zip=${zipcode},GB&appid=437218189febbb7451a26102eb3ef8af`);
-            if (!response.ok) { 
-                throw new Error(`Response status: ${response.status}`);
-            }            
-            const result = await response.json();  
-            return result;
-        } 
-        catch(error){
-
-        }
-        
-    }   
-
-
     // State:
-    const [listings, setListings] = useState(getListings());
-
-    const [sortOrder, setSortOrder] = useState(true);
-    
-
-    console.log(document);
-    
+    const [listings, setListings] = useState(getListings());    
     let searchParam = new URLSearchParams(window.location.search);
-    const [addressGeocode, setGeocode] = useState();
-    console.log(searchParam);
+
 
     function handleSearchSubmit(page){
         page.preventDefault();
@@ -248,11 +230,11 @@ export function SearchListings() {
         const formData = new FormData(searchForm);
 
         const formJson = Object.fromEntries(formData.entries());
+        console.log(formJson);
 
-        let newListingsOrder = getListings(validateParseFilter(formJson.city,formJson.minPrice,formJson.maxPrice,formJson.bedrooms,formJson.unavailable));
-
+        let newListingsOrder = getListings(validateParseFilter(formJson.city,formJson.minPrice,formJson.maxPrice,formJson.bedrooms,formJson.availability));
         if (formJson.order == "distance"){
-            console.log("THIS",formJson, getGeocoding()
+            console.log("FormJson",formJson, getGeocoding()
             .then(
                 function(value){
                     console.log(value);
@@ -268,10 +250,6 @@ export function SearchListings() {
             setListings(sortListings(newListingsOrder,formJson.order,formJson.sortOrder)); 
         }
 
-        console.log(addressGeocode);
-
-        
-        
     }
     
 
@@ -305,11 +283,6 @@ export function SearchListings() {
                             <input className="sub-form-item" type ="number" name="bedrooms"></input>      
                         </div>
                     </div>
-
-
-
-                    <label for="unavailable">unavailable</label>
-                    <input type ="checkbox" name="unavailable"></input> 
 
                     <div className="sub-form-section">
                         <div className="input-set">
@@ -347,7 +320,6 @@ export function SearchListings() {
             </div>
 
             <div>
-                {/* <DisplayListing listing={listings[0]}/> */}
                 <DisplayListings listings={listings}/>
             </div>
         </>

@@ -62,14 +62,6 @@ export default function App() {
             </PublicOnlyRoute>
           }    
         />
-        <Route 
-          path="/search"         
-          element={
-            <PublicOnlyRoute>
-              <Search />
-            </PublicOnlyRoute>
-          }    
-        />
 
         {/* ── Any authenticated user ─────────────────────────────────────── */}
         <Route
@@ -87,6 +79,14 @@ export default function App() {
               <Profile />
             </ProtectedLayout>
           }
+        />
+        <Route 
+          path="/search"         
+          element={
+            <ProtectedLayout>
+              <Search />
+            </ProtectedLayout>
+          }    
         />
 
         {/* ── Rentee (Consultant) applications ─────────────────────────────── */}
