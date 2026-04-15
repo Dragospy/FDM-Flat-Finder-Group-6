@@ -408,6 +408,8 @@
 .sub-form-section{
   display: flex;
   flex-flow: row wrap;
+
+  width: 100%;
 }
 
 .sub-form-item{
@@ -421,3 +423,6 @@
   flex-grow: 1;
 }
 
+.form-container{
+  width: 100%;
+}

@@ -343,7 +343,9 @@ function sanitizeAccount(account) {
  *   minPrice?:  number,
  *   maxPrice?:  number,
  *   bedrooms?:  number,
- *   available?: boolean
+ *   available?: boolean,
+ *   type?: string,
+ *   maxGuests?: number,
  * }} filters
  * @returns {Array}
  */
@@ -355,6 +357,12 @@ export function getListings(filters = {}) {
     listings = listings.filter((l) => l.location.city.toLowerCase().includes(city));
   }
 
+  if (filters.type !== undefined) {
+    const type = filters.type.toLowerCase();
+    listings = listings.filter((l) => l.type.toLowerCase() == type);
+  }  
+
+  // Price filter
   if (filters.minPrice !== undefined) {
     listings = listings.filter((l) => l.price >= filters.minPrice);
   }
@@ -362,6 +370,12 @@ export function getListings(filters = {}) {
   if (filters.maxPrice !== undefined) {
     listings = listings.filter((l) => l.price <= filters.maxPrice);
   }
+
+  // Guest filter
+  if (filters.maxGuests !== undefined) {
+    listings = listings.filter((l) => l.maxGuests == filters.maxGuests);
+  }  
+
 
   if (filters.bedrooms !== undefined) {
     listings = listings.filter((l) => l.bedrooms === filters.bedrooms);

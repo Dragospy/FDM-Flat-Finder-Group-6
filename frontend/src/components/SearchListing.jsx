@@ -184,37 +184,49 @@ function GetDistanceBetweenCoordinates(latitude1, longitude1, latitude2, longitu
 
     const distance = SphereRadius*centralAngle;
 
-    return Math.round(distance);
+    return Math.floor(distance);
 }
 
-
-function validateParseFilter(city,minPrice,maxPrice, bedrooms, availability){
+// city,minPrice,maxPrice, bedrooms, available
+function validateParseFilter(parseFilter){
     let filter = {};
 
-    if(Number.isInteger(parseInt(minPrice))){
-        filter.minPrice = parseInt(minPrice);
+    if(Number.isInteger(parseInt(parseFilter.minPrice))){
+        filter.minPrice = parseInt(parseFilter.minPrice);
     }
     
-    if(Number.isInteger(parseInt(maxPrice))){
-        filter.maxPrice = parseInt(maxPrice);
+    if(Number.isInteger(parseInt(parseFilter.maxPrice))){
+        filter.maxPrice = parseInt(parseFilter.maxPrice);
     }
 
-    if(Number.isInteger(parseInt(bedrooms))){
-        filter.bedrooms = parseInt(bedrooms);
+    if(Number.isInteger(parseInt(parseFilter.bedrooms))){
+        filter.bedrooms = parseInt(parseFilter.bedrooms);
     }
 
-    if(availability == "available"){
+    if(Number.isInteger(parseInt(parseFilter.maxGuests))){
+        filter.maxGuests = parseInt(parseFilter.maxGuests);
+    }
+
+    if(parseFilter.available == "available"){
         filter.available = true;
     }
-    else if(availability == "unavailable"){
+    else if(parseFilter.available == "unavailable"){
         filter.available = false;
     }
 
-    const parseCity = city.trim().toLowerCase();
+    const validTypes = ["studio", "apartment", "house"];
+    if (validTypes.includes(parseFilter.type)){
+        filter.type = parseFilter.type;
+    }
+
+
+    const parseCity = parseFilter.city.trim().toLowerCase();
    
     if(parseCity != ""){
         filter.city = parseCity;
     }
+
+    filter.status = APPLICATION_STATUS.ACCEPTED;
 
     return filter;
 }
@@ -277,6 +289,11 @@ async function getGeocoding(zipcode){
     
 }   
 
+function filterDistance(listings, maxDistance){
+    const sortedListings = listings.filter((l) => l.distance <= maxDistance);
+    return sortedListings;
+}
+
 export function SearchListings() {
     // State:
     const [listings, setListings] = useState(getListings());    
@@ -294,21 +311,36 @@ export function SearchListings() {
         const formJson = Object.fromEntries(formData.entries());
         console.log(formJson);
 
-        const parsedFilter = validateParseFilter(
-            formJson.city,
-            formJson.minPrice,
-            formJson.maxPrice,
-            formJson.bedrooms,
-            formJson.availability
-        );
+        const parsedFilter = validateParseFilter({
+            city : formJson.city,
+            minPrice : formJson.minPrice,
+            maxPrice : formJson.maxPrice,
+            bedrooms : formJson.bedrooms,
+            available : formJson.availability,
+            type : formJson.type,
+            maxGuests : formJson.maxGuest,
+        });
+
         let newListingsOrder = getListings(parsedFilter);
-        if (formJson.order == "distance"){
+        if (formJson.location.trim()!=""){
             console.log("FormJson",formJson, getGeocoding(formJson.location)
             .then(
                 function(value){
-                    console.log(value);
-                    let newListingsSet = listingsAppendDistance(newListingsOrder,value.lat,value.lon);
-                    setListings(sortListings(newListingsSet,formJson.order,formJson.sortOrder))
+                    try{
+                        let newListingsSet = listingsAppendDistance(newListingsOrder,value.lat,value.lon);
+
+                        if (Number.isInteger(parseInt(formJson.maxDistance))){
+                            setListings(sortListings(filterDistance(newListingsSet, parseInt(formJson.maxDistance)),formJson.order,formJson.sortOrder));
+                        }else{
+                            setListings(sortListings(newListingsSet,formJson.order,formJson.sortOrder));
+                        }
+                        
+                    }
+                    catch(errorMessage){
+                        console.log("API call failed: ", errorMessage)
+                        setListings(sortListings(newListingsOrder,formJson.order,formJson.sortOrder))
+                    }
+
                 },
                 function(){setListings(sortListings(newListingsOrder,formJson.order,formJson.sortOrder))}
             )
@@ -328,6 +360,11 @@ export function SearchListings() {
                 <section className="search-page-header">
                     <form className="form-container search-field" name="searchForm" method="post" onSubmit={handleSearchSubmit}>
                         <h1>Search listings</h1>
+
+
+
+
+
                         <div className="sub-form-section">
                             <div className="input-set">
                                 <label className="sub-form-item" for="city">City</label>
@@ -335,9 +372,20 @@ export function SearchListings() {
                             </div>
                             <div className="input-set">
                                 <label className="sub-form-item" for="location">Location</label>
-                                <input className="sub-form-item" placeholder="Search address" type ="text" name="location"></input> 
+                                <input className="sub-form-item" placeholder="Search by postcode" type ="text" name="location"></input> 
                             </div>
                         
+                            <div className="input-set">
+                                <label className="sub-form-item" for="maxDistance">Maximum distance</label>
+                                <input className="sub-form-item" min="0" placeholder="Enter maximum distance" type ="number" name="maxDistance"></input>
+                            </div>                            
+                        </div>
+
+                        <div className="sub-form-section">
+
+
+
+                  
                             <div className="input-set">
                                 <label className="sub-form-item" for="minPrice">Minimum price</label>
                                 <input className="sub-form-item" min="0" placeholder="Enter minimum price" type ="number" name="minPrice"></input>
@@ -347,11 +395,22 @@ export function SearchListings() {
                                 <label className="sub-form-item" for="maxPrice">Maximum price</label>
                                 <input className="sub-form-item" min="0" placeholder="Enter maximum price" type ="number" name="maxPrice"></input>
                             </div>
-
                             <div className="input-set">
                                 <label className="sub-form-item"for="bedrooms">Number of bedrooms</label>
-                                <input className="sub-form-item" min="0" type ="number" name="bedrooms"></input>      
+                                <input className="sub-form-item" min="0" placeholder="Enter number of bedrooms" type ="number" name="bedrooms"></input>      
                             </div>
+
+                            <div className="input-set">
+                                <label className="sub-form-item"for="maxGuest">Maximum number of guests</label>
+                                <input className="sub-form-item" min="0" placeholder="Enter number of guests" type ="number" name="maxGuest"></input>      
+                            </div>          
+
+
+
+
+
+  
+
                         </div>
 
                         <div className="sub-form-section">
@@ -362,6 +421,16 @@ export function SearchListings() {
                                     <option value ="available">Available</option>
                                     <option value ="unavailable">Unavailable</option>
 
+                                </select>
+                            </div>
+
+                           <div className="input-set">
+                                <label className="sub-form-item" for="type">Type</label>
+                                <select className="sub-form-item" id="type" name="type">
+                                    <option value ="all">All</option>                                    
+                                    <option value ="studio">Studio</option>
+                                    <option value ="apartment">Apartment</option>
+                                    <option value ="house">House</option>
                                 </select>
                             </div>
 
