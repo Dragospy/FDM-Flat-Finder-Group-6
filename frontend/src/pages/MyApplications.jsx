@@ -2,7 +2,12 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
-import { getListings, getApplicationsByConsultant, withdrawApplication } from "../lib/api";
+import {
+  getListings,
+  getApplicationsByConsultant,
+  withdrawApplication,
+  ACCEPTED_APPLICATION_STEPS,
+} from "../lib/api";
 
 import "../stylesheets/MyApplications.css";
 
@@ -24,6 +29,10 @@ function statusExplanation(status) {
     return "Withdrawn: you cancelled this application.";
   }
   return "Submitted: your application is under review by the host.";
+}
+
+function getAcceptedStep(stepId) {
+  return ACCEPTED_APPLICATION_STEPS.find((step) => step.id === stepId) ?? ACCEPTED_APPLICATION_STEPS[0];
 }
 
 export default function MyApplications() {
@@ -68,7 +77,7 @@ export default function MyApplications() {
             <h1>My Applications</h1>
             <p className="my-applications-copy">
               Track statuses and withdraw submitted applications, or{" "}
-              <Link to="/listings" className="my-applications-link">apply to another property</Link>.
+              <Link to="/search" className="my-applications-link">apply to another property</Link>.
             </p>
           </div>
           <div className="my-applications-actions">
@@ -82,13 +91,21 @@ export default function MyApplications() {
         <section className="my-applications-list">
           {applications.map((a) => {
           const listing = listingsById[a.listingId];
+          const acceptedStep = getAcceptedStep(a.postAcceptanceProgress?.step);
+          const acceptedStepIndex = ACCEPTED_APPLICATION_STEPS.findIndex(
+            (step) => step.id === acceptedStep.id
+          );
 
           return (
             <article key={a.id} className="my-applications-item">
               <div className="my-applications-item-top">
                 <div>
                   <h2 className="my-applications-title">
-                    {listing ? listing.title : "Unknown listing"}
+                    {listing ? (
+                      <Link to={`/apply/${encodeURIComponent(String(listing.id).trim())}`} className="my-applications-link">
+                        {listing.title}
+                      </Link>
+                    ) : "Unknown listing"}
                   </h2>
                   <p className="my-applications-meta">
                     {listing
@@ -120,6 +137,23 @@ export default function MyApplications() {
                       {a.details.notes && <li>Details: {a.details.notes}</li>}
                     </ul>
                   )}
+                  {a.status === "accepted" && (
+                    <div className="my-applications-next-steps">
+                      <p className="my-applications-meta">
+                        Next steps (current: {acceptedStep.label})
+                      </p>
+                      <ul className="my-applications-facts">
+                        {ACCEPTED_APPLICATION_STEPS.map((step, index) => {
+                          const done = index <= acceptedStepIndex;
+                          return (
+                            <li key={step.id}>
+                              {done ? "✓" : "○"} {step.label}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  )}
                 </div>
 
                 <div className="my-applications-actions">
@@ -142,7 +176,7 @@ export default function MyApplications() {
               <h2>No applications yet</h2>
               <p>
                 You haven&apos;t applied to any properties yet.{" "}
-                <Link to="/listings" className="my-applications-link">Browse listings</Link>.
+                <Link to="/search" className="my-applications-link">Browse listings</Link>.
               </p>
             </div>
           )}

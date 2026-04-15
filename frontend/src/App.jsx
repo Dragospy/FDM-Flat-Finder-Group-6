@@ -31,6 +31,7 @@ import BrowseListings from "./pages/BrowseListings";
 import MyApplications from "./pages/MyApplications";
 import HostApplications from "./pages/HostApplications";
 import Search  from "./pages/Search";
+import ApplyForListing from "./pages/ApplyForListing";
 import AccountManagement from "./pages/ManageAccounts";
 import ModerateListings from "./pages/ModerateListings";
 
@@ -105,6 +106,14 @@ export default function App() {
           element={
             <ProtectedLayout allowedRoles={[ROLES.RENTEE]}>
               <MyApplications />
+            </ProtectedLayout>
+          }
+        />
+        <Route
+          path="/apply/:listingId"
+          element={
+            <ProtectedLayout allowedRoles={[ROLES.RENTEE]}>
+              <ApplyForListing />
             </ProtectedLayout>
           }
         />
