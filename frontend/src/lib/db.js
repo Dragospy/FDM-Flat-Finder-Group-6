@@ -21,6 +21,7 @@ const KEYS = {
   listings:  "fdm_db_listings",
   enquiries: "fdm_db_enquiries",
   applications: "fdm_db_applications",
+  savedListings: "fdm_db_savedListings"
 };
 
 

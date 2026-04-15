@@ -1,11 +1,104 @@
 import { Link } from "react-router-dom";
 import { getListings, APPLICATION_STATUS } from "../lib/api.js";
-import { useAuth } from "../context/AuthContext.jsx";
+import { useAuth} from "../context/AuthContext.jsx";
 import { ROLES } from "../lib/auth.js";
 import "../stylesheets/Search.css";
 import { useState } from "react";
 import EnquiryButton from "./EnquiryButton";
 import ReportButton from "./ReportButton";
+import {db} from  "../lib/db.js";
+import {getCurrentUser} from  "../lib/auth.js";
+
+
+
+
+function isSavedListing(listingID){
+    const currentUserID = getCurrentUser().id;
+
+    if (currentUserID){
+
+
+        
+        const id = currentUserID+"-"+listingID;
+        const result = db.getById("savedListings",id);
+        if(result != null){
+            console.log(result, "Test");
+            return result.isListingSaved;
+        }else{
+            return false;
+        }
+        
+
+    }
+    
+    return null;
+
+}
+
+function setSaveListing(listingID, state){
+    const currentUserID = getCurrentUser().id;
+    console.log(state);
+
+    if(currentUserID){
+        const idStatus = currentUserID+"-"+listingID;
+        const listingStatus = {
+            id : idStatus,
+            isListingSaved : state
+        }
+
+        if (db.getById("savedListings",idStatus)){
+            db.update("savedListings",idStatus,listingStatus);
+        }else{
+            db.insert("savedListings",listingStatus);
+        }
+
+        
+    }
+
+}
+
+
+function SaveListingButton({listingID}){
+    const [listingAlreadySaved, setAlreadySaved] = useState(isSavedListing(listingID));
+
+    function saveListing(){
+        // console.log("test"+getCurrentUser().id);
+        // console.log(db.insert("savedListings"+getCurrentUser().id));
+        setSaveListing(listingID,true);
+        console.log("Turn on",isSavedListing(listingID));
+        setAlreadySaved(true);
+    }
+
+    function removeSavedListing(){
+
+
+
+        
+        setSaveListing(listingID,false);
+        console.log("Turn off",isSavedListing(listingID));
+        setAlreadySaved(false);
+    }
+
+    if (listingAlreadySaved == true){
+        return(
+        <button className="enquiry-button" onClick={() => removeSavedListing()}>
+            Remove saved listing
+        </button>
+        );
+
+    }
+    else{
+        return(
+        <button className="enquiry-button" onClick={() => saveListing()}>
+            Save listing
+        </button>
+        );
+    }
+
+
+}
+
+
 
 
 
@@ -110,6 +203,7 @@ function DisplayListing({ listing, showApplyAction }){
                 )}
             
                 <div className="search-listing-actions">
+                    <SaveListingButton listingID={listing.id}/>
                     {showApplyAction && (
                         listing.available ? (
                             <Link
@@ -298,6 +392,11 @@ function filterDistance(listings, maxDistance){
     return sortedListings;
 }
 
+function filterSavedListings(listings){
+    const sortedListings = listings.filter((l) => isSavedListing(l.id) == true);
+    return sortedListings;    
+}
+
 export function SearchListings() {
     // State:
     const [listings, setListings] = useState(getListings({status: APPLICATION_STATUS.ACCEPTED}));    
@@ -329,7 +428,15 @@ export function SearchListings() {
             maxGuests : formJson.maxGuest,
         });
 
-        let newListingsOrder = getListings(parsedFilter);
+        let newListingsOrder;
+        console.log(savedListing);
+        if (formJson.savedListing == "on"){
+            newListingsOrder=filterSavedListings(getListings(parsedFilter));
+        }
+        else{
+            newListingsOrder=getListings(parsedFilter);
+        }
+        
         if (formJson.location.trim()!=""){
             console.log("FormJson",formJson, getGeocoding(formJson.location)
             .then(
@@ -477,6 +584,12 @@ export function SearchListings() {
                             </div>
                         </div>
                     <div className="search-submit">
+                        <div>
+                            <div className="input-set">
+                                <label className="sub-form-item" for="savedListing">Show only saved listings:</label>
+                                <input className="sub-form-item" id="savedListing" name="savedListing" type="checkbox"/>
+                            </div>
+                        </div>
                         <span className="my-listings-count">{listings.length} results</span>
                         <input className="search-button" type="submit" value="Search"></input>                     
                     </div>
