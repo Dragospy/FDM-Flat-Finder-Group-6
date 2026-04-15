@@ -296,7 +296,7 @@ function filterDistance(listings, maxDistance){
 
 export function SearchListings() {
     // State:
-    const [listings, setListings] = useState(getListings());    
+    const [listings, setListings] = useState(getListings({status: APPLICATION_STATUS.ACCEPTED}));    
     const { user } = useAuth();
     const showApplyAction = user?.role === ROLES.RENTEE;
     let searchParam = new URLSearchParams(window.location.search);
