@@ -1,14 +1,36 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
-import { applyForListing, getApplicationsByConsultant, getListing, APPLICATION_STATUS } from "../lib/api";
+import {
+  applyForListing,
+  getApplicationsByConsultant,
+  getListing,
+  APPLICATION_STATUS,
+  getAccountWithPassword,
+} from "../lib/api";
 
 import "../stylesheets/BrowseListings.css";
 
 function formatPrice(listing) {
   const unit = listing.priceUnit ? `/${listing.priceUnit}` : "";
   return `£${listing.price.toLocaleString()}${unit}`;
+}
+
+function getRelevantDetailsPlaceholder(account) {
+  const fallback = "Share any useful details (e.g. wheelchair access needed or parking required).";
+  return account?.relevantDetailsForHost || account?.hostRelevantDetails || fallback;
+}
+
+function buildApplicationPrefill(account) {
+  return {
+    lengthOfStayMonths: account?.preferredStayLengthMonths ? String(account.preferredStayLengthMonths) : "",
+    moveInDate: account?.preferredMoveInDate ?? "",
+    occupants: 1,
+    employmentStatus: "",
+    monthlyIncome: "",
+    notes: account?.relevantDetailsForHost ?? account?.hostRelevantDetails ?? "",
+  };
 }
 
 export default function ApplyForListing() {
@@ -18,14 +40,22 @@ export default function ApplyForListing() {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [form, setForm] = useState({
-    lengthOfStayMonths: "",
-    moveInDate: "",
-    occupants: 1,
-    employmentStatus: "",
-    monthlyIncome: "",
-    notes: "",
-  });
+  const [form, setForm] = useState(buildApplicationPrefill(null));
+  const [relevantDetailsPlaceholder, setRelevantDetailsPlaceholder] = useState(
+    "Share any useful details (e.g. wheelchair access needed or parking required)."
+  );
+
+  useEffect(() => {
+    if (!user?.id) return;
+    try {
+      const account = getAccountWithPassword(user.id);
+      setForm(buildApplicationPrefill(account));
+      setRelevantDetailsPlaceholder(getRelevantDetailsPlaceholder(account));
+    } catch {
+      setForm(buildApplicationPrefill(null));
+      setRelevantDetailsPlaceholder(getRelevantDetailsPlaceholder(null));
+    }
+  }, [user?.id]);
 
   const hasAcceptedApplication = useMemo(() => {
     return getApplicationsByConsultant(user.id).some((a) => a.status === APPLICATION_STATUS.ACCEPTED);
@@ -75,14 +105,9 @@ export default function ApplyForListing() {
         notes: form.notes,
       });
       setSuccess("Application submitted.");
-      setForm({
-        lengthOfStayMonths: "",
-        moveInDate: "",
-        occupants: 1,
-        employmentStatus: "",
-        monthlyIncome: "",
-        notes: "",
-      });
+      const account = getAccountWithPassword(user.id);
+      setForm(buildApplicationPrefill(account));
+      setRelevantDetailsPlaceholder(getRelevantDetailsPlaceholder(account));
     } catch (err) {
       setError(err.message);
     }

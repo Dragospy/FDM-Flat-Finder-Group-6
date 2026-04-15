@@ -21,7 +21,17 @@
     "avatar": "https://i.pravatar.cc/150?u=alice",
     "createdAt": "2024-01-15T10:00:00.000Z",
     "securityQuestion": "What was the name of your first pet?",
-    "securityAnswer": "fluffy"
+    "securityAnswer": "fluffy",
+    "preferredCity": "",
+    "preferredType": "",
+    "budgetMin": "",
+    "budgetMax": "",
+    "preferredMoveInDate": "",
+    "preferredStayLengthMonths": "",
+    "relevantDetailsForHost": "",
+    "defaultListingCity": "London",
+    "defaultListingCountry": "England",
+    "defaultListingPriceUnit": "week"
   },
   {
     "id": "acc-002",
@@ -31,7 +41,25 @@
     "role": "rentee",
     "phone": "07222222222",
     "avatar": "https://i.pravatar.cc/150?u=bob",
-    "createdAt": "2024-02-20T14:30:00.000Z"
+    "createdAt": "2024-02-20T14:30:00.000Z",
+    "preferredLocation": "Manny",
+    "budgetMin": 10,
+    "budgetMax": 13300,
+    "preferredMoveInDate": "2026-03-02",
+    "preferredStayLengthMonths": 520,
+    "preferredAmenities": [
+      "nive"
+    ],
+    "defaultListingCity": "",
+    "defaultListingPostcode": "",
+    "defaultListingCountry": "",
+    "defaultListingPrice": "",
+    "securityQuestion": "What was the name of your first pet?",
+    "securityAnswer": "bob",
+    "preferredCity": "London",
+    "preferredType": "studio",
+    "hostRelevantDetails": "",
+    "relevantDetailsForHost": "Need wheelchair access brodie cuh"
   },
   {
     "id": "acc-003",

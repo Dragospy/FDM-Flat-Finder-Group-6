@@ -5,10 +5,10 @@
 }
 
 .profile-card {
-  background: var(--surface-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-card);
+  background: rgba(49, 49, 49, 0.92);
+  border: 1px solid rgba(119, 255, 0, 0.14);
+  border-radius: 1rem;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
   padding: 2rem;
 }
 
@@ -23,6 +23,59 @@
   margin: 0 0 1.5rem;
   color: var(--text-muted);
   font-size: 0.95rem;
+}
+
+.profile-subtitle--section {
+  margin-bottom: 1rem;
+}
+
+.profile-section-card {
+  margin-top: 1.5rem;
+  border: 1px solid rgba(119, 255, 0, 0.14);
+  border-radius: 0.85rem;
+  background: rgba(35, 35, 35, 0.9);
+  padding: 1.1rem;
+}
+
+.profile-section-title {
+  margin: 0;
+  color: #ffffff;
+  font-size: 1.15rem;
+}
+
+.profile-section-toggle {
+  width: 100%;
+  border: 1px solid rgba(119, 255, 0, 0.2);
+  border-radius: 0.75rem;
+  background: rgba(24, 24, 24, 0.9);
+  padding: 0.85rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.profile-section-toggle:hover {
+  border-color: rgba(119, 255, 0, 0.45);
+}
+
+.profile-section-heading-wrap {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.profile-section-subtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+
+.profile-section-icon {
+  color: #77ff00;
+  font-size: 1.4rem;
+  line-height: 1;
+  font-weight: 700;
 }
 
 .profile-alert {
@@ -47,28 +100,39 @@
 .profile-form {
   display: grid;
   gap: 1rem;
+  margin-top: 1rem;
 }
 
 .profile-field {
   display: grid;
   gap: 0.35rem;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.84);
   font-size: 0.9rem;
   font-weight: 500;
 }
 
 .profile-field input,
-.profile-field select {
+.profile-field select,
+.profile-field textarea {
   padding: 0.65rem 0.85rem;
-  border: 1px solid var(--border-input);
+  border: 1px solid #3f3f3f;
   border-radius: var(--radius-sm);
-  background: var(--surface-inner);
-  color: var(--text-primary);
+  background: #1c1c1c;
+  color: #ffffff;
   font: inherit;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
 }
 
 .profile-field input::placeholder {
-  color: var(--text-subtle);
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.profile-field input:focus,
+.profile-field select:focus,
+.profile-field textarea:focus {
+  outline: none;
+  border-color: rgba(119, 255, 0, 0.55);
+  box-shadow: 0 0 0 3px rgba(119, 255, 0, 0.15);
 }
 
 .profile-save {

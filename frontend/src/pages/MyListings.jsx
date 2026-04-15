@@ -5,12 +5,19 @@
 import React, { useState } from "react";
 import "../stylesheets/MyListings.css";
 import { getCurrentUser } from "../lib/auth";
-import { getListingsByHost, updateListing, createListing, deleteListing } from "../lib/api";
+import { getListingsByHost, updateListing, createListing, deleteListing, getAccountWithPassword } from "../lib/api";
 import ListingCard from "../components/ListingCard";
 import EditListingModal from "../components/EditListingModal";
 
 export default function MyListings() {
   const [user] = useState(getCurrentUser());
+  const [hostAccount] = useState(() => {
+    try {
+      return getAccountWithPassword(user.id);
+    } catch {
+      return null;
+    }
+  });
   const [listings, setListings] = useState(getListingsByHost(user.id));
   const [editingListing, setEditingListing] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -23,7 +30,17 @@ export default function MyListings() {
   };
 
   const handleCreate = () => {
-    setEditingListing({});
+    setEditingListing({
+      price: 0,
+      priceUnit: hostAccount?.defaultListingPriceUnit || "month",
+      location: {
+        address: "",
+        city: hostAccount?.defaultListingCity || "",
+        postcode: "",
+        country: hostAccount?.defaultListingCountry || "",
+      },
+      amenities: [],
+    });
     setIsCreate(true);
     setShowModal(true);
   };

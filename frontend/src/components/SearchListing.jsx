@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { getListings, APPLICATION_STATUS } from "../lib/api.js";
+import { getListings, APPLICATION_STATUS, getAccountWithPassword } from "../lib/api.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import { ROLES } from "../lib/auth.js";
 import "../stylesheets/Search.css";
@@ -303,6 +303,17 @@ export function SearchListings() {
     const [listings, setListings] = useState(getListings({status: APPLICATION_STATUS.ACCEPTED}));    
     const { user } = useAuth();
     const showApplyAction = user?.role === ROLES.RENTEE;
+    const account = user?.id ? getAccountWithPassword(user.id) : null;
+    const defaultCity = user?.role === ROLES.RENTEE
+      ? (account?.preferredCity ?? account?.preferredLocation ?? "")
+      : "";
+    const defaultType = user?.role === ROLES.RENTEE ? (account?.preferredType ?? "all") : "all";
+    const defaultMinPrice = user?.role === ROLES.RENTEE && account?.budgetMin !== undefined && account?.budgetMin !== ""
+      ? String(account.budgetMin)
+      : "";
+    const defaultMaxPrice = user?.role === ROLES.RENTEE && account?.budgetMax !== undefined && account?.budgetMax !== ""
+      ? String(account.budgetMax)
+      : "";
     
 
     const [alert, setAlert] = useState("");
@@ -391,7 +402,7 @@ export function SearchListings() {
                         <div className="sub-form-section">
                             <div className="input-set">
                                 <label className="sub-form-item" for="city">City</label>
-                                <input className="sub-form-item" placeholder="Search city" type ="text" name="city"></input>
+                                <input className="sub-form-item" placeholder="Search city" type ="text" name="city" defaultValue={defaultCity}></input>
                             </div>
                             <div className="input-set">
                                 <label className="sub-form-item" for="location">Location</label>
@@ -411,12 +422,12 @@ export function SearchListings() {
                   
                             <div className="input-set">
                                 <label className="sub-form-item" for="minPrice">Minimum price</label>
-                                <input className="sub-form-item" min="0" placeholder="Enter minimum price" type ="number" name="minPrice"></input>
+                                <input className="sub-form-item" min="0" placeholder="Enter minimum price" type ="number" name="minPrice" defaultValue={defaultMinPrice}></input>
                             </div>
 
                             <div className="input-set">
                                 <label className="sub-form-item" for="maxPrice">Maximum price</label>
-                                <input className="sub-form-item" min="0" placeholder="Enter maximum price" type ="number" name="maxPrice"></input>
+                                <input className="sub-form-item" min="0" placeholder="Enter maximum price" type ="number" name="maxPrice" defaultValue={defaultMaxPrice}></input>
                             </div>
                             <div className="input-set">
                                 <label className="sub-form-item"for="bedrooms">Number of bedrooms</label>
@@ -449,7 +460,7 @@ export function SearchListings() {
 
                            <div className="input-set">
                                 <label className="sub-form-item" for="type">Type</label>
-                                <select className="sub-form-item" id="type" name="type">
+                                <select className="sub-form-item" id="type" name="type" defaultValue={defaultType || "all"}>
                                     <option value ="all">All</option>                                    
                                     <option value ="studio">Studio</option>
                                     <option value ="apartment">Apartment</option>
