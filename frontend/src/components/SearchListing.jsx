@@ -150,7 +150,7 @@ function DisplayListings({ listings, showApplyAction }){
     }
     else{
         return (
-        <div className="browse-listings-empty-search">
+        <div className="browse-listings-search-alert">
             No listings match your filters.
         </div>
         );
@@ -305,8 +305,12 @@ export function SearchListings() {
     const showApplyAction = user?.role === ROLES.RENTEE;
     
 
+    const [alert, setAlert] = useState("");
+
 
     function handleSearchSubmit(page){
+        setAlert("");
+        let errorAlert;
         page.preventDefault();
 
         const searchForm = page.target;
@@ -343,6 +347,8 @@ export function SearchListings() {
                     catch(errorMessage){
                         console.log("API call failed: ", errorMessage)
                         setListings(sortListings(newListingsOrder,formJson.order,formJson.sortOrder))
+                        errorAlert =<>{errorAlert}<div className="browse-listings-search-alert">Postcode could not be found!</div> </>;
+                        setAlert(errorAlert);
                     }
 
                 },
@@ -352,7 +358,21 @@ export function SearchListings() {
             );
         }
         else{
+            
+            if(formJson.maxDistance != ""){
+                errorAlert =<>{errorAlert}<div className="browse-listings-search-alert">Enter a valid location for the listing distance to be calculated from!</div> </>;
+            }
+
+            if(formJson.order =="distance"){
+                errorAlert =<>{errorAlert}<div className="browse-listings-search-alert">Cannot sort by distance without an address location!</div> </>;
+            }
+
             setListings(sortListings(newListingsOrder,formJson.order,formJson.sortOrder)); 
+        }
+
+        if(errorAlert!=undefined){
+            setAlert(errorAlert);
+            
         }
 
     }
@@ -465,6 +485,7 @@ export function SearchListings() {
                 </section>
 
                 <section className="search-listings-container">
+                    {alert}
                     <DisplayListings listings={listings} showApplyAction={showApplyAction} />
                 </section>
             </div>
