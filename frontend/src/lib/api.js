@@ -240,7 +240,8 @@ function sanitizeAccount(account) {
  *   minPrice?:  number,
  *   maxPrice?:  number,
  *   bedrooms?:  number,
- *   available?: boolean
+ *   available?: boolean,
+ *   type?: string,
  * }} filters
  * @returns {Array}
  */
