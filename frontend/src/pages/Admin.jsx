@@ -24,6 +24,7 @@ import { useAuth } from "../context/AuthContext";
 import "../stylesheets/Admin.css";
 
 const LISTING_STATUS = {
+  ALL: "all",
   PENDING: "pending",
   APPROVED: "approved",
   REJECTED: "rejected",
@@ -83,7 +84,6 @@ function ListingDetails({id, setCurrentImage, currentImage, showPopUp, toggleDis
   function handleApprove(id) {
     approveListing(id);
     setListings(getListings());
-    console.log(getListings());
   }
 
   function handleReject(id) {
@@ -179,6 +179,7 @@ function StatusSelection({displayedStatus, setSearch, setDisplayedStatus, setLis
       {
         open && (
           <div className="status-dropdown">
+            <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.ALL); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>All</button>
             <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.PENDING); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Pending</button>
             <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.APPROVED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Approved</button>
             <button className="status-option bottom-status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.REJECTED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Rejected</button>
@@ -271,6 +272,20 @@ function AccommodationApproval({configurePopUp}) {
 
   const filtered = useMemo(() => {
     const query = search.toLowerCase();
+    if (displayedStatus === LISTING_STATUS.ALL) {
+      
+      return listings
+      .filter(
+        (l) =>
+          l.title.toLowerCase().includes(query) ||
+          l.type.toLowerCase().includes(query) ||
+          l.location.address.toLowerCase().includes(query) ||
+          l.location.city.toLowerCase().includes(query) ||
+          l.location.postcode.toLowerCase().includes(query) ||
+          l.location.country.toLowerCase().includes(query)
+      );
+    }
+
     return listings
       .filter((l) => (l.status === convertStatusToApplicationStatus(displayedStatus)))
       .filter(
@@ -310,7 +325,7 @@ function AccommodationApproval({configurePopUp}) {
         <div className="listing-group">
           {filtered.length === 0 ? (
         <p className="account-empty">
-          {search ? "No listings match your search." : `No ${displayedStatus} listings found.`}
+          {search ? "No listings match your search." : `No listings found.`}
         </p>
       ) : 
           displayListings(filtered, displayedStatus, displayedListing, toggleDisplayedListing)}

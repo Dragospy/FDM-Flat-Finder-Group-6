@@ -259,7 +259,7 @@ p, h1, h2, h3 {
     font-size: 0.95rem;
     cursor: pointer;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     gap: 0.65rem;
     align-items: center;
 }
