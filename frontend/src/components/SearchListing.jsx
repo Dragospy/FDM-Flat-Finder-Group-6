@@ -3,19 +3,12 @@ import "../stylesheets/Search.css";
 import { useState } from "react";
 
 
-function DisplayImages({images}){
-    const listImages = images.map(image => <img className="listingImage" src={image} key={image} />);
 
-    return <div>{listImages}</div>
-}
 
-function DisplayAmenities({amenities}){
-    const listingAmenities = amenities.map(amenity => <p key={amenity}>{amenity}</p>);
 
-    return <ul>{listingAmenities}</ul>
-}
 
 function DisplayListing({listing}){
+    const [currentImage, setCurrentImage] = useState(0);
     let distance = listing.distance;
     let displayDistance = ""; 
     if (distance || distance == 0){
@@ -23,53 +16,104 @@ function DisplayListing({listing}){
     }
 
     return(
-        <>
-            <div className="listing">
-                <div>
-                    <h2>{listing.title}</h2>
+
+        <div className={`search-listing-card ${!listing.available ? 'archived-card' : ''}`}>
+            {/* Images */}
+            <section className="search-section-image">
+                <div className="listing-images">
+                    {listing.images && listing.images.length > 0 ? (
+                    <>
+                        <img src={listing.images[currentImage]} alt={listing.title} className="listing-image-search" />
+                        {listing.images.length > 1 && (
+                        <>
+                            <button
+                            className="image-nav prev"
+                            onClick={() => setCurrentImage((currentImage - 1 + listing.images.length) % listing.images.length)}
+                            >
+                            ‹
+                            </button>
+                            <button
+                            className="image-nav next"
+                            onClick={() => setCurrentImage((currentImage + 1) % listing.images.length)}
+                            >
+                            ›
+                            </button>
+                            <div className="image-indicator">
+                            {currentImage + 1} / {listing.images.length}
+                            </div>
+                        </>
+                        )}
+                    </>
+                    ) : (
+                    <div className="no-image">No Image Available</div>
+                    )}
+                </div>
+            </section>
+            
+            <section className="search-section-information">
+                {/* Title and Rating */}
+                <div className="listing-header">
+                    <h3 className="listing-title">{listing.title}</h3>
+                    <div className="listing-rating">
+                    {listing.rating == 0
+                        ? 'No reviews yet'
+                        : `⭐ ${listing.rating} (${listing.reviewCount} reviews)`}
+                    </div>
                 </div>
 
-                <div className ="listing-contents">
-                    <div>
-                        <h3>Details:</h3>
-                            <div>
-                                <p>Rating: {listing.rating}</p>
-                                <p>Review count: {listing.reviewCount}</p>
-                            </div>
-                            <p>Price: {listing.price} per {listing.priceUnit}</p>
-                            <p>Type: {listing.type}</p>
-                            <p>Bedrooms:{listing.bedrooms}</p>
-                            <p>Bathrooms:{listing.bathrooms}</p>
-                            <p>Maximum number of guests: {listing.maxGuests}</p>
-                            {displayDistance}
+                {/* Type and Location */}
+                <div className="listing-type-location">
+                    <span className="listing-type">{listing.type}</span>
+                    <span className="listing-location">
+                    {listing.location.address}, {listing.location.city}, {listing.location.postcode}, {listing.location.country}
+                    </span>
+                </div>
 
-                            <h4>Amenities:</h4>
-                                <DisplayAmenities amenities={listing.amenities}/>
+                {/* Description */}
+                <p className="listing-description">{listing.description}</p>                
+
+                {displayDistance}
+
+                {/* Details */}
+                <h3>Details:</h3>
+                <div className="listing-details">
+                <div className="detail-item">
+                    <strong>Bedrooms:</strong> {listing.bedrooms}
+                </div>
+                <div className="detail-item">
+                    <strong>Bathrooms:</strong> {listing.bathrooms}
+                </div>
+                <div className="detail-item">
+                    <strong>Max Guests:</strong> {listing.maxGuests}
+                </div>
+                <div className="detail-item">
+                    <strong>Price:</strong> £{listing.price} per {listing.priceUnit}
+                </div>
+                <div className="detail-item">
+                    <strong>Available:</strong> {listing.available ? 'Yes' : 'No'}
+                </div>
+                </div>
+
+                {/* Amenities */}
+                {listing.amenities && listing.amenities.length > 0 && (
+                    <div className="listing-amenities">
+                    <strong>Amenities:</strong>
+                    <ul>
+                        {listing.amenities.map((amenity, index) => (
+                        <li key={index}>{amenity}</li>
+                        ))}
+                    </ul>
                     </div>
-
-                    <div>
-                        <h3>Description:</h3>
-                            <p>{listing.description}</p>
-                    </div>
-
-                    <div>
-                        <h3>Location:</h3>       
-                            <p>Postcode: {listing.location.postcode}</p>
-                            <p>Address: {listing.location.address}</p>
-                            <p>City: {listing.location.city}</p>
-                            <p>Country: {listing.location.country}</p>       
-                    </div>    
-
-                    <div>
-                        <h3>Images:</h3>
-                            <DisplayImages images={listing.images}/>
-                    </div>
-
- 
-                </div>   
-            </div>
+                )}
+            
+                {/* Created At */}
+                <div className="listing-created">
+                    <small>Listed on {new Date(listing.createdAt).toLocaleDateString()}</small>
+                </div>
+            </section>
+        </div>
         
-        </>
+
     )
 
 }
@@ -80,7 +124,7 @@ function DisplayListings({listings}){
 
     const displayListings = listings.map(listing => <DisplayListing listing={listing}/>);
     if (listings.length>0){
-        return <ul>{displayListings}</ul>;
+        return displayListings;
     }
     else{
         return <div><p>No results found</p></div>;
@@ -196,8 +240,7 @@ function listingsAppendDistance(listings,lat,lon){
 }
 
 // API call to fetch
-async function getGeocoding(){
-    let zipcode = "SE15 4DH"
+async function getGeocoding(zipcode){
     try{
         const response = await fetch(`https://api.openweathermap.org/geo/1.0/zip?zip=${zipcode},GB&appid=437218189febbb7451a26102eb3ef8af`);
         if (!response.ok) { 
@@ -229,7 +272,7 @@ export function SearchListings() {
 
         let newListingsOrder = getListings(validateParseFilter(formJson.city,formJson.minPrice,formJson.maxPrice,formJson.bedrooms,formJson.availability));
         if (formJson.order == "distance"){
-            console.log("FormJson",formJson, getGeocoding()
+            console.log("FormJson",formJson, getGeocoding(formJson.location)
             .then(
                 function(value){
                     console.log(value);
@@ -310,11 +353,15 @@ export function SearchListings() {
                                 </select>
                             </div>
                         </div>
-                    <input className="search-button" type="submit" value="Search"></input>
+                    <div className="search-submit">
+                        <span className="my-listings-count">{listings.length} results</span>
+                        <input className="search-button" type="submit" value="Search"></input>                     
+                    </div>
+                    
                     </form>
                 </section>
 
-                <section>
+                <section className="search-listings-container">
                     <DisplayListings listings={listings}/>
                 </section>
             </div>
