@@ -5,8 +5,6 @@ import { useState } from "react";
 
 
 
-
-
 function DisplayListing({listing}){
     const [currentImage, setCurrentImage] = useState(0);
     let distance = listing.distance;
@@ -20,20 +18,20 @@ function DisplayListing({listing}){
         <div className={`search-listing-card ${!listing.available ? 'archived-card' : ''}`}>
             {/* Images */}
             <section className="search-section-image">
-                <div className="listing-images">
+                <div className="listing-images-search">
                     {listing.images && listing.images.length > 0 ? (
                     <>
                         <img src={listing.images[currentImage]} alt={listing.title} className="listing-image-search" />
                         {listing.images.length > 1 && (
                         <>
                             <button
-                            className="image-nav prev"
+                            className="image-nav-search prev"
                             onClick={() => setCurrentImage((currentImage - 1 + listing.images.length) % listing.images.length)}
                             >
                             ‹
                             </button>
                             <button
-                            className="image-nav next"
+                            className="image-nav-search next"
                             onClick={() => setCurrentImage((currentImage + 1) % listing.images.length)}
                             >
                             ›
@@ -45,16 +43,16 @@ function DisplayListing({listing}){
                         )}
                     </>
                     ) : (
-                    <div className="no-image">No Image Available</div>
+                    <div className="no-image-search">No Image Available</div>
                     )}
                 </div>
             </section>
             
             <section className="search-section-information">
                 {/* Title and Rating */}
-                <div className="listing-header">
-                    <h3 className="listing-title">{listing.title}</h3>
-                    <div className="listing-rating">
+                <div className="listing-header-search">
+                    <h3 className="listing-title-search">{listing.title}</h3>
+                    <div className="listing-rating-search">
                     {listing.rating == 0
                         ? 'No reviews yet'
                         : `⭐ ${listing.rating} (${listing.reviewCount} reviews)`}
@@ -62,41 +60,41 @@ function DisplayListing({listing}){
                 </div>
 
                 {/* Type and Location */}
-                <div className="listing-type-location">
-                    <span className="listing-type">{listing.type}</span>
-                    <span className="listing-location">
+                <div className="listing-type-location-search">
+                    <span className="listing-type-search">{listing.type}</span>
+                    <span className="listing-location-search">
                     {listing.location.address}, {listing.location.city}, {listing.location.postcode}, {listing.location.country}
                     </span>
                 </div>
 
                 {/* Description */}
-                <p className="listing-description">{listing.description}</p>                
+                <p className="listing-description-search">{listing.description}</p>                
 
                 {displayDistance}
 
                 {/* Details */}
                 <h3>Details:</h3>
-                <div className="listing-details">
-                <div className="detail-item">
+                <div className="listing-details-search">
+                <div className="detail-item-search">
                     <strong>Bedrooms:</strong> {listing.bedrooms}
                 </div>
-                <div className="detail-item">
+                <div className="detail-item-search">
                     <strong>Bathrooms:</strong> {listing.bathrooms}
                 </div>
-                <div className="detail-item">
+                <div className="detail-item-search">
                     <strong>Max Guests:</strong> {listing.maxGuests}
                 </div>
-                <div className="detail-item">
+                <div className="detail-item-search">
                     <strong>Price:</strong> £{listing.price} per {listing.priceUnit}
                 </div>
-                <div className="detail-item">
+                <div className="detail-item-search">
                     <strong>Available:</strong> {listing.available ? 'Yes' : 'No'}
                 </div>
                 </div>
 
                 {/* Amenities */}
                 {listing.amenities && listing.amenities.length > 0 && (
-                    <div className="listing-amenities">
+                    <div className="listing-amenities-search">
                     <strong>Amenities:</strong>
                     <ul>
                         {listing.amenities.map((amenity, index) => (
@@ -107,7 +105,7 @@ function DisplayListing({listing}){
                 )}
             
                 {/* Created At */}
-                <div className="listing-created">
+                <div className="listing-created-search">
                     <small>Listed on {new Date(listing.createdAt).toLocaleDateString()}</small>
                 </div>
             </section>
