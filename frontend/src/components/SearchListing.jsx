@@ -160,33 +160,39 @@ function GetDistanceBetweenCoordinates(latitude1, longitude1, latitude2, longitu
 
     const distance = SphereRadius*centralAngle;
 
-    return Math.round(distance);
+    return Math.floor(distance);
 }
 
-
-function validateParseFilter(city,minPrice,maxPrice, bedrooms, availability){
+// city,minPrice,maxPrice, bedrooms, available
+function validateParseFilter(parseFilter){
     let filter = {};
 
-    if(Number.isInteger(parseInt(minPrice))){
-        filter.minPrice = parseInt(minPrice);
+    if(Number.isInteger(parseInt(parseFilter.minPrice))){
+        filter.minPrice = parseInt(parseFilter.minPrice);
     }
     
-    if(Number.isInteger(parseInt(maxPrice))){
-        filter.maxPrice = parseInt(maxPrice);
+    if(Number.isInteger(parseInt(parseFilter.maxPrice))){
+        filter.maxPrice = parseInt(parseFilter.maxPrice);
     }
 
-    if(Number.isInteger(parseInt(bedrooms))){
-        filter.bedrooms = parseInt(bedrooms);
+    if(Number.isInteger(parseInt(parseFilter.bedrooms))){
+        filter.bedrooms = parseInt(parseFilter.bedrooms);
     }
 
-    if(availability == "available"){
+    if(parseFilter.availability == "available"){
         filter.available = true;
     }
-    else if(availability == "unavailable"){
+    else if(parseFilter.availability == "unavailable"){
         filter.available = false;
     }
 
-    const parseCity = city.trim().toLowerCase();
+    const validTypes = ["studio", "apartment", "house"];
+    if (validTypes.includes(parseFilter.type)){
+        filter.type = parseFilter.type;
+    }
+
+
+    const parseCity = parseFilter.city.trim().toLowerCase();
    
     if(parseCity != ""){
         filter.city = parseCity;
@@ -270,14 +276,30 @@ export function SearchListings() {
         const formJson = Object.fromEntries(formData.entries());
         console.log(formJson);
 
-        let newListingsOrder = getListings(validateParseFilter(formJson.city,formJson.minPrice,formJson.maxPrice,formJson.bedrooms,formJson.availability));
-        if (formJson.order == "distance"){
+        const filterToParse ={
+            city : formJson.city,
+            minPrice : formJson.minPrice,
+            maxPrice : formJson.maxPrice,
+            bedrooms : formJson.bedrooms,
+            available : formJson.availability,
+            type : formJson.type
+        }
+
+        let newListingsOrder = getListings(validateParseFilter(filterToParse));
+        if (formJson.order == "distance" && formJson.location.trim()!=""){
             console.log("FormJson",formJson, getGeocoding(formJson.location)
             .then(
                 function(value){
-                    console.log(value);
-                    let newListingsSet = listingsAppendDistance(newListingsOrder,value.lat,value.lon);
-                    setListings(sortListings(newListingsSet,formJson.order,formJson.sortOrder))
+                    try{
+                        console.log(value);
+                        let newListingsSet = listingsAppendDistance(newListingsOrder,value.lat,value.lon);
+                        setListings(sortListings(newListingsSet,formJson.order,formJson.sortOrder))
+                    }
+                    catch{
+                        console.log("API call failed.")
+                        setListings(sortListings(newListingsOrder,formJson.order,formJson.sortOrder))
+                    }
+
                 },
                 function(){setListings(sortListings(newListingsOrder,formJson.order,formJson.sortOrder))}
             )

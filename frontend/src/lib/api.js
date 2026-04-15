@@ -252,6 +252,11 @@ export function getListings(filters = {}) {
     listings = listings.filter((l) => l.location.city.toLowerCase().includes(city));
   }
 
+  if (filters.type !== undefined) {
+    const type = filters.type.toLowerCase();
+    listings = listings.filter((l) => l.type.toLowerCase() == type);
+  }  
+
   if (filters.minPrice !== undefined) {
     listings = listings.filter((l) => l.price >= filters.minPrice);
   }
