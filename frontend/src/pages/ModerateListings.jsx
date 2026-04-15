@@ -16,7 +16,6 @@ import {
   dismissReports,
   updateListing,
   APPLICATION_STATUS,
-  reportListing
 } from "../lib/api";
 import "../stylesheets/Admin.css";
 
@@ -384,7 +383,7 @@ function ReportedListings() {
       <div className="left-panel">
         {message && <p className="reported-message">{message}</p>}
         {reported.length === 0 ? (
-          <p>No reported listings.</p>
+          <p className="no-reported-message">No reported listings.</p>
         ) : (
           <div className="listing-group">
             {reported.map((l) => (
