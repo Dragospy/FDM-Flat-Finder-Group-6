@@ -426,3 +426,31 @@
 .form-container{
   width: 100%;
 }
+
+.browse-listings-empty-search {
+  grid-column: 1 / -1;
+  display: grid;
+  gap: 0.85rem;
+  place-items: start;
+  padding: 2rem;
+  border: 1px dashed rgba(119, 255, 0, 0.22);
+  border-radius: 1.25rem;
+  background: rgba(49, 49, 49, 0.72);
+  color: #fff;
+}
+
+
+.search-apply-disabled{
+  opacity: 0.45;
+  cursor: not-allowed;
+  background: #2a2a2a;
+  color: #b3b3b3;
+
+  padding: 0.7rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(119, 255, 0, 0.2);
+  font-weight: 700;
+  font-family: inherit;
+}
+
+

@@ -149,7 +149,11 @@ function DisplayListings({ listings, showApplyAction }){
         return displayListings;
     }
     else{
-        return <div><p>No results found</p></div>;
+        return (
+        <div className="browse-listings-empty-search">
+            No listings match your filters.
+        </div>
+        );
     }
     
 }
