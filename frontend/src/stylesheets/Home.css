@@ -57,6 +57,7 @@
 
 .home-button:hover {
   background: var(--accent-hover);
+  color: black;
 }
 
 .home-button--ghost {
