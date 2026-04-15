@@ -25,7 +25,6 @@ import Profile     from "./pages/Profile";
 import MyBookings  from "./pages/MyBookings";
 import MyListings  from "./pages/MyListings";
 import Admin       from "./pages/ModerateListings";
-import Moderation  from "./pages/Moderation";
 import Enquiries   from "./pages/Enquiries";
 import PublicOnlyRoute from "./components/PublicOnlyRoute";
 import BrowseListings from "./pages/BrowseListings";
@@ -178,17 +177,6 @@ export default function App() {
           element={
             <ProtectedLayout allowedRoles={[ROLES.ADMIN]}>
               <AccountManagement />
-            </ProtectedLayout>
-          }
-        />
-
-
-        {/* ── Admin + Host ───────────────────────────────────────────────── */}
-        <Route
-          path="/moderation"
-          element={
-            <ProtectedLayout allowedRoles={[ROLES.ADMIN, ROLES.HOST]}>
-              <Moderation />
             </ProtectedLayout>
           }
         />

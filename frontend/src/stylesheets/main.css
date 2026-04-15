@@ -18,6 +18,10 @@
   --radius: 12px;
   --radius-sm: 8px;
   --font: system-ui, -apple-system, sans-serif;
+  --app-page-gradient:
+    radial-gradient(circle at top left, rgba(119, 255, 0, 0.14), transparent 28%),
+    radial-gradient(circle at top right, rgba(119, 255, 0, 0.08), transparent 22%),
+    linear-gradient(180deg, #1c1c1c 0%, #151515 100%);
 }
 
 * {
@@ -42,10 +46,10 @@ a:hover {
 /* Wrapper from PublicOnlyRoute.jsx */
 .publicRouteLayout {
   min-height: 100vh;
-  background: var(--app-bg);
+  background: var(--app-page-gradient);
 }
 
-/* Simple inner pages (bookings, listings, admin, moderation) */
+/* Simple inner pages (bookings, listings, admin) */
 .app-simple-page {
   max-width: 720px;
   margin: 0 auto;
