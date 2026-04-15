@@ -532,11 +532,11 @@ p, h1, h2, h3 {
     box-shadow: 0 14px 30px rgba(0, 0, 0, 0.507);
 }
 
-.pop-up-approve, .pop-up-activate {
+.pop-up-approve, .pop-up-activate, .pop-up-dismiss {
     color: rgb(37, 206, 37);
 }
 
-.pop-up-reject {
+.pop-up-reject, .pop-up-deactivate {
     color: rgb(247, 182, 42);
 }
 
