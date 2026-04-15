@@ -52,7 +52,6 @@ export default function AuthShell({ children }) {
               <NavLink to="/applications/manage" className={navClass}>Process applications</NavLink>
               <NavLink to="/my-listings" className={navClass}>My listings</NavLink>
               <NavLink to="/enquiries" className={navClass}>Enquiries</NavLink>
-              <NavLink to="/moderation" className={navClass}>Moderation</NavLink>
             </>
           )}
 
@@ -60,7 +59,6 @@ export default function AuthShell({ children }) {
             <>
               <NavLink to="/moderate-listings" className={navClass}>Moderate Listings</NavLink>
               <NavLink to="/manage-accounts" className={navClass}>Manage Accounts</NavLink>
-              <NavLink to="/moderation" className={navClass}>Moderation</NavLink>
             </>
           )}
           <NavLink to="/search" className={navClass} end>

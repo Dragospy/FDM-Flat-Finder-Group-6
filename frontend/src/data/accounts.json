@@ -30,7 +30,7 @@
     "preferredStayLengthMonths": "",
     "relevantDetailsForHost": "",
     "defaultListingCity": "London",
-    "defaultListingCountry": "England",
+    "defaultListingCountry": "test1",
     "defaultListingPriceUnit": "week"
   },
   {
@@ -43,10 +43,10 @@
     "avatar": "https://i.pravatar.cc/150?u=bob",
     "createdAt": "2024-02-20T14:30:00.000Z",
     "preferredLocation": "Manny",
-    "budgetMin": 10,
-    "budgetMax": 13300,
+    "budgetMin": 107,
+    "budgetMax": 133022,
     "preferredMoveInDate": "2026-03-02",
-    "preferredStayLengthMonths": 520,
+    "preferredStayLengthMonths": 21,
     "preferredAmenities": [
       "nive"
     ],
@@ -56,10 +56,11 @@
     "defaultListingPrice": "",
     "securityQuestion": "What was the name of your first pet?",
     "securityAnswer": "bob",
-    "preferredCity": "London",
-    "preferredType": "studio",
+    "preferredCity": "",
+    "preferredType": "apartment",
     "hostRelevantDetails": "",
-    "relevantDetailsForHost": "Need wheelchair access brodie cuh"
+    "relevantDetailsForHost": "Need wheelchair access",
+    "defaultListingPriceUnit": "month"
   },
   {
     "id": "acc-003",

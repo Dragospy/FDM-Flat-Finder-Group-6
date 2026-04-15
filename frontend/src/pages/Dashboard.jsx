@@ -37,6 +37,10 @@ export default function Dashboard() {
               <h2>Profile</h2>
               <p>Update your contact details and account information.</p>
             </Link>
+            <Link to="/enquiries" className="dashboard-card">
+              <h2>Enquiries</h2>
+              <p>View and respond to your listings enquiries.</p>
+            </Link>            
             <Link to="/search" className="dashboard-card">
               <h2>Search</h2>
               <p>Search accommodation listings.</p>
@@ -54,13 +58,13 @@ export default function Dashboard() {
               <h2>My listings</h2>
               <p>Create, edit, and archive your properties.</p>
             </Link>
-            <Link to="/moderation" className="dashboard-card">
-              <h2>Moderation</h2>
-              <p>Review listing reports and moderation queue items.</p>
-            </Link>
             <Link to="/profile" className="dashboard-card">
               <h2>Profile</h2>
               <p>Update your contact details and account information.</p>
+            </Link>
+            <Link to="/enquiries" className="dashboard-card">
+              <h2>Enquiries</h2>
+              <p>View and respond to listings enquiries.</p>
             </Link>
             <Link to="/search" className="dashboard-card">
               <h2>Search</h2>
@@ -82,10 +86,6 @@ export default function Dashboard() {
             <Link to="/manage-accounts" className="dashboard-card">
               <h2>Manage Accounts</h2>
               <p>Deactivate and reactivate accounts.</p>
-            </Link>
-            <Link to="/moderation" className="dashboard-card">
-              <h2>Moderation</h2>
-              <p>Review reports and moderation queue items.</p>
             </Link>
             <Link to="/search" className="dashboard-card">
               <h2>Search</h2>
