@@ -299,7 +299,7 @@ export function SearchListings() {
     const [listings, setListings] = useState(getListings());    
     const { user } = useAuth();
     const showApplyAction = user?.role === ROLES.RENTEE;
-    let searchParam = new URLSearchParams(window.location.search);
+    
 
 
     function handleSearchSubmit(page){
@@ -360,11 +360,10 @@ export function SearchListings() {
                 <section className="search-page-header">
                     <form className="form-container search-field" name="searchForm" method="post" onSubmit={handleSearchSubmit}>
                         <h1>Search listings</h1>
-
-
-
-
-
+                        {/* <div className="input-set">
+                            <label className="sub-form-item" for="title">Search by title</label>
+                            <input className="sub-form-item" placeholder="Search by title" type ="text" name="title"></input>
+                        </div>                       */}
                         <div className="sub-form-section">
                             <div className="input-set">
                                 <label className="sub-form-item" for="city">City</label>
