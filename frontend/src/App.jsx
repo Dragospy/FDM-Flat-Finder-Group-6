@@ -24,13 +24,15 @@ import Dashboard   from "./pages/Dashboard";
 import Profile     from "./pages/Profile";
 import MyBookings  from "./pages/MyBookings";
 import MyListings  from "./pages/MyListings";
-import Admin       from "./pages/Admin";
+import Admin       from "./pages/ModerateListings";
 import Moderation  from "./pages/Moderation";
 import PublicOnlyRoute from "./components/PublicOnlyRoute";
 import BrowseListings from "./pages/BrowseListings";
 import MyApplications from "./pages/MyApplications";
 import HostApplications from "./pages/HostApplications";
 import Search  from "./pages/Search";
+import AccountManagement from "./pages/ManageAccounts";
+import ModerateListings from "./pages/ModerateListings";
 
 export default function App() {
   return (
@@ -142,10 +144,19 @@ export default function App() {
 
         {/* ── Admin only ─────────────────────────────────────────────────── */}
         <Route
-          path="/admin"
+          path="/moderate-listings"
           element={
             <ProtectedLayout allowedRoles={[ROLES.ADMIN]}>
-              <Admin />
+              <ModerateListings />
+            </ProtectedLayout>
+          }
+        />
+
+        <Route
+          path="/manage-accounts"
+          element={
+            <ProtectedLayout allowedRoles={[ROLES.ADMIN]}>
+              <AccountManagement />
             </ProtectedLayout>
           }
         />
