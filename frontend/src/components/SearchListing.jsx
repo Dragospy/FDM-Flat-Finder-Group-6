@@ -179,10 +179,14 @@ function validateParseFilter(parseFilter){
         filter.bedrooms = parseInt(parseFilter.bedrooms);
     }
 
-    if(parseFilter.availability == "available"){
+    if(Number.isInteger(parseInt(parseFilter.maxGuests))){
+        filter.maxGuests = parseInt(parseFilter.maxGuests);
+    }
+
+    if(parseFilter.available == "available"){
         filter.available = true;
     }
-    else if(parseFilter.availability == "unavailable"){
+    else if(parseFilter.available == "unavailable"){
         filter.available = false;
     }
 
@@ -261,6 +265,11 @@ async function getGeocoding(zipcode){
     
 }   
 
+function filterDistance(listings, maxDistance){
+    const sortedListings = listings.filter((l) => l.distance <= maxDistance);
+    return sortedListings;
+}
+
 export function SearchListings() {
     // State:
     const [listings, setListings] = useState(getListings({status: APPLICATION_STATUS.ACCEPTED}));    
@@ -282,21 +291,27 @@ export function SearchListings() {
             maxPrice : formJson.maxPrice,
             bedrooms : formJson.bedrooms,
             available : formJson.availability,
-            type : formJson.type
+            type : formJson.type,
+            maxGuests : formJson.maxGuest,
         }
 
         let newListingsOrder = getListings(validateParseFilter(filterToParse));
-        if (formJson.order == "distance" && formJson.location.trim()!=""){
+        if (formJson.location.trim()!=""){
             console.log("FormJson",formJson, getGeocoding(formJson.location)
             .then(
                 function(value){
                     try{
-                        console.log(value);
                         let newListingsSet = listingsAppendDistance(newListingsOrder,value.lat,value.lon);
-                        setListings(sortListings(newListingsSet,formJson.order,formJson.sortOrder))
+
+                        if (Number.isInteger(parseInt(formJson.maxDistance))){
+                            setListings(sortListings(filterDistance(newListingsSet, parseInt(formJson.maxDistance)),formJson.order,formJson.sortOrder));
+                        }else{
+                            setListings(sortListings(newListingsSet,formJson.order,formJson.sortOrder));
+                        }
+                        
                     }
-                    catch{
-                        console.log("API call failed.")
+                    catch(errorMessage){
+                        console.log("API call failed: ", errorMessage)
                         setListings(sortListings(newListingsOrder,formJson.order,formJson.sortOrder))
                     }
 
