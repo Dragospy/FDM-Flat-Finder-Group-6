@@ -12,18 +12,15 @@ import {
   getListings,
   rejectListing,
   revertListingToPending,
-  getAccounts,
-  deactivateAccount,
-  activateAccount,
   getReportedListings,
   dismissReports,
   updateListing,
-  APPLICATION_STATUS
+  APPLICATION_STATUS,
 } from "../lib/api";
-import { useAuth } from "../context/AuthContext";
 import "../stylesheets/Admin.css";
 
 const LISTING_STATUS = {
+  ALL: "all",
   PENDING: "pending",
   APPROVED: "approved",
   REJECTED: "rejected",
@@ -83,7 +80,6 @@ function ListingDetails({id, setCurrentImage, currentImage, showPopUp, toggleDis
   function handleApprove(id) {
     approveListing(id);
     setListings(getListings());
-    console.log(getListings());
   }
 
   function handleReject(id) {
@@ -179,6 +175,7 @@ function StatusSelection({displayedStatus, setSearch, setDisplayedStatus, setLis
       {
         open && (
           <div className="status-dropdown">
+            <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.ALL); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>All</button>
             <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.PENDING); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Pending</button>
             <button className="status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.APPROVED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Approved</button>
             <button className="status-option bottom-status-option" onClick={() => {setOpen(false); setDisplayedStatus(LISTING_STATUS.REJECTED); toggleDisplayedListing(null); setSearch(""); setListings(getListings());}}>Rejected</button>
@@ -218,7 +215,7 @@ function displayListings(listings, status, displayedListing, setDisplayedListing
  * @param {function} togglePopUp Function to toggle the pop up
  * @returns Custom pop up to get confirmation from the user
  */
-function PopUp({details, togglePopUp}) {
+export function PopUp({details, togglePopUp}) {
 
   const keyword = details.keyword;
   const message = details.message.split(keyword);
@@ -271,6 +268,20 @@ function AccommodationApproval({configurePopUp}) {
 
   const filtered = useMemo(() => {
     const query = search.toLowerCase();
+    if (displayedStatus === LISTING_STATUS.ALL) {
+      
+      return listings
+      .filter(
+        (l) =>
+          l.title.toLowerCase().includes(query) ||
+          l.type.toLowerCase().includes(query) ||
+          l.location.address.toLowerCase().includes(query) ||
+          l.location.city.toLowerCase().includes(query) ||
+          l.location.postcode.toLowerCase().includes(query) ||
+          l.location.country.toLowerCase().includes(query)
+      );
+    }
+
     return listings
       .filter((l) => (l.status === convertStatusToApplicationStatus(displayedStatus)))
       .filter(
@@ -310,7 +321,7 @@ function AccommodationApproval({configurePopUp}) {
         <div className="listing-group">
           {filtered.length === 0 ? (
         <p className="account-empty">
-          {search ? "No listings match your search." : `No ${displayedStatus} listings found.`}
+          {search ? "No listings match your search." : `No listings found.`}
         </p>
       ) : 
           displayListings(filtered, displayedStatus, displayedListing, toggleDisplayedListing)}
@@ -327,122 +338,6 @@ function AccommodationApproval({configurePopUp}) {
 }
 
 /**
- * Account management sub-tab — search, deactivate, and reactivate user accounts.
- */
-function AccountManagement({configurePopUp}) {
-  const { user } = useAuth();
-  const [search, setSearch] = useState("");
-  const [tab, setTab] = useState("active");
-  const [accounts, setAccounts] = useState(() => getAccounts());
-  const [error, setError] = useState("");
-
-  const filtered = useMemo(() => {
-    const query = search.toLowerCase();
-    return accounts
-      .filter((a) => a.id !== user.id) // admins cannot deactivate themselves
-      .filter((a) => (tab === "active" ? a.active !== false : a.active === false))
-      .filter(
-        (a) =>
-          a.name.toLowerCase().includes(query) ||
-          a.email.toLowerCase().includes(query) ||
-          a.role.toLowerCase().includes(query)
-      );
-  }, [accounts, search, tab, user.id]);
-
-  function handleDeactivate(id) {
-    try {
-      deactivateAccount(id);
-      setAccounts(getAccounts());
-      setError("");
-    } catch (err) {
-      setError(err.message);
-    }
-  }
-
-  function handleActivate(id) {
-    try {
-      activateAccount(id);
-      setAccounts(getAccounts());
-      setError("");
-    } catch (err) {
-      setError(err.message);
-    }
-  }
-
-  return (
-    <div className="account-management">
-      <div className="account-tabs">
-        <button
-          className={`account-tab ${tab === "active" ? "active" : ""}`}
-          onClick={() => { setTab("active"); setSearch(""); }}
-        >
-          Active Users
-        </button>
-        <button
-          className={`account-tab ${tab === "deactivated" ? "active" : ""}`}
-          onClick={() => { setTab("deactivated"); setSearch(""); }}
-        >
-          Deactivated Users
-        </button>
-      </div>
-
-      <input
-        type="text"
-        className="account-search"
-        placeholder={`Search ${tab} users by name, email, or role…`}
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
-
-      {error && <p className="account-error">{error}</p>}
-
-      {filtered.length === 0 ? (
-        <p className="account-empty">
-          {search ? "No users match your search." : `No ${tab} users found.`}
-        </p>
-      ) : (
-        <table className="account-table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((account) => (
-              <tr key={account.id}>
-                <td>{account.name}</td>
-                <td>{account.email}</td>
-                <td className="account-role">{account.role}</td>
-                <td>
-                  {tab === "active" ? (
-                    <button
-                      className="account-btn deactivate"
-                      onClick={() => configurePopUp("Are you sure you want to deactivate the account with email: " + account.email + "?", "deactivate", handleDeactivate, account.id, null)}
-                    >
-                      Deactivate
-                    </button>
-                  ) : (
-                    <button
-                      className="account-btn activate"
-                      onClick={() => configurePopUp("Are you sure you want to activate the account with email: " + account.email + "?", "activate", handleActivate, account.id, null)}
-                    >
-                      Activate
-                    </button>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
-  );
-}
-
-/**
  * Reported listings sub-tab — admins review reports and either dismiss them
  * (wrongful report) or deactivate the listing (legitimate report).
  */
@@ -450,10 +345,12 @@ function ReportedListings() {
   const [reported, setReported] = useState(() => getReportedListings());
   const [selectedId, setSelectedId] = useState(null);
   const [message, setMessage] = useState("");
+  const [currentImage, setCurrentImage] = useState(0);
 
   function refresh() {
     const next = getReportedListings();
     setReported(next);
+    setCurrentImage(0)
     if (!next.find((l) => l.id === selectedId)) setSelectedId(null);
   }
 
@@ -469,27 +366,42 @@ function ReportedListings() {
     refresh();
   }
 
+  const prevImage = () => {
+    setCurrentImage(currentImage - 1)
+    if (currentImage === 0) {setCurrentImage(selected.images.length-1);}
+  }
+
+  const nextImage = () => {
+    setCurrentImage(currentImage + 1)
+    if (currentImage === selected.images.length-1) {setCurrentImage(0);}
+  }
+
   const selected = selectedId ? reported.find((l) => l.id === selectedId) : null;
 
   return (
-    <div className="admin-container">
+    <div className="manage-listings-container">
       <div className="left-panel">
-        <h2>Reported Listings</h2>
         {message && <p className="reported-message">{message}</p>}
         {reported.length === 0 ? (
-          <p>No reported listings.</p>
+          <p className="no-reported-message">No reported listings.</p>
         ) : (
           <div className="listing-group">
             {reported.map((l) => (
               <div
                 key={l.id}
-                className="listing-container"
-                onClick={() => setSelectedId(l.id === selectedId ? null : l.id)}
+                className={l.id === selectedId ? "active-listing-container" : " listing-container"}
+                onClick={() => {setSelectedId(l.id === selectedId ? null : l.id); setCurrentImage(0)}}
               >
-                <img className="listing-image" src={l.images[0]} />
-                <h3 className="listing-title">{l.title}</h3>
+              {l.images.length === 0 ? (
+                <div className="admin-listing-no-image">
+                  <p>No image available</p>
+                </div>
+              ) : (
+                <img className="admin-listing-image" src={l.images[0]}></img>
+              )}
+                <h3 className={l.id === selectedId ? "active-admin-listing-title" : "admin-listing-title"}>{l.title}</h3>
                 <div className="listing-info">
-                  <p>{l.reports.length} report(s)</p>
+                  <p><strong>{l.reports.length} report(s)</strong></p>
                 </div>
               </div>
             ))}
@@ -497,16 +409,39 @@ function ReportedListings() {
         )}
       </div>
 
-      {selected && <hr className="panel-separator" />}
-
       {selected && (
         <div className="right-panel">
-          <button className="listing-details-close-button" onClick={() => setSelectedId(null)}>X</button>
+          <button className="listing-details-close-button" onClick={() => {setSelectedId(null); setCurrentImage(0);}}>X</button>
           <div className="listing-details-container">
-            <h2 className="listing-details-title">{selected.title}</h2>
-            <p>{selected.type} &#8226; £{selected.price}/{selected.priceUnit}</p>
-            <p>{selected.location.address}, {selected.location.city}</p>
+            <header className="listing-details-header">
 
+              {selected.images.length === 0 ? (
+                <div className="listing-details-no-image">
+                  <p>No image available</p>
+                </div>
+                ) : (
+                  <div className="listing-images-container">
+                    <img src={selected.images[currentImage]} className="listing-details-image"></img>
+                    <div className="arrow-buttons-container">
+                      <button onClick={prevImage} className="image-prev-button">&lt;</button>
+                    <button onClick={nextImage} className="image-next-button">&gt;</button>
+                  </div>
+                </div>
+              )}
+              <h2 className="listing-details-title">{selected.title}</h2>
+              <p>{selected.type} &#8226; £{selected.price}/{selected.priceUnit}</p>
+            </header>
+              <section>
+              <h3 className="listing-location-heading">Location</h3>
+                <ul className="listing-location">
+                  <li>{selected.location.address}</li>
+                  <li>{selected.location.city}</li>
+                  <li>{selected.location.postcode}</li>
+                  <li>{selected.location.country}</li>
+              </ul>
+            </section>
+              
+            
             <section>
               <h3>Reports ({selected.reports.length})</h3>
               <ul className="reports-list">
@@ -533,7 +468,7 @@ function ReportedListings() {
   );
 }
 
-export default function Admin() {
+export default function ModerateListings() {
   const [section, setSection] = useState("approval");
   const [popUp, setPopUp] = useState(null);
 
@@ -550,10 +485,9 @@ export default function Admin() {
     <main className="admin-page">
       <header className="admin-header">
         <p className="admin-eyebrow">Admin Dashboard</p>
-        <h1>Admin Panel</h1>
-        <p className="admin-copy">Manage accounts and moderate listings.</p>
+        <h1>Moderate Listings</h1>
+        <p className="admin-copy">Approve or reject accommodation listings.</p>
       </header>
-      
 
       <div className="admin-subtabs">
         <button
@@ -561,12 +495,6 @@ export default function Admin() {
           onClick={() => setSection("approval")}
         >
           Accommodation Approval
-        </button>
-        <button
-          className={`admin-subtab ${section === "accounts" ? "active" : ""}`}
-          onClick={() => setSection("accounts")}
-        >
-          Account Management
         </button>
         <button
           className={`admin-subtab ${section === "reported" ? "active" : ""}`}
@@ -577,7 +505,6 @@ export default function Admin() {
       </div>
 
       {section === "approval" && <AccommodationApproval configurePopUp={configurePopUp}/>}
-      {section === "accounts" && <AccountManagement configurePopUp={configurePopUp}/>}
 
       {section === "reported" && <ReportedListings />}
       {popUp != null && <PopUp details={popUp} togglePopUp={setPopUp}/>}

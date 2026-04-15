@@ -59,7 +59,8 @@ export default function AuthShell({ children }) {
 
           {user?.role === ROLES.ADMIN && (
             <>
-              <NavLink to="/admin" className={navClass}>Admin</NavLink>
+              <NavLink to="/moderate-listings" className={navClass}>Moderate Listings</NavLink>
+              <NavLink to="/manage-accounts" className={navClass}>Manage Accounts</NavLink>
               <NavLink to="/moderation" className={navClass}>Moderation</NavLink>
             </>
           )}
