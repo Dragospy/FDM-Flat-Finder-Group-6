@@ -6,6 +6,7 @@ import {
   getApplicationsByHost,
   decideApplication,
   advanceAcceptedApplicationStep,
+  unacceptApplication,
   ACCEPTED_APPLICATION_STEPS,
   getAccount,
 } from "../lib/api";
@@ -71,6 +72,18 @@ export default function HostApplications() {
       const updated = advanceAcceptedApplicationStep({ applicationId, hostId: user.id });
       const step = getAcceptedStep(updated.postAcceptanceProgress?.step);
       setSuccess(`Accepted application progressed to: ${step.label}.`);
+      setRefreshKey((k) => k + 1);
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
+  function handleUnaccept(applicationId) {
+    setError("");
+    setSuccess("");
+    try {
+      unacceptApplication({ applicationId, hostId: user.id });
+      setSuccess("Application reverted to submitted and listing reopened.");
       setRefreshKey((k) => k + 1);
     } catch (err) {
       setError(err.message);
@@ -176,6 +189,15 @@ export default function HostApplications() {
                       title={nextAcceptedStep ? `Move to ${nextAcceptedStep.label}` : "Already at final booking step"}
                     >
                       {nextAcceptedStep ? `Advance to ${nextAcceptedStep.label}` : "Booking complete"}
+                    </button>
+                  )}
+                  {a.status === "accepted" && (
+                    <button
+                      className="host-applications-button host-applications-button--secondary"
+                      onClick={() => handleUnaccept(a.id)}
+                      title="Revert this accepted application back to submitted"
+                    >
+                      Unaccept
                     </button>
                   )}
                 </div>
