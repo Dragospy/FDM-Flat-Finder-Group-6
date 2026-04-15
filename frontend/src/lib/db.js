@@ -8,15 +8,17 @@
  * Available collections: "accounts" | "listings"
  */
 
-import initialAccounts from "../data/accounts.json";
+import initialAccounts  from "../data/accounts.json";
 import initialListings  from "../data/listings.json";
+import initialEnquiries from "../data/enquiries.json";
 
 
 // ─── Storage keys ─────────────────────────────────────────────────────────────
 
 const KEYS = {
-  accounts: "fdm_db_accounts",
-  listings: "fdm_db_listings",
+  accounts:  "fdm_db_accounts",
+  listings:  "fdm_db_listings",
+  enquiries: "fdm_db_enquiries",
 };
 
 
@@ -34,6 +36,10 @@ function seed() {
 
   if (!localStorage.getItem(KEYS.listings)) {
     localStorage.setItem(KEYS.listings, JSON.stringify(initialListings));
+  }
+
+  if (!localStorage.getItem(KEYS.enquiries)) {
+    localStorage.setItem(KEYS.enquiries, JSON.stringify(initialEnquiries));
   }
 }
 
@@ -158,6 +164,7 @@ function remove(collection, id) {
 function reset() {
   localStorage.removeItem(KEYS.accounts);
   localStorage.removeItem(KEYS.listings);
+  localStorage.removeItem(KEYS.enquiries);
   seed();
 }
 

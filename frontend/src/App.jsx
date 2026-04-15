@@ -25,6 +25,7 @@ import MyBookings  from "./pages/MyBookings";
 import MyListings  from "./pages/MyListings";
 import Admin       from "./pages/Admin";
 import Moderation  from "./pages/Moderation";
+import Enquiries   from "./pages/Enquiries";
 import PublicOnlyRoute from "./components/PublicOnlyRoute";
 
 
@@ -65,6 +66,17 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+
+        {/* ── Host + Rentee ──────────────────────────────────────────────── */}
+        <Route
+          path="/enquiries"
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.HOST, ROLES.RENTEE]}>
+              <Enquiries />
             </ProtectedRoute>
           }
         />
