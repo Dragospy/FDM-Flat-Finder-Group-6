@@ -80,6 +80,14 @@ export default function EditListingModal({ isOpen, onClose, listing, onSave, isC
   return (
     <div className="modal-overlay">
       <div className="modal">
+        <button
+          type="button"
+          className="modal-close-button"
+          onClick={onClose}
+          aria-label="Close modal"
+        >
+          ×
+        </button>
         <div className="modal-header">
           <div>
             <p className="modal-eyebrow">My listings</p>
