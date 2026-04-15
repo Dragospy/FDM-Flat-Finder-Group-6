@@ -135,7 +135,7 @@ function ListingDetails({id, setCurrentImage, currentImage, showPopUp, toggleDis
           {
             listing.amenities.map((amenity, index) => {
               return (
-                <li key={index}>{amenity}</li>
+                <li className="admin-amenities-item" key={index}>{amenity}</li>
               )
             })
           }
@@ -547,8 +547,13 @@ export default function Admin() {
   }
 
   return (
-    <main>
-      <h1 className="admin-heading">Admin Panel</h1>
+    <main className="admin-page">
+      <header className="admin-header">
+        <p className="admin-eyebrow">Admin Dashboard</p>
+        <h1>Admin Panel</h1>
+        <p className="admin-copy">Manage accounts and moderate listings.</p>
+      </header>
+      
 
       <div className="admin-subtabs">
         <button
