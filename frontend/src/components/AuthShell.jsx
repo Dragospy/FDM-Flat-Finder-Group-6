@@ -43,7 +43,6 @@ export default function AuthShell({ children }) {
 
           {user?.role === ROLES.RENTEE && (
             <>
-              <NavLink to="/listings" className={navClass}>Browse &amp; apply</NavLink>
               <NavLink to="/applications" className={navClass}>My applications</NavLink>
               <NavLink to="/my-bookings" className={navClass}>My bookings</NavLink>
             </>
