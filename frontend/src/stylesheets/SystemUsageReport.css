@@ -1,0 +1,140 @@
+.usage-summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0.75rem;
+    margin: 1rem 0 1.5rem;
+}
+
+.usage-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid #333;
+    border-radius: 8px;
+}
+
+.usage-stat-value {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #a3e635;
+}
+
+.usage-stat-label {
+    font-size: 0.85rem;
+    color: #aaa;
+}
+
+.usage-controls {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.usage-filter {
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background: #1f1f1f;
+    color: white;
+    min-width: 220px;
+}
+
+.usage-meta {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.8rem;
+    color: #bbb;
+    max-width: 360px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.usage-log {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    max-width: none;
+}
+
+.usage-log-scroll {
+    height: 520px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #333;
+    border-radius: 8px;
+    background: #161616;
+    width: 100%;
+    contain: strict;
+    transform: translateZ(0);
+    isolation: isolate;
+    -webkit-overflow-scrolling: touch;
+}
+
+.usage-log-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.usage-log-head,
+.usage-log-row {
+    display: grid;
+    grid-template-columns: 180px 160px 160px 90px 1fr;
+    gap: 0.75rem;
+    padding: 0 0.85rem;
+    border-bottom: 1px solid #2a2a2a;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.usage-log-head {
+    background: #1f1f1f;
+    border: 1px solid #333;
+    border-radius: 8px 8px 0 0;
+    border-bottom: 0;
+    height: 40px;
+    font-weight: 600;
+    color: #77ff00;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.usage-log-scroll {
+    border-radius: 0 0 8px 8px;
+}
+
+.usage-log-spacer {
+    position: relative;
+}
+
+.usage-log-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    will-change: transform;
+}
+
+.usage-log-row > span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.usage-log-row .account-role {
+    text-transform: capitalize;
+}
+
+.usage-log-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #aaa;
+    font-size: 0.85rem;
+    padding: 0 0.25rem;
+}

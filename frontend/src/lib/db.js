@@ -12,6 +12,7 @@ import initialAccounts  from "../data/accounts.json";
 import initialListings  from "../data/listings.json";
 import initialEnquiries from "../data/enquiries.json";
 import initialApplications from "../data/applications.json";
+import initialUsageLogs from "../data/usageLogs.json";
 
 
 // ─── Storage keys ─────────────────────────────────────────────────────────────
@@ -21,7 +22,8 @@ const KEYS = {
   listings:  "fdm_db_listings",
   enquiries: "fdm_db_enquiries",
   applications: "fdm_db_applications",
-  savedListings: "fdm_db_savedListings"
+  savedListings: "fdm_db_savedListings",
+  usageLogs: "fdm_db_usageLogs",
 };
 
 
@@ -59,6 +61,10 @@ function seed() {
 
   if (!localStorage.getItem(KEYS.applications)) {
     localStorage.setItem(KEYS.applications, JSON.stringify(initialApplications));
+  }
+
+  if (!localStorage.getItem(KEYS.usageLogs)) {
+    localStorage.setItem(KEYS.usageLogs, JSON.stringify(initialUsageLogs));
   }
 }
 

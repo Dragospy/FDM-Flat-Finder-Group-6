@@ -9,6 +9,7 @@
  */
 
 import { db } from "./db";
+import { logEvent, USAGE_EVENTS } from "./usageLog";
 
 
 // ─── Constants ────────────────────────────────────────────────────────────────
@@ -71,15 +72,18 @@ export function login(email, password) {
   );
 
   if (!account) {
+    logEvent(USAGE_EVENTS.LOGIN_FAILED, { meta: { email } });
     throw new Error("Invalid email or password.");
   }
 
   if (account.active === false) {
+    logEvent(USAGE_EVENTS.LOGIN_FAILED, { userId: account.id, meta: { reason: "deactivated" } });
     throw new Error("This account has been deactivated. Please contact an administrator.");
   }
 
   const user = sanitize(account);
   localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+  logEvent(USAGE_EVENTS.LOGIN, { userId: user.id, userRole: user.role });
   return user;
 }
 
@@ -145,6 +149,7 @@ export function register({
   const user       = sanitize(newAccount);
 
   localStorage.setItem(SESSION_KEY, JSON.stringify(user));
+  logEvent(USAGE_EVENTS.REGISTER, { userId: user.id, userRole: user.role });
   return user;
 }
 
@@ -152,6 +157,10 @@ export function register({
  * Clear the active session, effectively logging the user out.
  */
 export function logout() {
+  const current = getCurrentUser();
+  if (current) {
+    logEvent(USAGE_EVENTS.LOGOUT, { userId: current.id, userRole: current.role });
+  }
   localStorage.removeItem(SESSION_KEY);
 }
 
