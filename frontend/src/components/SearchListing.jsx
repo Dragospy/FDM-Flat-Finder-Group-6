@@ -1,4 +1,4 @@
-import { getListings, getListing, getListingsByHost } from "../lib/api.js";
+import { getListings, getListing, getListingsByHost, APPLICATION_STATUS } from "../lib/api.js";
 import "../stylesheets/Search.css";
 import { useState } from "react";
 
@@ -192,6 +192,8 @@ function validateParseFilter(city,minPrice,maxPrice, bedrooms, availability){
         filter.city = parseCity;
     }
 
+    filter.status = APPLICATION_STATUS.ACCEPTED;
+
     return filter;
 }
 
@@ -255,7 +257,7 @@ async function getGeocoding(zipcode){
 
 export function SearchListings() {
     // State:
-    const [listings, setListings] = useState(getListings());    
+    const [listings, setListings] = useState(getListings({status: APPLICATION_STATUS.ACCEPTED}));    
     let searchParam = new URLSearchParams(window.location.search);
 
 
