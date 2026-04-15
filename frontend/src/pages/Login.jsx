@@ -336,7 +336,7 @@ export default function Login() {
         </p>
 
         <p className="login-hint">
-          Demo: <strong>alice@example.com</strong> / <strong>password123</strong>
+          Demo: <strong>host@example.com</strong> / <strong>password123</strong>
         </p>
 
       </div>

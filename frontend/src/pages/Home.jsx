@@ -3,6 +3,7 @@
  */
 
 import { Link } from "react-router-dom";
+import { SearchListings } from "../components/SearchListing.jsx";
 
 import "../stylesheets/Home.css";
 

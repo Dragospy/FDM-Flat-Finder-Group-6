@@ -30,7 +30,7 @@ import PublicOnlyRoute from "./components/PublicOnlyRoute";
 import BrowseListings from "./pages/BrowseListings";
 import MyApplications from "./pages/MyApplications";
 import HostApplications from "./pages/HostApplications";
-
+import Search  from "./pages/Search";
 
 export default function App() {
   return (
@@ -79,6 +79,14 @@ export default function App() {
               <Profile />
             </ProtectedLayout>
           }
+        />
+        <Route 
+          path="/search"         
+          element={
+            <ProtectedLayout>
+              <Search />
+            </ProtectedLayout>
+          }    
         />
 
         {/* ── Rentee (Consultant) applications ─────────────────────────────── */}

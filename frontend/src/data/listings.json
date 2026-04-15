@@ -9,7 +9,9 @@
       "address": "14 Rivington Street",
       "city": "London",
       "postcode": "EC2A 3DU",
-      "country": "UK"
+      "country": "UK",
+      "latitude": 52.526,
+      "longitude": -0.0824
     },
     "price": 1650,
     "priceUnit": "month",
@@ -37,7 +39,9 @@
       "address": "88 Mare Street",
       "city": "London",
       "postcode": "E8 4RG",
-      "country": "UK"
+      "country": "UK",
+      "latitude": 51.5368,
+      "longitude": -0.0572
     },
     "price": 2400,
     "priceUnit": "month",
@@ -65,7 +69,9 @@
       "address": "32 Pembridge Road",
       "city": "London",
       "postcode": "W11 3HG",
-      "country": "UK"
+      "country": "UK",
+      "latitude": 51.5104,
+      "longitude": -0.1976
     },
     "price": 2100,
     "priceUnit": "month",
@@ -93,7 +99,9 @@
       "address": "7 Bellenden Road",
       "city": "London",
       "postcode": "SE15 4DH",
-      "country": "UK"
+      "country": "UK",
+      "latitude": 51.4669,
+      "longitude": -0.0725
     },
     "price": 3200,
     "priceUnit": "month",
