@@ -677,6 +677,95 @@ export function updateAccount(id, data) {
     throw new Error("Please provide an answer for your security question.");
   }
 
+  if (safeData.preferredLocation !== undefined) {
+    safeData.preferredLocation = String(safeData.preferredLocation).trim();
+  }
+
+  if (safeData.preferredCity !== undefined) {
+    safeData.preferredCity = String(safeData.preferredCity).trim();
+  }
+
+  if (safeData.preferredType !== undefined) {
+    const preferredType = String(safeData.preferredType).trim().toLowerCase();
+    const validTypes = ["", "studio", "apartment", "house"];
+    if (!validTypes.includes(preferredType)) {
+      throw new Error("Type must be studio, apartment, house, or empty.");
+    }
+    safeData.preferredType = preferredType;
+  }
+
+  if (safeData.defaultListingCity !== undefined) {
+    safeData.defaultListingCity = String(safeData.defaultListingCity).trim();
+  }
+
+  if (safeData.defaultListingCountry !== undefined) {
+    safeData.defaultListingCountry = String(safeData.defaultListingCountry).trim();
+  }
+
+  if (safeData.defaultListingPriceUnit !== undefined) {
+    const defaultListingPriceUnit = String(safeData.defaultListingPriceUnit).trim().toLowerCase();
+    const validPriceUnits = ["month", "week", "night"];
+    if (!validPriceUnits.includes(defaultListingPriceUnit)) {
+      throw new Error("Default listing price unit must be month, week, or night.");
+    }
+    safeData.defaultListingPriceUnit = defaultListingPriceUnit;
+  }
+
+  if (safeData.relevantDetailsForHost !== undefined) {
+    safeData.relevantDetailsForHost = String(safeData.relevantDetailsForHost).trim();
+  }
+
+  if (safeData.hostRelevantDetails !== undefined) {
+    safeData.hostRelevantDetails = String(safeData.hostRelevantDetails).trim();
+  }
+
+  if (safeData.preferredMoveInDate !== undefined) {
+    safeData.preferredMoveInDate = String(safeData.preferredMoveInDate).trim();
+  }
+
+  if (safeData.preferredAmenities !== undefined) {
+    if (!Array.isArray(safeData.preferredAmenities)) {
+      throw new Error("Preferred amenities must be a list.");
+    }
+    safeData.preferredAmenities = safeData.preferredAmenities
+      .map((item) => String(item).trim())
+      .filter(Boolean);
+  }
+
+  if (safeData.budgetMin !== undefined && safeData.budgetMin !== "") {
+    const budgetMin = Number(safeData.budgetMin);
+    if (Number.isNaN(budgetMin) || budgetMin < 0) {
+      throw new Error("Minimum price must be a positive number.");
+    }
+    safeData.budgetMin = budgetMin;
+  }
+
+  if (safeData.budgetMax !== undefined && safeData.budgetMax !== "") {
+    const budgetMax = Number(safeData.budgetMax);
+    if (Number.isNaN(budgetMax) || budgetMax < 0) {
+      throw new Error("Maximum price must be a positive number.");
+    }
+    safeData.budgetMax = budgetMax;
+  }
+
+  if (
+    safeData.budgetMin !== undefined
+    && safeData.budgetMin !== ""
+    && safeData.budgetMax !== undefined
+    && safeData.budgetMax !== ""
+    && safeData.budgetMin > safeData.budgetMax
+  ) {
+    throw new Error("Minimum price cannot be greater than maximum price.");
+  }
+
+  if (safeData.preferredStayLengthMonths !== undefined && safeData.preferredStayLengthMonths !== "") {
+    const stayLength = Number(safeData.preferredStayLengthMonths);
+    if (Number.isNaN(stayLength) || stayLength < 1) {
+      throw new Error("Preferred stay length must be at least 1 month.");
+    }
+    safeData.preferredStayLengthMonths = stayLength;
+  }
+
   const updated = db.update("accounts", id, safeData);
   if (!updated) throw new Error(`Account "${id}" not found.`);
   return sanitizeAccount(updated);

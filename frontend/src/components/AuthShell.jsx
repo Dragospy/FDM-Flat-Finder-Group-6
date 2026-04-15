@@ -35,11 +35,9 @@ export default function AuthShell({ children }) {
             Dashboard
           </NavLink>
 
-          {user?.role !== ROLES.ADMIN && (
-            <NavLink to="/profile" className={navClass}>
-              Profile
-            </NavLink>
-          )}
+          <NavLink to="/profile" className={navClass}>
+            Profile
+          </NavLink>
 
           {user?.role === ROLES.RENTEE && (
             <>
