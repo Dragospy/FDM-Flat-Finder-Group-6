@@ -1,20 +1,36 @@
 import { useState } from "react";
 import ReportModal from "./ReportModal";
-import "../stylesheets/ReportModal.css";
+import { useAuth } from "../context/AuthContext";
+import { reportListing } from "../lib/api";
+import "../stylesheets/Enquiry.css";
 
 /**
- * Button that opens a ReportModal. When the user confirms, `onSubmit` is called
- * with the reason string. Wiring to persist the report lives outside this component.
+ * Reusable button that lets a logged-in user report a listing. Opens a ReportModal
+ * and persists the report via the api on confirm.
  *
- * @param {function} onSubmit  Receives the trimmed reason string
- * @param {string} label       Button label (defaults to "Report")
+ * If `onSubmit` is supplied it runs after a successful report — handy for parent
+ * components that want to update local state (e.g. show a toast).
+ *
+ * @param {string}   listingId  id of the listing being reported
+ * @param {function} onSubmit   optional callback receiving the trimmed reason
+ * @param {string}   label      button label (defaults to "Report")
  */
-export default function ReportButton({ onSubmit, label = "Report" }) {
+export default function ReportButton({ listingId, onSubmit, label = "Report" }) {
+  const { user } = useAuth();
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
+
+  if (!user) return null;
 
   function handleConfirm(reason) {
-    onSubmit?.(reason);
-    setOpen(false);
+    try {
+      reportListing(listingId, user.id, reason);
+      onSubmit?.(reason);
+      setOpen(false);
+      setError("");
+    } catch (err) {
+      setError(err.message || "Could not submit report.");
+    }
   }
 
   return (
@@ -24,8 +40,10 @@ export default function ReportButton({ onSubmit, label = "Report" }) {
       </button>
       {open && (
         <ReportModal
+          title="Report listing"
           onConfirm={handleConfirm}
-          onCancel={() => setOpen(false)}
+          onCancel={() => { setOpen(false); setError(""); }}
+          error={error}
         />
       )}
     </>

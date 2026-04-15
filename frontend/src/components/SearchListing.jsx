@@ -4,6 +4,8 @@ import { useAuth } from "../context/AuthContext.jsx";
 import { ROLES } from "../lib/auth.js";
 import "../stylesheets/Search.css";
 import { useState } from "react";
+import EnquiryButton from "./EnquiryButton";
+import ReportButton from "./ReportButton";
 
 
 
@@ -107,9 +109,9 @@ function DisplayListing({ listing, showApplyAction }){
                     </div>
                 )}
             
-                {showApplyAction && (
-                    <div className="search-listing-actions">
-                        {listing.available ? (
+                <div className="search-listing-actions">
+                    {showApplyAction && (
+                        listing.available ? (
                             <Link
                                 className="search-apply-button"
                                 to={`/apply/${encodeURIComponent(String(listing.id).trim())}`}
@@ -118,9 +120,11 @@ function DisplayListing({ listing, showApplyAction }){
                             </Link>
                         ) : (
                             <span className="search-apply-disabled">Unavailable</span>
-                        )}
-                    </div>
-                )}
+                        )
+                    )}
+                    <EnquiryButton accommodationId={listing.id} hostId={listing.hostId} />
+                    <ReportButton listingId={listing.id} />
+                </div>
 
                 {/* Created At */}
                 <div className="listing-created-search">

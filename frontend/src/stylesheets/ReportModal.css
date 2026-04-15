@@ -1,13 +1,16 @@
 .report-button {
     padding: 0.5rem 1rem;
-    background-color: #b00020;
-    color: white;
-    border: none;
+    background-color: #2a2a2a;
+    color: #ff6b6b;
+    border: 1px solid #ff6b6b;
     border-radius: 0.25rem;
     font-weight: bold;
     cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
 }
 
 .report-button:hover {
-    background-color: #8a0019;
+    background-color: #b00020;
+    color: white;
+    border-color: #b00020;
 }

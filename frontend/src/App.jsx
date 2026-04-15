@@ -134,9 +134,9 @@ export default function App() {
         <Route
           path="/enquiries"
           element={
-            <ProtectedRoute allowedRoles={[ROLES.HOST, ROLES.RENTEE]}>
+            <ProtectedLayout allowedRoles={[ROLES.HOST, ROLES.RENTEE]}>
               <Enquiries />
-            </ProtectedRoute>
+            </ProtectedLayout>
           }
         />
 

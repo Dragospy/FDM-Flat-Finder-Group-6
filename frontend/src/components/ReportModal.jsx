@@ -8,7 +8,7 @@ import Modal from "./Modal";
  * @param {function} onConfirm  Called with the trimmed reason string when the user confirms
  * @param {function} onCancel   Called when the user cancels or closes the modal
  */
-export default function ReportModal({ title = "Report listing", onConfirm, onCancel }) {
+export default function ReportModal({ title = "Report listing", onConfirm, onCancel, error }) {
   const [reason, setReason] = useState("");
 
   const trimmed = reason.trim();
@@ -24,6 +24,7 @@ export default function ReportModal({ title = "Report listing", onConfirm, onCan
         rows={5}
         autoFocus
       />
+      {error && <p className="enquiry-error">{error}</p>}
       <div className="modal-buttons">
         <button className="modal-button modal-button-secondary" onClick={onCancel}>
           Cancel

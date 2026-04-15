@@ -500,8 +500,12 @@ export function reportListing(id, userId, reason) {
   if (!trimmed) throw new Error("A reason is required to report a listing.");
 
   const listing = getListing(id);
+  const existing = listing.reports ?? [];
+  if (existing.some((r) => r.userId === userId)) {
+    throw new Error("You have already reported this listing.");
+  }
   const reports = [
-    ...(listing.reports ?? []),
+    ...existing,
     { userId, reason: trimmed, createdAt: new Date().toISOString() },
   ];
   return updateListing(id, { reports });

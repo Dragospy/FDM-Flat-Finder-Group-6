@@ -239,6 +239,42 @@
   margin: 0.75rem 0 0.5rem;
   display: flex;
   justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.search-listing-actions .enquiry-button,
+.search-listing-actions .report-button {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
+}
+
+.search-listing-actions .enquiry-button {
+  border: 1px solid rgba(119, 255, 0, 0.2);
+  background: #77ff00;
+  color: #111;
+}
+
+.search-listing-actions .enquiry-button:hover {
+  background-color: #64d104;
+  transform: translateY(-1px);
+}
+
+.search-listing-actions .report-button {
+  border: 1px solid rgba(255, 107, 107, 0.5);
+  background: transparent;
+  color: #ff6b6b;
+}
+
+.search-listing-actions .report-button:hover {
+  background-color: #b00020;
+  border-color: #b00020;
+  color: #fff;
+  transform: translateY(-1px);
 }
 
 .search-apply-button {

@@ -3,6 +3,8 @@ import { Link, useSearchParams } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
 import { getListings, getApplicationsByConsultant, applyForListing, APPLICATION_STATUS } from "../lib/api";
+import EnquiryButton from "../components/EnquiryButton";
+import ReportButton from "../components/ReportButton";
 
 import "../stylesheets/BrowseListings.css";
 
@@ -180,6 +182,8 @@ export default function BrowseListings() {
                   ? "Application locked"
                   : (l.available ? (openFormFor === l.id ? "Close form" : "Apply") : "Unavailable")}
               </button>
+              <EnquiryButton accommodationId={l.id} hostId={l.hostId} />
+              <ReportButton listingId={l.id} onSubmit={() => setSuccess("Report submitted — thanks for flagging it.")} />
             </div>
 
             {openFormFor === l.id && (
