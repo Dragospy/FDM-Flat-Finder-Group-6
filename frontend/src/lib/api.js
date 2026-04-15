@@ -315,6 +315,36 @@ export function advanceAcceptedApplicationStep({ applicationId, hostId }) {
   });
 }
 
+/**
+ * Revert an accepted application back to submitted (host).
+ * This also re-opens the listing for applications.
+ *
+ * @param {{ applicationId: string, hostId: string }} data
+ * @returns {object}
+ */
+export function unacceptApplication({ applicationId, hostId }) {
+  if (!applicationId) throw new Error("applicationId is required.");
+  if (!hostId) throw new Error("hostId is required.");
+
+  const app = db.getById("applications", applicationId);
+  if (!app) throw new Error("Application not found.");
+  if (app.hostId !== hostId) throw new Error("You do not own this application.");
+  if (app.status !== APPLICATION_STATUS.ACCEPTED) {
+    throw new Error("Only accepted applications can be unaccepted.");
+  }
+
+  const listing = db.getById("listings", app.listingId);
+  if (!listing) throw new Error("Listing not found for this application.");
+
+  db.update("listings", app.listingId, { available: true });
+
+  return db.update("applications", applicationId, {
+    status: APPLICATION_STATUS.SUBMITTED,
+    postAcceptanceProgress: null,
+    updatedAt: new Date().toISOString(),
+  });
+}
+
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
