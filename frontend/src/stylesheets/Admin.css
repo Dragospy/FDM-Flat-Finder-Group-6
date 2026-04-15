@@ -10,8 +10,49 @@ p, h1, h2, h3 {
     padding: 0;
 }
 
-.admin-heading {
+.admin-page {
+    min-height: 100vh;
+    padding: 2rem 1rem 3rem;
+    background:
+    radial-gradient(circle at top left, rgba(59, 119, 6, 0.14), transparent 28%),
+    radial-gradient(circle at top right, rgba(90, 184, 8, 0.08), transparent 22%),
+    linear-gradient(180deg, #1c1c1c 0%, #151515 100%);
+}
+
+.admin-header {
     margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.75rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(119, 255, 0, 0.15);
+    border-radius: 1.25rem;
+    background: rgba(49, 49, 49, 0.9);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(8px);
+}
+
+.admin-header h1 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.05;
+}
+
+.admin-eyebrow {
+  margin: 0 0 0.35rem;
+  color: #77ff00;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admin-copy {
+    max-width: 42rem;
+    margin: 0.65rem 0 0;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
 }
 
 /********************************
@@ -136,6 +177,9 @@ p, h1, h2, h3 {
 .admin-listing-image {
     border-radius: 1rem;
     height: 8rem;
+    object-fit: cover;
+    display: block;
+    overflow: hidden;
 }
 
 .admin-listing-no-image {
@@ -276,11 +320,10 @@ p, h1, h2, h3 {
     cursor: pointer;
     font-size: 1.5rem;
     font-weight: bold;
-    color: #77ff00;
+    color: black;
 
     border: 1px solid rgba(119, 255, 0, 0.14);
-    background: linear-gradient(180deg, rgba(49, 49, 49, 0.96) 0%, rgba(36, 36, 36, 0.96) 100%);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.329);
 }
 
 .listing-details-close-button:hover {
@@ -305,8 +348,11 @@ p, h1, h2, h3 {
 
 .listing-details-image {
     width: 100%;
-    max-height: 30rem;
+    height: 30rem;
     border-radius: 0.5rem;
+    object-fit: cover;
+    display: block;
+    overflow: hidden;
 }
 
 .listing-images-container:hover .arrow-buttons-container {
@@ -365,12 +411,34 @@ p, h1, h2, h3 {
     margin: 0;
 }
 
+.admin-listing-amenities {
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    color: #77ff00;
+    font-weight: bold;
+
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;  
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.admin-amenities-item {
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+  background: rgba(119, 255, 0, 0.09);
+  border: 1px solid rgba(119, 255, 0, 0.12);
+  font-size: 0.78rem;
+}
+
 .listing-location {
     list-style: none;
     padding: 0;
 }
 
-.admin-listing-amenities-heading, .listing-location-heading {
+.listing-location-heading {
     margin: 0;
     margin-bottom: 0.25rem;
 }
@@ -385,8 +453,7 @@ p, h1, h2, h3 {
     cursor: pointer;
 
     border: 1px solid rgba(119, 255, 0, 0.14);
-    background: linear-gradient(180deg, rgba(49, 49, 49, 0.96) 0%, rgba(36, 36, 36, 0.96) 100%);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.603);
 }
 
 .approve-button {
@@ -442,7 +509,7 @@ p, h1, h2, h3 {
     justify-content: center;
     width: 100%;
     height: 100%;
-    background-color: rgba(93, 93, 93, 0.686)
+    background-color: rgba(21, 21, 21, 0.686)
 }
 
 .pop-up-container {
@@ -494,8 +561,7 @@ p, h1, h2, h3 {
     font-weight: bold;
 
     border: 1px solid rgba(119, 255, 0, 0.14);
-    background: linear-gradient(180deg, rgba(49, 49, 49, 0.96) 0%, rgba(36, 36, 36, 0.96) 100%);
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.603);
 }
 
 .pop-up-ok {
