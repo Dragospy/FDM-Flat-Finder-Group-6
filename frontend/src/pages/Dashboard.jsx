@@ -71,6 +71,10 @@ export default function Dashboard() {
 
         {user?.role === ROLES.ADMIN && (
           <>
+            <Link to="/profile" className="dashboard-card">
+              <h2>Profile</h2>
+              <p>Update your contact details and account information.</p>
+            </Link>
             <Link to="/moderate-listings" className="dashboard-card">
               <h2>Moderate Listings</h2>
               <p>Approve or reject accommodation listings</p>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
+import { ROLES } from "../lib/auth";
 import {
   deleteAccount,
   getAccountWithPassword,
@@ -22,6 +23,7 @@ const SECURITY_QUESTIONS = [
 export default function Profile() {
   const { user, logout, refresh } = useAuth();
   const navigate = useNavigate();
+  const canDeleteAccount = user?.role !== ROLES.ADMIN;
 
   const [form, setForm] = useState({
     name: "",
@@ -195,15 +197,17 @@ export default function Profile() {
           <button className="profile-save" type="submit">Save Changes</button>
         </form>
 
-        <section className="profile-danger-zone">
-          <h2 className="profile-danger-title">Warning</h2>
-          <p className="profile-danger-copy">
-            Deleting your account is permanent and cannot be undone.
-          </p>
-          <button className="profile-delete" type="button" onClick={handleDeleteAccount}>
-            Delete Account
-          </button>
-        </section>
+        {canDeleteAccount && (
+          <section className="profile-danger-zone">
+            <h2 className="profile-danger-title">Warning</h2>
+            <p className="profile-danger-copy">
+              Deleting your account is permanent and cannot be undone.
+            </p>
+            <button className="profile-delete" type="button" onClick={handleDeleteAccount}>
+              Delete Account
+            </button>
+          </section>
+        )}
       </section>
     </main>
   );
