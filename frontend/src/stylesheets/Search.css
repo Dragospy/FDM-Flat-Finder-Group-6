@@ -256,6 +256,7 @@
 
 .search-apply-button:hover {
   background-color: #64d104;
+  color: #111;
   transform: translateY(-1px);
 }
 

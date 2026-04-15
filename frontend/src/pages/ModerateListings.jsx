@@ -346,6 +346,7 @@ function ReportedListings() {
   const [selectedId, setSelectedId] = useState(null);
   const [message, setMessage] = useState("");
   const [currentImage, setCurrentImage] = useState(0);
+  const [search, setSearch] = useState("");
 
   function refresh() {
     const next = getReportedListings();
@@ -376,17 +377,40 @@ function ReportedListings() {
     if (currentImage === selected.images.length-1) {setCurrentImage(0);}
   }
 
-  const selected = selectedId ? reported.find((l) => l.id === selectedId) : null;
+    const reportedFiltered = useMemo(() => {
+    const query = search.toLowerCase();
+
+    return reported
+      .filter(
+        (l) =>
+          l.title.toLowerCase().includes(query) ||
+          l.type.toLowerCase().includes(query) ||
+          l.location.address.toLowerCase().includes(query) ||
+          l.location.city.toLowerCase().includes(query) ||
+          l.location.postcode.toLowerCase().includes(query) ||
+          l.location.country.toLowerCase().includes(query)
+      );
+  }, [reported, search]);
+
+  const selected = selectedId ? reportedFiltered.find((l) => l.id === selectedId) : null;
 
   return (
     <div className="manage-listings-container">
       <div className="left-panel">
+
+        <input
+          type="text"
+          className="account-search"
+          placeholder={`Search for reported listings by title, type or location...`}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          />
         {message && <p className="reported-message">{message}</p>}
-        {reported.length === 0 ? (
-          <p className="no-reported-message">No reported listings.</p>
+        {reportedFiltered.length === 0 ? (
+          <p className="no-reported-message">No reported listings found.</p>
         ) : (
           <div className="listing-group">
-            {reported.map((l) => (
+            {reportedFiltered.map((l) => (
               <div
                 key={l.id}
                 className={l.id === selectedId ? "active-listing-container" : " listing-container"}
