@@ -297,6 +297,11 @@ export function SearchListings() {
                 <section className="search-page-header">
                     <form className="form-container search-field" name="searchForm" method="post" onSubmit={handleSearchSubmit}>
                         <h1>Search listings</h1>
+
+
+
+
+
                         <div className="sub-form-section">
                             <div className="input-set">
                                 <label className="sub-form-item" for="city">City</label>
@@ -304,9 +309,20 @@ export function SearchListings() {
                             </div>
                             <div className="input-set">
                                 <label className="sub-form-item" for="location">Location</label>
-                                <input className="sub-form-item" placeholder="Search address" type ="text" name="location"></input> 
+                                <input className="sub-form-item" placeholder="Search by postcode" type ="text" name="location"></input> 
                             </div>
                         
+                            <div className="input-set">
+                                <label className="sub-form-item" for="maxDistance">Maximum distance</label>
+                                <input className="sub-form-item" min="0" placeholder="Enter maximum distance" type ="number" name="maxDistance"></input>
+                            </div>                            
+                        </div>
+
+                        <div className="sub-form-section">
+
+
+
+                  
                             <div className="input-set">
                                 <label className="sub-form-item" for="minPrice">Minimum price</label>
                                 <input className="sub-form-item" min="0" placeholder="Enter minimum price" type ="number" name="minPrice"></input>
@@ -316,11 +332,22 @@ export function SearchListings() {
                                 <label className="sub-form-item" for="maxPrice">Maximum price</label>
                                 <input className="sub-form-item" min="0" placeholder="Enter maximum price" type ="number" name="maxPrice"></input>
                             </div>
-
                             <div className="input-set">
                                 <label className="sub-form-item"for="bedrooms">Number of bedrooms</label>
-                                <input className="sub-form-item" min="0" type ="number" name="bedrooms"></input>      
+                                <input className="sub-form-item" min="0" placeholder="Enter number of bedrooms" type ="number" name="bedrooms"></input>      
                             </div>
+
+                            <div className="input-set">
+                                <label className="sub-form-item"for="maxGuest">Maximum number of guests</label>
+                                <input className="sub-form-item" min="0" placeholder="Enter number of guests" type ="number" name="maxGuest"></input>      
+                            </div>          
+
+
+
+
+
+  
+
                         </div>
 
                         <div className="sub-form-section">
@@ -331,6 +358,16 @@ export function SearchListings() {
                                     <option value ="available">Available</option>
                                     <option value ="unavailable">Unavailable</option>
 
+                                </select>
+                            </div>
+
+                           <div className="input-set">
+                                <label className="sub-form-item" for="type">Type</label>
+                                <select className="sub-form-item" id="type" name="type">
+                                    <option value ="all">All</option>                                    
+                                    <option value ="studio">Studio</option>
+                                    <option value ="apartment">Apartment</option>
+                                    <option value ="house">House</option>
                                 </select>
                             </div>
 
