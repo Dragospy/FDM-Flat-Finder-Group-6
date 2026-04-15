@@ -34,6 +34,14 @@ export default function Dashboard() {
               <h2>Manage applications</h2>
               <p>Track status and withdraw submitted applications.</p>
             </Link>
+            <Link to="/my-bookings" className="dashboard-card">
+              <h2>My bookings</h2>
+              <p>See confirmed accommodation bookings.</p>
+            </Link>
+            <Link to="/profile" className="dashboard-card">
+              <h2>Profile</h2>
+              <p>Update your contact details and account information.</p>
+            </Link>
           </>
         )}
 
@@ -43,6 +51,18 @@ export default function Dashboard() {
               <h2>Process applications</h2>
               <p>Accept or reject accommodation applications.</p>
             </Link>
+            <Link to="/my-listings" className="dashboard-card">
+              <h2>My listings</h2>
+              <p>Create, edit, and archive your properties.</p>
+            </Link>
+            <Link to="/moderation" className="dashboard-card">
+              <h2>Moderation</h2>
+              <p>Review listing reports and moderation queue items.</p>
+            </Link>
+            <Link to="/profile" className="dashboard-card">
+              <h2>Profile</h2>
+              <p>Update your contact details and account information.</p>
+            </Link>
           </>
         )}
 
@@ -51,6 +71,10 @@ export default function Dashboard() {
             <Link to="/admin" className="dashboard-card">
               <h2>Admin</h2>
               <p>Administrative tools.</p>
+            </Link>
+            <Link to="/moderation" className="dashboard-card">
+              <h2>Moderation</h2>
+              <p>Review reports and moderation queue items.</p>
             </Link>
           </>
         )}

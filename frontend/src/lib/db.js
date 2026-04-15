@@ -30,7 +30,19 @@ const KEYS = {
  * never overwritten by a page refresh.
  */
 function seed() {
-  if (!localStorage.getItem(KEYS.accounts)) {
+  const rawAccounts = localStorage.getItem(KEYS.accounts);
+  let shouldSeedAccounts = !rawAccounts;
+
+  if (rawAccounts) {
+    try {
+      const parsed = JSON.parse(rawAccounts);
+      shouldSeedAccounts = !Array.isArray(parsed) || parsed.length === 0;
+    } catch {
+      shouldSeedAccounts = true;
+    }
+  }
+
+  if (shouldSeedAccounts) {
     localStorage.setItem(KEYS.accounts, JSON.stringify(initialAccounts));
   }
 

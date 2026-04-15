@@ -225,7 +225,7 @@ export function decideApplication({ applicationId, hostId, decision }) {
 function sanitizeAccount(account) {
   if (!account) return null;
   // eslint-disable-next-line no-unused-vars
-  const { password, ...safe } = account;
+  const { password, securityAnswer, ...safe } = account;
   return safe;
 }
 
@@ -448,21 +448,110 @@ export function getAccount(id) {
 }
 
 /**
- * Update an account's public profile fields.
- * The password field is intentionally blocked here — use changePassword() instead.
+ * Return a single account by id including password.
+ * Intended only for local profile editing in this coursework app.
+ *
+ * @param {string} id
+ * @returns {object}
+ */
+export function getAccountWithPassword(id) {
+  const account = db.getById("accounts", id);
+  if (!account) throw new Error(`Account "${id}" not found.`);
+  return account;
+}
+
+/**
+ * Update an account's profile fields.
  * Throws if the account does not exist.
  *
  * @param {string} id
- * @param {{ name?: string, avatar?: string }} data
+ * @param {{
+ *   name?: string,
+ *   email?: string,
+ *   avatar?: string,
+ *   phone?: string
+ * }} data
  * @returns {object} the updated account (password stripped)
  */
 export function updateAccount(id, data) {
-  // Prevent accidental password changes through this function
-  const { password: _ignored, ...safeData } = data;
+  const safeData = { ...data };
+
+  if (safeData.name !== undefined && !safeData.name.trim()) {
+    throw new Error("Name cannot be empty.");
+  }
+
+  if (safeData.email !== undefined) {
+    const nextEmail = safeData.email.trim().toLowerCase();
+    if (!nextEmail) throw new Error("Email cannot be empty.");
+
+    const duplicate = db.findOne(
+      "accounts",
+      (a) => a.email.toLowerCase() === nextEmail && a.id !== id
+    );
+
+    if (duplicate) {
+      throw new Error("An account with this email already exists.");
+    }
+
+    safeData.email = nextEmail;
+  }
+
+  if (safeData.password !== undefined && safeData.password !== "") {
+    if (safeData.password.length < 6) {
+      throw new Error("Password must be at least 6 characters.");
+    }
+  }
+
+  if (safeData.password === "") {
+    delete safeData.password;
+  }
+
+  if (safeData.securityQuestion !== undefined) {
+    safeData.securityQuestion = safeData.securityQuestion.trim();
+  }
+
+  if (safeData.securityAnswer !== undefined) {
+    const answer = safeData.securityAnswer.trim();
+    if (answer.length === 0) {
+      throw new Error("Security answer cannot be empty.");
+    }
+    safeData.securityAnswer = answer;
+  }
+
+  if (
+    safeData.securityQuestion !== undefined
+    && safeData.securityQuestion.length > 0
+    && safeData.securityAnswer === undefined
+  ) {
+    throw new Error("Please provide an answer for your security question.");
+  }
 
   const updated = db.update("accounts", id, safeData);
   if (!updated) throw new Error(`Account "${id}" not found.`);
   return sanitizeAccount(updated);
+}
+
+/**
+ * Dev-only helper to persist current account records back into src/data/accounts.json.
+ * This only works while running the Vite dev server.
+ *
+ * @returns {Promise<void>}
+ */
+export async function persistAccountsToJson() {
+  const accounts = db.getAll("accounts");
+  if (accounts.length === 0) {
+    throw new Error("Refusing to persist: account list is empty.");
+  }
+
+  const response = await fetch("/__dev/write-accounts-json", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ accounts }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to persist account data to accounts.json.");
+  }
 }
 
 /**
@@ -489,6 +578,129 @@ export function changePassword(id, currentPassword, newPassword) {
 }
 
 /**
+ * Look up reset details by matching full name + email + phone number.
+ *
+ * @param {{ fullName: string, email: string, phone: string }} data
+ * @returns {{ securityQuestion: string, name: string }}
+ */
+export function getSecurityQuestionByEmailAndPhone({ fullName, email, phone }) {
+  const normalizedName = (fullName ?? "").trim().toLowerCase();
+  const normalizedEmail = (email ?? "").trim().toLowerCase();
+  const normalizedPhone = (phone ?? "").trim();
+
+  if (!normalizedName || !normalizedEmail || !normalizedPhone) {
+    throw new Error("Full name, email and phone number are required.");
+  }
+
+  const matches = db.find(
+    "accounts",
+    (a) =>
+      a.name?.trim().toLowerCase() === normalizedName
+      && a.email?.trim().toLowerCase() === normalizedEmail
+      && (a.phone ?? "").trim() === normalizedPhone
+  );
+
+  if (matches.length === 0) {
+    throw new Error("No account matched that name, email and phone number.");
+  }
+
+  if (matches.length > 1) {
+    throw new Error("Multiple accounts matched. Contact support.");
+  }
+
+  const account = matches[0];
+  if (!account.securityQuestion || !account.securityAnswer) {
+    throw new Error("No security question is set for this account. Please update your profile first.");
+  }
+
+  return {
+    securityQuestion: account.securityQuestion,
+    name: account.name,
+  };
+}
+
+/**
+ * Verify security answer for a reset flow using full name + email + phone.
+ *
+ * @param {{ fullName: string, email: string, phone: string, securityAnswer: string }} data
+ * @returns {true}
+ */
+export function verifyResetSecurityAnswer({ fullName, email, phone, securityAnswer }) {
+  const normalizedName = (fullName ?? "").trim().toLowerCase();
+  const normalizedEmail = (email ?? "").trim().toLowerCase();
+  const normalizedPhone = (phone ?? "").trim();
+  const normalizedAnswer = (securityAnswer ?? "").trim().toLowerCase();
+
+  if (!normalizedAnswer) {
+    throw new Error("Security answer is required.");
+  }
+
+  const account = db.findOne(
+    "accounts",
+    (a) =>
+      a.name?.trim().toLowerCase() === normalizedName
+      && a.email?.trim().toLowerCase() === normalizedEmail
+      && (a.phone ?? "").trim() === normalizedPhone
+  );
+
+  if (!account) {
+    throw new Error("Unable to verify account details.");
+  }
+
+  const savedAnswer = (account.securityAnswer ?? "").trim().toLowerCase();
+  if (savedAnswer !== normalizedAnswer) {
+    throw new Error("Security answer did not match.");
+  }
+
+  return true;
+}
+
+/**
+ * Reset a password by matching full name + email + phone + security answer.
+ *
+ * @param {{
+ *   fullName: string,
+ *   email: string,
+ *   phone: string,
+ *   securityAnswer: string,
+ *   newPassword: string
+ * }} data
+ * @returns {true}
+ */
+export function resetPasswordByEmailAndPhone({
+  fullName,
+  email,
+  phone,
+  securityAnswer,
+  newPassword,
+}) {
+  verifyResetSecurityAnswer({ fullName, email, phone, securityAnswer });
+
+  if (!newPassword || newPassword.length < 6) {
+    throw new Error("New password must be at least 6 characters.");
+  }
+
+  const normalizedName = (fullName ?? "").trim().toLowerCase();
+  const normalizedEmail = (email ?? "").trim().toLowerCase();
+  const normalizedPhone = (phone ?? "").trim();
+
+  const account = db.findOne(
+    "accounts",
+    (a) =>
+      a.name?.trim().toLowerCase() === normalizedName
+      && a.email?.trim().toLowerCase() === normalizedEmail
+      && (a.phone ?? "").trim() === normalizedPhone
+  );
+
+  if (!account) {
+    throw new Error("Unable to verify account details.");
+  }
+
+  db.update("accounts", account.id, { password: newPassword });
+  return true;
+}
+
+/**
  * Permanently delete an account.
  * Throws if the account does not exist.
  *
@@ -496,6 +708,11 @@ export function changePassword(id, currentPassword, newPassword) {
  * @returns {true}
  */
 export function deleteAccount(id) {
+  const accounts = db.getAll("accounts");
+  if (accounts.length <= 1) {
+    throw new Error("Cannot delete the final account.");
+  }
+
   const removed = db.remove("accounts", id);
   if (!removed) throw new Error(`Account "${id}" not found.`);
   return true;
