@@ -4,6 +4,7 @@
 
 import React, { useState } from 'react';
 import { getCurrentUser } from '../lib/auth';
+import EnquiryButton from './EnquiryButton';
 import '../stylesheets/ListingCard.css';
 
 export default function ListingCard({ listing, onEdit, onArchive, onDelete }) {
@@ -115,6 +116,9 @@ export default function ListingCard({ listing, onEdit, onArchive, onDelete }) {
 
       {/* Buttons */}
       <div className="card-buttons">
+        {!isOwner && (
+          <EnquiryButton accommodationId={listing.id} hostId={listing.hostId} />
+        )}
         {onEdit && (
           <button className="edit-button" onClick={() => onEdit(listing)}>
             Edit

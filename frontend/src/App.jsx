@@ -26,6 +26,7 @@ import MyBookings  from "./pages/MyBookings";
 import MyListings  from "./pages/MyListings";
 import Admin       from "./pages/ModerateListings";
 import Moderation  from "./pages/Moderation";
+import Enquiries   from "./pages/Enquiries";
 import PublicOnlyRoute from "./components/PublicOnlyRoute";
 import BrowseListings from "./pages/BrowseListings";
 import MyApplications from "./pages/MyApplications";
@@ -125,6 +126,17 @@ export default function App() {
             <ProtectedLayout allowedRoles={[ROLES.HOST]}>
               <HostApplications />
             </ProtectedLayout>
+          }
+        />
+
+
+        {/* ── Host + Rentee ──────────────────────────────────────────────── */}
+        <Route
+          path="/enquiries"
+          element={
+            <ProtectedRoute allowedRoles={[ROLES.HOST, ROLES.RENTEE]}>
+              <Enquiries />
+            </ProtectedRoute>
           }
         />
 

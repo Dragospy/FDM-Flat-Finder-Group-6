@@ -1,7 +1,6 @@
 /**
  * Dashboard.jsx — Authenticated landing page (any role).
  */
-
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
