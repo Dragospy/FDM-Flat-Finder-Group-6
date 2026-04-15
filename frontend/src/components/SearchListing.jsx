@@ -311,7 +311,7 @@ export function SearchListings() {
         const formJson = Object.fromEntries(formData.entries());
         console.log(formJson);
 
-        const filterToParse ={
+        const parsedFilter = validateParseFilter({
             city : formJson.city,
             minPrice : formJson.minPrice,
             maxPrice : formJson.maxPrice,
@@ -319,9 +319,9 @@ export function SearchListings() {
             available : formJson.availability,
             type : formJson.type,
             maxGuests : formJson.maxGuest,
-        }
+        });
 
-        let newListingsOrder = getListings(validateParseFilter(filterToParse));
+        let newListingsOrder = getListings(parsedFilter);
         if (formJson.location.trim()!=""){
             console.log("FormJson",formJson, getGeocoding(formJson.location)
             .then(
