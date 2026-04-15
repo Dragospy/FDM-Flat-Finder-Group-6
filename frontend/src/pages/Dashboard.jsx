@@ -1,7 +1,6 @@
 /**
  * Dashboard.jsx — Authenticated landing page (any role).
  */
-
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
@@ -26,10 +25,6 @@ export default function Dashboard() {
       <section className="dashboard-cards">
         {user?.role === ROLES.RENTEE && (
           <>
-            <Link to="/listings" className="dashboard-card">
-              <h2>Apply for accommodation</h2>
-              <p>Browse properties and submit an application.</p>
-            </Link>
             <Link to="/applications" className="dashboard-card">
               <h2>Manage applications</h2>
               <p>Track status and withdraw submitted applications.</p>

@@ -1,7 +1,14 @@
 import { useMemo, useState } from "react";
 
 import { useAuth } from "../context/AuthContext";
-import { getListingsByHost, getApplicationsByHost, decideApplication } from "../lib/api";
+import {
+  getListingsByHost,
+  getApplicationsByHost,
+  decideApplication,
+  advanceAcceptedApplicationStep,
+  ACCEPTED_APPLICATION_STEPS,
+  getAccount,
+} from "../lib/api";
 
 import "../stylesheets/HostApplications.css";
 
@@ -10,6 +17,17 @@ function statusBadgeClass(status) {
   if (status === "rejected") return "status-badge status-badge--rejected";
   if (status === "withdrawn") return "status-badge status-badge--withdrawn";
   return "status-badge status-badge--submitted";
+}
+
+function getAcceptedStep(stepId) {
+  return ACCEPTED_APPLICATION_STEPS.find((step) => step.id === stepId) ?? ACCEPTED_APPLICATION_STEPS[0];
+}
+
+function getNextAcceptedStep(stepId) {
+  const safeStep = getAcceptedStep(stepId).id;
+  const currentIndex = ACCEPTED_APPLICATION_STEPS.findIndex((step) => step.id === safeStep);
+  if (currentIndex < 0 || currentIndex >= ACCEPTED_APPLICATION_STEPS.length - 1) return null;
+  return ACCEPTED_APPLICATION_STEPS[currentIndex + 1];
 }
 
 export default function HostApplications() {
@@ -46,6 +64,19 @@ export default function HostApplications() {
     }
   }
 
+  function handleAdvance(applicationId) {
+    setError("");
+    setSuccess("");
+    try {
+      const updated = advanceAcceptedApplicationStep({ applicationId, hostId: user.id });
+      const step = getAcceptedStep(updated.postAcceptanceProgress?.step);
+      setSuccess(`Accepted application progressed to: ${step.label}.`);
+      setRefreshKey((k) => k + 1);
+    } catch (err) {
+      setError(err.message);
+    }
+  }
+
   return (
     <main className="host-applications-page">
       <div className="host-applications-shell">
@@ -68,6 +99,9 @@ export default function HostApplications() {
         <section className="host-applications-list">
           {applications.map((a) => {
           const listing = listingsById[a.listingId];
+          const consultant = getAccount(a.consultantId);
+          const acceptedStep = getAcceptedStep(a.postAcceptanceProgress?.step);
+          const nextAcceptedStep = getNextAcceptedStep(acceptedStep.id);
           return (
             <article key={a.id} className="host-applications-item">
               <div className="host-applications-item-top">
@@ -99,6 +133,22 @@ export default function HostApplications() {
                       {a.details.notes && <li>Details: {a.details.notes}</li>}
                     </ul>
                   )}
+                  <div className="host-applications-contact">
+                    <p className="host-applications-meta">
+                      Contact rentee: {consultant?.name ?? a.consultantId}
+                    </p>
+                    <p className="host-applications-meta">
+                      Email: {consultant?.email ?? "Not available"}
+                    </p>
+                    <p className="host-applications-meta">
+                      Phone: {consultant?.phone ?? "Not provided"}
+                    </p>
+                  </div>
+                  {a.status === "accepted" && (
+                    <p className="host-applications-meta">
+                      Post-acceptance step: {acceptedStep.label}
+                    </p>
+                  )}
                 </div>
 
                 <div className="host-applications-actions">
@@ -118,6 +168,16 @@ export default function HostApplications() {
                   >
                     Reject
                   </button>
+                  {a.status === "accepted" && (
+                    <button
+                      className="host-applications-button"
+                      onClick={() => handleAdvance(a.id)}
+                      disabled={!nextAcceptedStep}
+                      title={nextAcceptedStep ? `Move to ${nextAcceptedStep.label}` : "Already at final booking step"}
+                    >
+                      {nextAcceptedStep ? `Advance to ${nextAcceptedStep.label}` : "Booking complete"}
+                    </button>
+                  )}
                 </div>
               </div>
             </article>

@@ -43,9 +43,9 @@ export default function AuthShell({ children }) {
 
           {user?.role === ROLES.RENTEE && (
             <>
-              <NavLink to="/listings" className={navClass}>Browse &amp; apply</NavLink>
               <NavLink to="/applications" className={navClass}>My applications</NavLink>
               <NavLink to="/my-bookings" className={navClass}>My bookings</NavLink>
+              <NavLink to="/enquiries" className={navClass}>Enquiries</NavLink>
             </>
           )}
 
@@ -53,6 +53,7 @@ export default function AuthShell({ children }) {
             <>
               <NavLink to="/applications/manage" className={navClass}>Process applications</NavLink>
               <NavLink to="/my-listings" className={navClass}>My listings</NavLink>
+              <NavLink to="/enquiries" className={navClass}>Enquiries</NavLink>
               <NavLink to="/moderation" className={navClass}>Moderation</NavLink>
             </>
           )}

@@ -26,11 +26,13 @@ import MyBookings  from "./pages/MyBookings";
 import MyListings  from "./pages/MyListings";
 import Admin       from "./pages/ModerateListings";
 import Moderation  from "./pages/Moderation";
+import Enquiries   from "./pages/Enquiries";
 import PublicOnlyRoute from "./components/PublicOnlyRoute";
 import BrowseListings from "./pages/BrowseListings";
 import MyApplications from "./pages/MyApplications";
 import HostApplications from "./pages/HostApplications";
 import Search  from "./pages/Search";
+import ApplyForListing from "./pages/ApplyForListing";
 import AccountManagement from "./pages/ManageAccounts";
 import ModerateListings from "./pages/ModerateListings";
 
@@ -108,6 +110,14 @@ export default function App() {
             </ProtectedLayout>
           }
         />
+        <Route
+          path="/apply/:listingId"
+          element={
+            <ProtectedLayout allowedRoles={[ROLES.RENTEE]}>
+              <ApplyForListing />
+            </ProtectedLayout>
+          }
+        />
 
         {/* ── Host (Landlord) processing ──────────────────────────────────── */}
         <Route
@@ -115,6 +125,17 @@ export default function App() {
           element={
             <ProtectedLayout allowedRoles={[ROLES.HOST]}>
               <HostApplications />
+            </ProtectedLayout>
+          }
+        />
+
+
+        {/* ── Host + Rentee ──────────────────────────────────────────────── */}
+        <Route
+          path="/enquiries"
+          element={
+            <ProtectedLayout allowedRoles={[ROLES.HOST, ROLES.RENTEE]}>
+              <Enquiries />
             </ProtectedLayout>
           }
         />

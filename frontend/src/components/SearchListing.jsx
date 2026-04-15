@@ -1,11 +1,16 @@
-import { getListings, getListing, getListingsByHost, APPLICATION_STATUS } from "../lib/api.js";
+import { Link } from "react-router-dom";
+import { getListings, APPLICATION_STATUS } from "../lib/api.js";
+import { useAuth } from "../context/AuthContext.jsx";
+import { ROLES } from "../lib/auth.js";
 import "../stylesheets/Search.css";
 import { useState } from "react";
+import EnquiryButton from "./EnquiryButton";
+import ReportButton from "./ReportButton";
 
 
 
 
-function DisplayListing({listing}){
+function DisplayListing({ listing, showApplyAction }){
     const [currentImage, setCurrentImage] = useState(0);
     let distance = listing.distance;
     let displayDistance = ""; 
@@ -104,6 +109,23 @@ function DisplayListing({listing}){
                     </div>
                 )}
             
+                <div className="search-listing-actions">
+                    {showApplyAction && (
+                        listing.available ? (
+                            <Link
+                                className="search-apply-button"
+                                to={`/apply/${encodeURIComponent(String(listing.id).trim())}`}
+                            >
+                                Apply
+                            </Link>
+                        ) : (
+                            <span className="search-apply-disabled">Unavailable</span>
+                        )
+                    )}
+                    <EnquiryButton accommodationId={listing.id} hostId={listing.hostId} />
+                    <ReportButton listingId={listing.id} />
+                </div>
+
                 {/* Created At */}
                 <div className="listing-created-search">
                     <small>Listed on {new Date(listing.createdAt).toLocaleDateString()}</small>
@@ -116,11 +138,13 @@ function DisplayListing({listing}){
 
 }
 
-function DisplayListings({listings}){
+function DisplayListings({ listings, showApplyAction }){
     console.log("listings");
     console.log(listings);
 
-    const displayListings = listings.map(listing => <DisplayListing listing={listing}/>);
+    const displayListings = listings.map((listing) => (
+        <DisplayListing key={listing.id} listing={listing} showApplyAction={showApplyAction} />
+    ));
     if (listings.length>0){
         return displayListings;
     }
@@ -272,7 +296,9 @@ function filterDistance(listings, maxDistance){
 
 export function SearchListings() {
     // State:
-    const [listings, setListings] = useState(getListings({status: APPLICATION_STATUS.ACCEPTED}));    
+    const [listings, setListings] = useState(getListings());    
+    const { user } = useAuth();
+    const showApplyAction = user?.role === ROLES.RENTEE;
     let searchParam = new URLSearchParams(window.location.search);
 
 
@@ -436,7 +462,7 @@ export function SearchListings() {
                 </section>
 
                 <section className="search-listings-container">
-                    <DisplayListings listings={listings}/>
+                    <DisplayListings listings={listings} showApplyAction={showApplyAction} />
                 </section>
             </div>
         </main>

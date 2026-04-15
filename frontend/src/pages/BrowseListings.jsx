@@ -1,8 +1,10 @@
-import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 
 import { useAuth } from "../context/AuthContext";
 import { getListings, getApplicationsByConsultant, applyForListing, APPLICATION_STATUS } from "../lib/api";
+import EnquiryButton from "../components/EnquiryButton";
+import ReportButton from "../components/ReportButton";
 
 import "../stylesheets/BrowseListings.css";
 
@@ -13,6 +15,7 @@ function formatPrice(listing) {
 
 export default function BrowseListings() {
   const { user } = useAuth();
+  const [searchParams] = useSearchParams();
 
   const [city, setCity] = useState("");
   const [error, setError] = useState("");
@@ -34,6 +37,41 @@ export default function BrowseListings() {
   const hasAcceptedApplication = useMemo(() => {
     return getApplicationsByConsultant(user.id).some((a) => a.status === "accepted");
   }, [user.id]);
+
+  useEffect(() => {
+    const rawListingIdParam = searchParams.get("listingId");
+    const listingIdParam = rawListingIdParam ? decodeURIComponent(rawListingIdParam).trim() : "";
+    if (!listingIdParam) return;
+
+    const targetListing = listings.find(
+      (listing) => String(listing.id).trim() === listingIdParam
+    );
+    if (!targetListing) {
+      setError("The selected property could not be found.");
+      return;
+    }
+
+    if (!targetListing.available) {
+      setError("The selected property is currently unavailable.");
+      return;
+    }
+
+    if (hasAcceptedApplication) {
+      setError("You already have an accepted application. New applications are disabled.");
+      return;
+    }
+
+    setError("");
+    setSuccess("Continue below to complete your application.");
+    setOpenFormFor(targetListing.id);
+
+    requestAnimationFrame(() => {
+      document.getElementById(`listing-${targetListing.id}`)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }, [searchParams, listings, hasAcceptedApplication]);
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -116,7 +154,7 @@ export default function BrowseListings() {
 
         <section className="browse-listings-grid">
           {listings.map((l) => (
-            <article key={l.id} className="browse-listings-card">
+            <article id={`listing-${l.id}`} key={l.id} className="browse-listings-card">
             <div className="browse-listings-card-top">
               <div>
                 <h2 className="browse-listings-title">{l.title}</h2>
@@ -144,6 +182,8 @@ export default function BrowseListings() {
                   ? "Application locked"
                   : (l.available ? (openFormFor === l.id ? "Close form" : "Apply") : "Unavailable")}
               </button>
+              <EnquiryButton accommodationId={l.id} hostId={l.hostId} />
+              <ReportButton listingId={l.id} onSubmit={() => setSuccess("Report submitted — thanks for flagging it.")} />
             </div>
 
             {openFormFor === l.id && (

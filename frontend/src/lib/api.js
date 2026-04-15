@@ -19,6 +19,36 @@ export const APPLICATION_STATUS = Object.freeze({
   WITHDRAWN: "withdrawn",
 });
 
+export const ACCEPTED_APPLICATION_STEPS = Object.freeze([
+  { id: "offer_sent", label: "Offer sent" },
+  { id: "docs_submitted", label: "Documents submitted" },
+  { id: "contract_signed", label: "Contract signed" },
+  { id: "booked", label: "Booked" },
+]);
+
+function normalizeAcceptedStep(stepId) {
+  if (ACCEPTED_APPLICATION_STEPS.some((step) => step.id === stepId)) {
+    return stepId;
+  }
+  return ACCEPTED_APPLICATION_STEPS[0].id;
+}
+
+function getNextAcceptedStep(stepId) {
+  const safeStep = normalizeAcceptedStep(stepId);
+  const currentIndex = ACCEPTED_APPLICATION_STEPS.findIndex((step) => step.id === safeStep);
+  if (currentIndex < 0 || currentIndex >= ACCEPTED_APPLICATION_STEPS.length - 1) {
+    return safeStep;
+  }
+  return ACCEPTED_APPLICATION_STEPS[currentIndex + 1].id;
+}
+
+function initialAcceptedProgress() {
+  return {
+    step: ACCEPTED_APPLICATION_STEPS[0].id,
+    updatedAt: new Date().toISOString(),
+  };
+}
+
 function isFinalStatus(status) {
   return status === APPLICATION_STATUS.ACCEPTED
     || status === APPLICATION_STATUS.REJECTED
@@ -119,6 +149,26 @@ export function getApplicationsByConsultant(consultantId) {
 }
 
 /**
+ * Return confirmed bookings for a consultant.
+ * A booking is an accepted application that reached the "booked" step.
+ *
+ * @param {string} consultantId
+ * @returns {Array}
+ */
+export function getBookingsByConsultant(consultantId) {
+  if (!consultantId) return [];
+  return db
+    .find(
+      "applications",
+      (a) =>
+        a.consultantId === consultantId
+        && a.status === APPLICATION_STATUS.ACCEPTED
+        && normalizeAcceptedStep(a.postAcceptanceProgress?.step) === "booked"
+    )
+    .sort((a, b) => new Date(b.updatedAt ?? b.createdAt) - new Date(a.updatedAt ?? a.createdAt));
+}
+
+/**
  * Return all applications for listings owned by a host.
  *
  * @param {string} hostId
@@ -185,10 +235,15 @@ export function decideApplication({ applicationId, hostId, decision }) {
     }
   }
 
-  const decidedApplication = db.update("applications", applicationId, {
+  const updatePayload = {
     status: decision,
     updatedAt: new Date().toISOString(),
-  });
+  };
+  if (decision === APPLICATION_STATUS.ACCEPTED) {
+    updatePayload.postAcceptanceProgress = initialAcceptedProgress();
+  }
+
+  const decidedApplication = db.update("applications", applicationId, updatePayload);
 
   if (decision === APPLICATION_STATUS.ACCEPTED) {
     db.update("listings", app.listingId, { available: false });
@@ -207,9 +262,57 @@ export function decideApplication({ applicationId, hostId, decision }) {
         updatedAt: new Date().toISOString(),
       });
     });
+
+    const otherSubmittedByConsultant = db.find(
+      "applications",
+      (candidate) =>
+        candidate.consultantId === app.consultantId
+        && candidate.id !== applicationId
+        && candidate.status === APPLICATION_STATUS.SUBMITTED
+    );
+
+    otherSubmittedByConsultant.forEach((candidate) => {
+      db.update("applications", candidate.id, {
+        status: APPLICATION_STATUS.WITHDRAWN,
+        autoWithdrawnReason: "Another application was accepted.",
+        updatedAt: new Date().toISOString(),
+      });
+    });
   }
 
   return decidedApplication;
+}
+
+/**
+ * Advance an accepted application through the post-acceptance process.
+ *
+ * @param {{ applicationId: string, hostId: string }} data
+ * @returns {object}
+ */
+export function advanceAcceptedApplicationStep({ applicationId, hostId }) {
+  if (!applicationId) throw new Error("applicationId is required.");
+  if (!hostId) throw new Error("hostId is required.");
+
+  const app = db.getById("applications", applicationId);
+  if (!app) throw new Error("Application not found.");
+  if (app.hostId !== hostId) throw new Error("You do not own this application.");
+  if (app.status !== APPLICATION_STATUS.ACCEPTED) {
+    throw new Error("Only accepted applications can be advanced.");
+  }
+
+  const currentStep = normalizeAcceptedStep(app.postAcceptanceProgress?.step);
+  const nextStep = getNextAcceptedStep(currentStep);
+  if (nextStep === currentStep) {
+    throw new Error("This application is already fully booked.");
+  }
+
+  return db.update("applications", applicationId, {
+    postAcceptanceProgress: {
+      step: nextStep,
+      updatedAt: new Date().toISOString(),
+    },
+    updatedAt: new Date().toISOString(),
+  });
 }
 
 
@@ -411,8 +514,12 @@ export function reportListing(id, userId, reason) {
   if (!trimmed) throw new Error("A reason is required to report a listing.");
 
   const listing = getListing(id);
+  const existing = listing.reports ?? [];
+  if (existing.some((r) => r.userId === userId)) {
+    throw new Error("You have already reported this listing.");
+  }
   const reports = [
-    ...(listing.reports ?? []),
+    ...existing,
     { userId, reason: trimmed, createdAt: new Date().toISOString() },
   ];
   return updateListing(id, { reports });
