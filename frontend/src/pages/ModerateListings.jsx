@@ -341,7 +341,7 @@ function AccommodationApproval({configurePopUp}) {
  * Reported listings sub-tab — admins review reports and either dismiss them
  * (wrongful report) or deactivate the listing (legitimate report).
  */
-function ReportedListings() {
+function ReportedListings({configurePopUp}) {
   const [reported, setReported] = useState(() => getReportedListings());
   const [selectedId, setSelectedId] = useState(null);
   const [message, setMessage] = useState("");
@@ -479,10 +479,10 @@ function ReportedListings() {
               </ul>
             </section>
 
-            <button className="approve-button" onClick={() => handleDismiss(selected.id)}>
+            <button className="approve-button" onClick={() => configurePopUp("Are you sure you want to dismiss all reports for this listing?", "dismiss", handleDismiss, selected.id, null)}>
               Dismiss Reports
             </button>
-            <button className="reject-button" onClick={() => handleDeactivate(selected.id)}>
+            <button className="delete-button" onClick={() => configurePopUp("Are you sure you want to deactivate this listing?", "deactivate", handleDeactivate, selected.id, null)}>
               Deactivate Listing
             </button>
           </div>
@@ -530,7 +530,7 @@ export default function ModerateListings() {
 
       {section === "approval" && <AccommodationApproval configurePopUp={configurePopUp}/>}
 
-      {section === "reported" && <ReportedListings />}
+      {section === "reported" && <ReportedListings configurePopUp={configurePopUp}/>}
       {popUp != null && <PopUp details={popUp} togglePopUp={setPopUp}/>}
     </main>
   );
