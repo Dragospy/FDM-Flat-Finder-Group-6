@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { ROLES } from "../lib/auth";
 import {
   deleteAccount,
+  getAccountDeletionBlockers,
   getAccountWithPassword,
   persistAccountsToJson,
   updateAccount,
@@ -579,6 +580,12 @@ export default function Profile() {
     setError("");
     setAccountSuccess("");
     setProfileSuccess("");
+
+    const blockers = getAccountDeletionBlockers(user.id, user.role);
+    if (blockers.length) {
+      setError(blockers.join(" "));
+      return;
+    }
 
     const confirmed = window.confirm(
       "Warning: this will permanently delete your account. This action cannot be undone."
