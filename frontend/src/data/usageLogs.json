@@ -1,0 +1,2421 @@
+[
+  {
+    "id": "log-0003",
+    "createdAt": "2026-03-16T08:21:22.271Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0004",
+    "createdAt": "2026-03-16T09:58:38.322Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0001",
+    "createdAt": "2026-03-16T10:00:08.610Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0006",
+    "createdAt": "2026-03-16T10:06:01.776Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0005",
+    "createdAt": "2026-03-16T10:11:38.072Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0002",
+    "createdAt": "2026-03-16T11:09:14.820Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0007",
+    "createdAt": "2026-03-16T11:42:43.359Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0011",
+    "createdAt": "2026-03-17T08:02:23.587Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0012",
+    "createdAt": "2026-03-17T09:56:29.030Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0009",
+    "createdAt": "2026-03-17T10:36:58.266Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0010",
+    "createdAt": "2026-03-17T11:30:55.306Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0008",
+    "createdAt": "2026-03-17T16:47:33.416Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0013",
+    "createdAt": "2026-03-17T16:59:58.038Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0014",
+    "createdAt": "2026-03-17T17:10:59.076Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0263",
+    "createdAt": "2026-03-18T11:15:47.619Z",
+    "type": "register",
+    "userId": "acc-new-0",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0021",
+    "createdAt": "2026-03-18T11:47:04.386Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0019",
+    "createdAt": "2026-03-18T12:00:27.721Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0020",
+    "createdAt": "2026-03-18T13:41:55.495Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0017",
+    "createdAt": "2026-03-18T13:46:32.083Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0018",
+    "createdAt": "2026-03-18T14:53:16.207Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0022",
+    "createdAt": "2026-03-18T15:03:15.209Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0023",
+    "createdAt": "2026-03-18T16:18:03.582Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0015",
+    "createdAt": "2026-03-18T18:59:34.055Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0016",
+    "createdAt": "2026-03-18T19:40:05.920Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0028",
+    "createdAt": "2026-03-19T10:02:26.934Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0030",
+    "createdAt": "2026-03-19T10:39:35.693Z",
+    "type": "login_failed",
+    "userId": null,
+    "userRole": null,
+    "meta": {
+      "email": "typo@example.com"
+    }
+  },
+  {
+    "id": "log-0025",
+    "createdAt": "2026-03-19T11:14:54.755Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0029",
+    "createdAt": "2026-03-19T11:24:36.980Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0027",
+    "createdAt": "2026-03-19T11:34:55.153Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0026",
+    "createdAt": "2026-03-19T12:28:19.991Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0024",
+    "createdAt": "2026-03-19T14:10:20.651Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0038",
+    "createdAt": "2026-03-20T08:30:33.760Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0039",
+    "createdAt": "2026-03-20T09:25:25.822Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0033",
+    "createdAt": "2026-03-20T12:44:47.343Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0031",
+    "createdAt": "2026-03-20T12:57:13.033Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0032",
+    "createdAt": "2026-03-20T13:10:22.997Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0268",
+    "createdAt": "2026-03-20T13:21:00.927Z",
+    "type": "listing_created",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": {
+      "listingId": "lst-100",
+      "title": "Riverside Apt"
+    }
+  },
+  {
+    "id": "log-0037",
+    "createdAt": "2026-03-20T15:27:13.073Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0035",
+    "createdAt": "2026-03-20T15:57:11.295Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0036",
+    "createdAt": "2026-03-20T16:01:55.653Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0034",
+    "createdAt": "2026-03-20T19:15:44.689Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0049",
+    "createdAt": "2026-03-21T10:39:09.640Z",
+    "type": "login_failed",
+    "userId": null,
+    "userRole": null,
+    "meta": {
+      "email": "typo@example.com"
+    }
+  },
+  {
+    "id": "log-0047",
+    "createdAt": "2026-03-21T11:13:23.725Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0048",
+    "createdAt": "2026-03-21T12:08:16.707Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0044",
+    "createdAt": "2026-03-21T12:54:03.282Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0042",
+    "createdAt": "2026-03-21T13:34:10.592Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0045",
+    "createdAt": "2026-03-21T13:41:05.830Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0043",
+    "createdAt": "2026-03-21T14:33:00.691Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0040",
+    "createdAt": "2026-03-21T14:34:47.327Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0275",
+    "createdAt": "2026-03-21T15:47:32.908Z",
+    "type": "application_submitted",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": {
+      "applicationId": "app-200",
+      "listingId": "lst-100"
+    }
+  },
+  {
+    "id": "log-0041",
+    "createdAt": "2026-03-21T17:09:09.200Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0046",
+    "createdAt": "2026-03-21T18:53:33.532Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0053",
+    "createdAt": "2026-03-22T08:36:04.300Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0054",
+    "createdAt": "2026-03-22T09:50:30.920Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0050",
+    "createdAt": "2026-03-22T10:03:43.120Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0283",
+    "createdAt": "2026-03-22T10:07:26.213Z",
+    "type": "listing_approved",
+    "userId": null,
+    "userRole": "admin",
+    "meta": {
+      "listingId": "lst-100"
+    }
+  },
+  {
+    "id": "log-0057",
+    "createdAt": "2026-03-22T11:28:44.749Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0051",
+    "createdAt": "2026-03-22T12:21:37.120Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0058",
+    "createdAt": "2026-03-22T12:53:18.469Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0055",
+    "createdAt": "2026-03-22T13:09:16.742Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0052",
+    "createdAt": "2026-03-22T13:44:31.576Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0056",
+    "createdAt": "2026-03-22T14:02:50.024Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0059",
+    "createdAt": "2026-03-22T19:30:42.029Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0060",
+    "createdAt": "2026-03-22T20:43:30.011Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0061",
+    "createdAt": "2026-03-23T08:10:48.585Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0069",
+    "createdAt": "2026-03-23T08:51:47.700Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0063",
+    "createdAt": "2026-03-23T09:03:17.231Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0062",
+    "createdAt": "2026-03-23T09:15:20.997Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0070",
+    "createdAt": "2026-03-23T09:37:19.577Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0071",
+    "createdAt": "2026-03-23T09:52:11.272Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0067",
+    "createdAt": "2026-03-23T10:15:00.336Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0072",
+    "createdAt": "2026-03-23T10:16:39.103Z",
+    "type": "login_failed",
+    "userId": null,
+    "userRole": null,
+    "meta": {
+      "email": "ghost@x.com"
+    }
+  },
+  {
+    "id": "log-0288",
+    "createdAt": "2026-03-23T10:30:20.514Z",
+    "type": "listing_rejected",
+    "userId": null,
+    "userRole": "admin",
+    "meta": {
+      "listingId": "lst-150"
+    }
+  },
+  {
+    "id": "log-0064",
+    "createdAt": "2026-03-23T10:48:57.930Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0068",
+    "createdAt": "2026-03-23T11:31:15.892Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0065",
+    "createdAt": "2026-03-23T18:02:10.909Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0066",
+    "createdAt": "2026-03-23T19:54:46.117Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0073",
+    "createdAt": "2026-03-24T08:10:46.555Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0074",
+    "createdAt": "2026-03-24T09:22:39.766Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0078",
+    "createdAt": "2026-03-24T10:06:53.786Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0075",
+    "createdAt": "2026-03-24T10:53:13.555Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0079",
+    "createdAt": "2026-03-24T11:02:09.003Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0264",
+    "createdAt": "2026-03-24T11:14:34.100Z",
+    "type": "register",
+    "userId": "acc-new-1",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0081",
+    "createdAt": "2026-03-24T13:11:10.137Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0082",
+    "createdAt": "2026-03-24T14:21:27.947Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0076",
+    "createdAt": "2026-03-24T14:23:52.072Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0077",
+    "createdAt": "2026-03-24T15:11:50.857Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0080",
+    "createdAt": "2026-03-24T15:37:27.401Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0085",
+    "createdAt": "2026-03-25T08:49:58.636Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0086",
+    "createdAt": "2026-03-25T09:57:38.370Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0087",
+    "createdAt": "2026-03-25T10:37:24.537Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0276",
+    "createdAt": "2026-03-25T15:16:30.050Z",
+    "type": "application_submitted",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": {
+      "applicationId": "app-201",
+      "listingId": "lst-101"
+    }
+  },
+  {
+    "id": "log-0083",
+    "createdAt": "2026-03-25T19:00:13.678Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0084",
+    "createdAt": "2026-03-25T20:38:51.954Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0089",
+    "createdAt": "2026-03-26T09:38:59.845Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0088",
+    "createdAt": "2026-03-26T10:02:40.507Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0090",
+    "createdAt": "2026-03-26T11:27:18.629Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0091",
+    "createdAt": "2026-03-26T12:31:24.493Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0096",
+    "createdAt": "2026-03-26T13:03:34.312Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0269",
+    "createdAt": "2026-03-26T14:50:39.492Z",
+    "type": "listing_created",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": {
+      "listingId": "lst-101",
+      "title": "Sunny Loft"
+    }
+  },
+  {
+    "id": "log-0092",
+    "createdAt": "2026-03-26T15:16:12.497Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0094",
+    "createdAt": "2026-03-26T16:41:54.419Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0093",
+    "createdAt": "2026-03-26T16:48:58.803Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0095",
+    "createdAt": "2026-03-26T17:28:31.216Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0099",
+    "createdAt": "2026-03-27T08:10:54.456Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0103",
+    "createdAt": "2026-03-27T08:49:07.572Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0104",
+    "createdAt": "2026-03-27T09:21:53.938Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0284",
+    "createdAt": "2026-03-27T10:00:06.534Z",
+    "type": "listing_approved",
+    "userId": null,
+    "userRole": "admin",
+    "meta": {
+      "listingId": "lst-101"
+    }
+  },
+  {
+    "id": "log-0107",
+    "createdAt": "2026-03-27T10:20:05.164Z",
+    "type": "login_failed",
+    "userId": null,
+    "userRole": null,
+    "meta": {
+      "email": "alice@example.com"
+    }
+  },
+  {
+    "id": "log-0101",
+    "createdAt": "2026-03-27T12:08:00.789Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0100",
+    "createdAt": "2026-03-27T12:59:37.052Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0102",
+    "createdAt": "2026-03-27T13:23:55.754Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0105",
+    "createdAt": "2026-03-27T13:55:16.090Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0106",
+    "createdAt": "2026-03-27T14:10:54.317Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0097",
+    "createdAt": "2026-03-27T15:58:39.909Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0098",
+    "createdAt": "2026-03-27T16:08:04.985Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0108",
+    "createdAt": "2026-03-28T09:08:13.169Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0111",
+    "createdAt": "2026-03-28T14:21:41.901Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0277",
+    "createdAt": "2026-03-28T15:55:00.969Z",
+    "type": "application_submitted",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": {
+      "applicationId": "app-202",
+      "listingId": "lst-102"
+    }
+  },
+  {
+    "id": "log-0112",
+    "createdAt": "2026-03-28T16:28:04.203Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0113",
+    "createdAt": "2026-03-28T17:12:00.818Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0114",
+    "createdAt": "2026-03-28T18:31:46.729Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0109",
+    "createdAt": "2026-03-28T18:46:50.139Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0115",
+    "createdAt": "2026-03-28T19:02:19.293Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0110",
+    "createdAt": "2026-03-28T19:10:11.120Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0116",
+    "createdAt": "2026-03-29T07:37:44.582Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0117",
+    "createdAt": "2026-03-29T08:07:35.693Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0118",
+    "createdAt": "2026-03-29T09:52:09.837Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0119",
+    "createdAt": "2026-03-29T10:17:27.430Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0122",
+    "createdAt": "2026-03-29T15:09:57.453Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0120",
+    "createdAt": "2026-03-29T15:36:45.170Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0290",
+    "createdAt": "2026-03-29T15:48:39.716Z",
+    "type": "account_deactivated",
+    "userId": null,
+    "userRole": "admin",
+    "meta": {
+      "targetAccountId": "acc-spam-1"
+    }
+  },
+  {
+    "id": "log-0121",
+    "createdAt": "2026-03-29T16:00:21.868Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0127",
+    "createdAt": "2026-03-30T08:48:46.501Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0133",
+    "createdAt": "2026-03-30T09:08:29.268Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0128",
+    "createdAt": "2026-03-30T09:39:50.412Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0123",
+    "createdAt": "2026-03-30T09:52:17.421Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0124",
+    "createdAt": "2026-03-30T10:01:20.764Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0134",
+    "createdAt": "2026-03-30T10:30:40.985Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0131",
+    "createdAt": "2026-03-30T11:32:57.282Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0132",
+    "createdAt": "2026-03-30T12:23:33.232Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0278",
+    "createdAt": "2026-03-30T14:20:42.814Z",
+    "type": "application_submitted",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": {
+      "applicationId": "app-203",
+      "listingId": "lst-103"
+    }
+  },
+  {
+    "id": "log-0129",
+    "createdAt": "2026-03-30T17:39:19.965Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0130",
+    "createdAt": "2026-03-30T18:01:07.090Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0125",
+    "createdAt": "2026-03-30T18:09:37.738Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0126",
+    "createdAt": "2026-03-30T19:13:40.650Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0139",
+    "createdAt": "2026-03-31T09:29:25.613Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0265",
+    "createdAt": "2026-03-31T10:24:45.956Z",
+    "type": "register",
+    "userId": "acc-new-2",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0140",
+    "createdAt": "2026-03-31T10:35:42.608Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0135",
+    "createdAt": "2026-03-31T14:40:52.013Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0136",
+    "createdAt": "2026-03-31T15:33:13.285Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0137",
+    "createdAt": "2026-03-31T16:54:52.739Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0138",
+    "createdAt": "2026-03-31T17:53:57.266Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0143",
+    "createdAt": "2026-04-01T07:19:28.566Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0148",
+    "createdAt": "2026-04-01T07:45:51.644Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0147",
+    "createdAt": "2026-04-01T08:21:51.583Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0144",
+    "createdAt": "2026-04-01T08:41:38.580Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0149",
+    "createdAt": "2026-04-01T08:49:23.327Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0145",
+    "createdAt": "2026-04-01T12:05:44.171Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0146",
+    "createdAt": "2026-04-01T13:19:41.113Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0150",
+    "createdAt": "2026-04-01T13:48:24.984Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0270",
+    "createdAt": "2026-04-01T14:35:09.715Z",
+    "type": "listing_created",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": {
+      "listingId": "lst-102",
+      "title": "2-Bed Flat"
+    }
+  },
+  {
+    "id": "log-0151",
+    "createdAt": "2026-04-01T14:47:08.882Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0141",
+    "createdAt": "2026-04-01T17:23:20.467Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0142",
+    "createdAt": "2026-04-01T18:56:48.900Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0285",
+    "createdAt": "2026-04-02T09:37:17.551Z",
+    "type": "listing_approved",
+    "userId": null,
+    "userRole": "admin",
+    "meta": {
+      "listingId": "lst-102"
+    }
+  },
+  {
+    "id": "log-0153",
+    "createdAt": "2026-04-02T10:54:44.239Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0154",
+    "createdAt": "2026-04-02T11:57:38.378Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0155",
+    "createdAt": "2026-04-02T12:59:49.636Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0157",
+    "createdAt": "2026-04-02T13:12:21.988Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0156",
+    "createdAt": "2026-04-02T14:29:41.604Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0158",
+    "createdAt": "2026-04-02T14:50:23.972Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0152",
+    "createdAt": "2026-04-02T15:37:45.820Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0159",
+    "createdAt": "2026-04-02T16:52:17.911Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0160",
+    "createdAt": "2026-04-02T17:17:05.069Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0161",
+    "createdAt": "2026-04-03T09:34:55.737Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0166",
+    "createdAt": "2026-04-03T10:18:42.993Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0162",
+    "createdAt": "2026-04-03T10:45:20.618Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0164",
+    "createdAt": "2026-04-03T15:08:18.945Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0271",
+    "createdAt": "2026-04-03T15:22:56.341Z",
+    "type": "listing_created",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": {
+      "listingId": "lst-103",
+      "title": "Sunny Loft"
+    }
+  },
+  {
+    "id": "log-0165",
+    "createdAt": "2026-04-03T16:38:12.717Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0163",
+    "createdAt": "2026-04-03T17:14:03.412Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0173",
+    "createdAt": "2026-04-04T09:38:12.269Z",
+    "type": "login_failed",
+    "userId": null,
+    "userRole": null,
+    "meta": {
+      "email": "ghost@x.com"
+    }
+  },
+  {
+    "id": "log-0167",
+    "createdAt": "2026-04-04T12:50:35.641Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0168",
+    "createdAt": "2026-04-04T13:41:45.144Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0279",
+    "createdAt": "2026-04-04T14:51:55.915Z",
+    "type": "application_submitted",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": {
+      "applicationId": "app-204",
+      "listingId": "lst-104"
+    }
+  },
+  {
+    "id": "log-0169",
+    "createdAt": "2026-04-04T15:51:35.956Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0171",
+    "createdAt": "2026-04-04T17:25:05.045Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0170",
+    "createdAt": "2026-04-04T18:04:11.518Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0172",
+    "createdAt": "2026-04-04T18:38:29.152Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0289",
+    "createdAt": "2026-04-05T09:19:39.458Z",
+    "type": "listing_rejected",
+    "userId": null,
+    "userRole": "admin",
+    "meta": {
+      "listingId": "lst-151"
+    }
+  },
+  {
+    "id": "log-0179",
+    "createdAt": "2026-04-05T10:08:34.091Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0180",
+    "createdAt": "2026-04-05T11:06:00.502Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0174",
+    "createdAt": "2026-04-05T14:45:11.662Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0183",
+    "createdAt": "2026-04-05T15:01:07.357Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0177",
+    "createdAt": "2026-04-05T15:15:25.504Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0181",
+    "createdAt": "2026-04-05T15:48:36.425Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0182",
+    "createdAt": "2026-04-05T16:10:11.934Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0184",
+    "createdAt": "2026-04-05T16:14:41.463Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0178",
+    "createdAt": "2026-04-05T16:29:13.635Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0175",
+    "createdAt": "2026-04-05T17:39:52.848Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0176",
+    "createdAt": "2026-04-05T18:00:23.234Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0193",
+    "createdAt": "2026-04-06T09:11:27.826Z",
+    "type": "login_failed",
+    "userId": null,
+    "userRole": null,
+    "meta": {
+      "email": "ghost@x.com"
+    }
+  },
+  {
+    "id": "log-0187",
+    "createdAt": "2026-04-06T09:50:49.030Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0188",
+    "createdAt": "2026-04-06T10:03:08.188Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0292",
+    "createdAt": "2026-04-06T10:05:11.805Z",
+    "type": "listing_deleted",
+    "userId": null,
+    "userRole": null,
+    "meta": {
+      "listingId": "lst-999"
+    }
+  },
+  {
+    "id": "log-0266",
+    "createdAt": "2026-04-06T10:46:01.703Z",
+    "type": "register",
+    "userId": "acc-new-3",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0189",
+    "createdAt": "2026-04-06T14:36:36.902Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0190",
+    "createdAt": "2026-04-06T15:12:15.354Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0191",
+    "createdAt": "2026-04-06T17:18:07.996Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0185",
+    "createdAt": "2026-04-06T18:09:15.427Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0192",
+    "createdAt": "2026-04-06T18:42:47.693Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0186",
+    "createdAt": "2026-04-06T19:07:02.856Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0194",
+    "createdAt": "2026-04-07T07:06:36.869Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0195",
+    "createdAt": "2026-04-07T08:49:54.109Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0199",
+    "createdAt": "2026-04-07T09:10:29.985Z",
+    "type": "login_failed",
+    "userId": null,
+    "userRole": null,
+    "meta": {
+      "email": "typo@example.com"
+    }
+  },
+  {
+    "id": "log-0280",
+    "createdAt": "2026-04-07T14:26:44.941Z",
+    "type": "application_submitted",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": {
+      "applicationId": "app-205",
+      "listingId": "lst-105"
+    }
+  },
+  {
+    "id": "log-0196",
+    "createdAt": "2026-04-07T16:48:22.129Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0197",
+    "createdAt": "2026-04-07T17:35:36.351Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0198",
+    "createdAt": "2026-04-07T18:09:01.613Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0210",
+    "createdAt": "2026-04-08T09:15:31.452Z",
+    "type": "login_failed",
+    "userId": null,
+    "userRole": null,
+    "meta": {
+      "email": "typo@example.com"
+    }
+  },
+  {
+    "id": "log-0202",
+    "createdAt": "2026-04-08T10:32:57.439Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0203",
+    "createdAt": "2026-04-08T11:50:13.660Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0272",
+    "createdAt": "2026-04-08T12:49:56.408Z",
+    "type": "listing_created",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": {
+      "listingId": "lst-104",
+      "title": "Cosy Studio"
+    }
+  },
+  {
+    "id": "log-0204",
+    "createdAt": "2026-04-08T14:51:03.873Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0200",
+    "createdAt": "2026-04-08T15:09:42.378Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0205",
+    "createdAt": "2026-04-08T15:27:43.860Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0208",
+    "createdAt": "2026-04-08T16:36:23.768Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0201",
+    "createdAt": "2026-04-08T16:53:14.293Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0206",
+    "createdAt": "2026-04-08T17:10:28.334Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0209",
+    "createdAt": "2026-04-08T17:20:13.394Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0207",
+    "createdAt": "2026-04-08T18:20:18.665Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0215",
+    "createdAt": "2026-04-09T07:13:38.817Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0216",
+    "createdAt": "2026-04-09T08:16:15.877Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0217",
+    "createdAt": "2026-04-09T08:20:30.998Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0220",
+    "createdAt": "2026-04-09T09:11:34.632Z",
+    "type": "login_failed",
+    "userId": null,
+    "userRole": null,
+    "meta": {
+      "email": "ghost@x.com"
+    }
+  },
+  {
+    "id": "log-0218",
+    "createdAt": "2026-04-09T09:28:06.254Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0286",
+    "createdAt": "2026-04-09T09:33:53.794Z",
+    "type": "listing_approved",
+    "userId": null,
+    "userRole": "admin",
+    "meta": {
+      "listingId": "lst-103"
+    }
+  },
+  {
+    "id": "log-0213",
+    "createdAt": "2026-04-09T11:18:06.710Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0214",
+    "createdAt": "2026-04-09T12:05:07.912Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0219",
+    "createdAt": "2026-04-09T17:40:53.085Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0211",
+    "createdAt": "2026-04-09T17:56:19.034Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0212",
+    "createdAt": "2026-04-09T18:02:45.436Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0223",
+    "createdAt": "2026-04-10T07:47:02.234Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0224",
+    "createdAt": "2026-04-10T08:28:02.579Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0221",
+    "createdAt": "2026-04-10T10:38:45.146Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0222",
+    "createdAt": "2026-04-10T11:42:01.386Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0227",
+    "createdAt": "2026-04-10T11:43:12.773Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0281",
+    "createdAt": "2026-04-10T14:16:47.410Z",
+    "type": "application_submitted",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": {
+      "applicationId": "app-206",
+      "listingId": "lst-106"
+    }
+  },
+  {
+    "id": "log-0225",
+    "createdAt": "2026-04-10T15:10:26.677Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0226",
+    "createdAt": "2026-04-10T16:08:39.799Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0228",
+    "createdAt": "2026-04-11T12:17:10.919Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0229",
+    "createdAt": "2026-04-11T13:02:39.034Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0273",
+    "createdAt": "2026-04-11T13:16:13.950Z",
+    "type": "listing_created",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": {
+      "listingId": "lst-105",
+      "title": "2-Bed Flat"
+    }
+  },
+  {
+    "id": "log-0230",
+    "createdAt": "2026-04-11T14:35:45.561Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0291",
+    "createdAt": "2026-04-11T15:07:47.944Z",
+    "type": "account_activated",
+    "userId": null,
+    "userRole": "admin",
+    "meta": {
+      "targetAccountId": "acc-spam-1"
+    }
+  },
+  {
+    "id": "log-0231",
+    "createdAt": "2026-04-11T15:31:54.865Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0232",
+    "createdAt": "2026-04-11T16:05:51.519Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0233",
+    "createdAt": "2026-04-11T17:46:45.977Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0237",
+    "createdAt": "2026-04-12T07:07:38.371Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0238",
+    "createdAt": "2026-04-12T08:58:08.371Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0235",
+    "createdAt": "2026-04-12T10:19:49.187Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0267",
+    "createdAt": "2026-04-12T10:32:49.662Z",
+    "type": "register",
+    "userId": "acc-new-4",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0236",
+    "createdAt": "2026-04-12T11:10:25.529Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0241",
+    "createdAt": "2026-04-12T12:21:48.135Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0234",
+    "createdAt": "2026-04-12T14:26:34.527Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0239",
+    "createdAt": "2026-04-12T17:03:58.871Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0240",
+    "createdAt": "2026-04-12T18:12:48.551Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0243",
+    "createdAt": "2026-04-13T08:15:21.883Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0242",
+    "createdAt": "2026-04-13T08:34:45.702Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0287",
+    "createdAt": "2026-04-13T09:13:37.728Z",
+    "type": "listing_approved",
+    "userId": null,
+    "userRole": "admin",
+    "meta": {
+      "listingId": "lst-104"
+    }
+  },
+  {
+    "id": "log-0282",
+    "createdAt": "2026-04-13T14:17:33.033Z",
+    "type": "application_submitted",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": {
+      "applicationId": "app-207",
+      "listingId": "lst-100"
+    }
+  },
+  {
+    "id": "log-0246",
+    "createdAt": "2026-04-13T14:59:10.145Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0247",
+    "createdAt": "2026-04-13T15:05:50.214Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0244",
+    "createdAt": "2026-04-13T18:06:40.323Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0245",
+    "createdAt": "2026-04-13T19:34:36.513Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0250",
+    "createdAt": "2026-04-14T07:05:12.987Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0251",
+    "createdAt": "2026-04-14T08:05:26.810Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0248",
+    "createdAt": "2026-04-14T11:42:54.924Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0249",
+    "createdAt": "2026-04-14T12:52:45.483Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0274",
+    "createdAt": "2026-04-14T14:18:57.228Z",
+    "type": "listing_created",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": {
+      "listingId": "lst-106",
+      "title": "2-Bed Flat"
+    }
+  },
+  {
+    "id": "log-0252",
+    "createdAt": "2026-04-14T16:58:21.069Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0253",
+    "createdAt": "2026-04-14T17:54:27.433Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0255",
+    "createdAt": "2026-04-15T11:43:37.386Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0256",
+    "createdAt": "2026-04-15T12:37:11.265Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0257",
+    "createdAt": "2026-04-15T12:55:12.238Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0254",
+    "createdAt": "2026-04-15T12:59:07.280Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0258",
+    "createdAt": "2026-04-15T13:23:52.064Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0259",
+    "createdAt": "2026-04-15T15:21:44.940Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0260",
+    "createdAt": "2026-04-15T16:14:45.979Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0261",
+    "createdAt": "2026-04-15T17:00:46.824Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0262",
+    "createdAt": "2026-04-15T18:23:31.519Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  }
+]

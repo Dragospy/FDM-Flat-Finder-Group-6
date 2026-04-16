@@ -87,6 +87,10 @@ export default function Dashboard() {
               <h2>Manage Accounts</h2>
               <p>Deactivate and reactivate accounts.</p>
             </Link>
+            <Link to="/system-usage" className="dashboard-card">
+              <h2>System Usage Report</h2>
+              <p>Generate usage reports across the platform.</p>
+            </Link>
             <Link to="/search" className="dashboard-card">
               <h2>Search</h2>
               <p>Search accommodation listings.</p>

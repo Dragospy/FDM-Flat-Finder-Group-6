@@ -34,6 +34,7 @@ import Search  from "./pages/Search";
 import ApplyForListing from "./pages/ApplyForListing";
 import AccountManagement from "./pages/ManageAccounts";
 import ModerateListings from "./pages/ModerateListings";
+import SystemUsageReport from "./pages/SystemUsageReport";
 
 export default function App() {
   return (
@@ -177,6 +178,15 @@ export default function App() {
           element={
             <ProtectedLayout allowedRoles={[ROLES.ADMIN]}>
               <AccountManagement />
+            </ProtectedLayout>
+          }
+        />
+
+        <Route
+          path="/system-usage"
+          element={
+            <ProtectedLayout allowedRoles={[ROLES.ADMIN]}>
+              <SystemUsageReport />
             </ProtectedLayout>
           }
         />

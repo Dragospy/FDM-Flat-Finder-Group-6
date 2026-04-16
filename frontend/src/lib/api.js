@@ -9,6 +9,7 @@
  */
 
 import { db } from "./db";
+import { logEvent, USAGE_EVENTS } from "./usageLog";
 
 // ─── Applications ──────────────────────────────────────────────────────────────
 
@@ -118,7 +119,7 @@ export function applyForListing({
     throw new Error("You already have an active application for this property.");
   }
 
-  return db.insert("applications", {
+  const created = db.insert("applications", {
     listingId,
     consultantId,
     hostId: listing.hostId,
@@ -133,6 +134,12 @@ export function applyForListing({
     status: APPLICATION_STATUS.SUBMITTED,
     updatedAt: new Date().toISOString(),
   });
+  logEvent(USAGE_EVENTS.APPLICATION_SUBMITTED, {
+    userId: consultantId,
+    userRole: "rentee",
+    meta: { applicationId: created.id, listingId },
+  });
+  return created;
 }
 
 /**
@@ -457,7 +464,7 @@ export function createListing(data) {
   if (!data.title)  throw new Error("title is required.");
   if (!data.price)  throw new Error("price is required.");
 
-  return db.insert("listings", {
+  const created = db.insert("listings", {
     available:   true,
     rating:      0,
     reviewCount: 0,
@@ -468,6 +475,12 @@ export function createListing(data) {
     priceUnit:    "month",
     ...data,
   });
+  logEvent(USAGE_EVENTS.LISTING_CREATED, {
+    userId: data.hostId,
+    userRole: "host",
+    meta: { listingId: created.id, title: created.title },
+  });
+  return created;
 }
 
 /**
@@ -494,6 +507,7 @@ export function updateListing(id, data) {
 export function deleteListing(id) {
   const removed = db.remove("listings", id);
   if (!removed) throw new Error(`Listing "${id}" not found.`);
+  logEvent(USAGE_EVENTS.LISTING_DELETED, { meta: { listingId: id } });
   return true;
 }
 
@@ -505,6 +519,7 @@ export function deleteListing(id) {
  */
 export function approveListing(id) {
   const approved = updateListing(id,  {status: APPLICATION_STATUS.ACCEPTED});
+  logEvent(USAGE_EVENTS.LISTING_APPROVED, { userRole: "admin", meta: { listingId: id } });
   return approved;
 }
 
@@ -516,6 +531,7 @@ export function approveListing(id) {
  */
 export function rejectListing(id) {
   const rejected = updateListing(id,  {status: APPLICATION_STATUS.REJECTED});
+  logEvent(USAGE_EVENTS.LISTING_REJECTED, { userRole: "admin", meta: { listingId: id } });
   return rejected;
 }
 
@@ -968,6 +984,7 @@ export function deleteAccount(id) {
 export function deactivateAccount(id) {
   const updated = db.update("accounts", id, { active: false });
   if (!updated) throw new Error(`Account "${id}" not found.`);
+  logEvent(USAGE_EVENTS.ACCOUNT_DEACTIVATED, { userRole: "admin", meta: { targetAccountId: id } });
   return sanitizeAccount(updated);
 }
 
@@ -981,5 +998,6 @@ export function deactivateAccount(id) {
 export function activateAccount(id) {
   const updated = db.update("accounts", id, { active: true });
   if (!updated) throw new Error(`Account "${id}" not found.`);
+  logEvent(USAGE_EVENTS.ACCOUNT_ACTIVATED, { userRole: "admin", meta: { targetAccountId: id } });
   return sanitizeAccount(updated);
 }
