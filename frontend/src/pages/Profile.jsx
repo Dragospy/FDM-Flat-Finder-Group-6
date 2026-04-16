@@ -913,9 +913,8 @@ export default function Profile() {
             <section className="profile-request">
               <div className="profile-request-filters">
                 <p className="profile-request-copy profile-request-copy--tight">
-                  Optional date and time range (your device’s local timezone). Leave both empty to include all
-                  activity. The same bounds apply to every metric when you generate a snapshot. The end value includes
-                  the entire minute you pick (through :59.999) so stored timestamps with seconds are not cut off.
+                  Optional local date and time filter. Leave From and To empty for all activity; one range applies to
+                  every metric. The end time includes the full minute you select.
                 </p>
                 <div className="profile-request-date-row">
                   <label className="profile-request-date-field">
