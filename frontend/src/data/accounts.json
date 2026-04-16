@@ -44,7 +44,7 @@
     "createdAt": "2024-02-20T14:30:00.000Z",
     "preferredLocation": "Manny",
     "budgetMin": 120,
-    "budgetMax": 1800,
+    "budgetMax": 600000,
     "preferredMoveInDate": "2026-03-02",
     "preferredStayLengthMonths": 21,
     "preferredAmenities": [
@@ -60,7 +60,8 @@
     "preferredType": "apartment",
     "hostRelevantDetails": "",
     "relevantDetailsForHost": "Need wheelchair access",
-    "defaultListingPriceUnit": "month"
+    "defaultListingPriceUnit": "month",
+    "active": true
   },
   {
     "id": "acc-003",
@@ -71,5 +72,35 @@
     "phone": "07333333333",
     "avatar": "https://i.pravatar.cc/150?u=carol",
     "createdAt": "2024-03-05T09:15:00.000Z"
+  },
+  {
+    "id": "acc-004",
+    "name": "Rachel Smith",
+    "email": "rentee2@example.com",
+    "password": "password123",
+    "role": "rentee",
+    "phone": "07222222222",
+    "avatar": "https://i.pravatar.cc/150?u=bob",
+    "createdAt": "2024-02-20T14:30:00.000Z",
+    "preferredLocation": null,
+    "budgetMin": null,
+    "budgetMax": null,
+    "preferredMoveInDate": null,
+    "preferredStayLengthMonths": null,
+    "preferredAmenities": [
+      "nive"
+    ],
+    "defaultListingCity": "",
+    "defaultListingPostcode": "",
+    "defaultListingCountry": "",
+    "defaultListingPrice": "",
+    "securityQuestion": "What was the name of your first pet?",
+    "securityAnswer": "bobby",
+    "preferredCity": "",
+    "preferredType": "apartment",
+    "hostRelevantDetails": "",
+    "relevantDetailsForHost": "Need wheelchair access",
+    "defaultListingPriceUnit": "month",
+    "active": true
   }
 ]

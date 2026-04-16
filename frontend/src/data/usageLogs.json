@@ -2417,5 +2417,230 @@
     "userId": "acc-003",
     "userRole": "host",
     "meta": null
+  },
+  {
+    "id": "log-0293",
+    "createdAt": "2026-04-15T07:12:48.331Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0294",
+    "createdAt": "2026-04-15T08:04:19.772Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0295",
+    "createdAt": "2026-04-15T08:31:02.104Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0296",
+    "createdAt": "2026-04-15T09:02:55.880Z",
+    "type": "login_failed",
+    "userId": null,
+    "userRole": null,
+    "meta": {
+      "email": "typo@example.com"
+    }
+  },
+  {
+    "id": "log-0297",
+    "createdAt": "2026-04-15T09:18:41.452Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0298",
+    "createdAt": "2026-04-15T09:44:10.613Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0299",
+    "createdAt": "2026-04-15T10:05:27.208Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0300",
+    "createdAt": "2026-04-15T10:22:58.017Z",
+    "type": "listing_created",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": {
+      "listingId": "lst-107",
+      "title": "Garden Studio"
+    }
+  },
+  {
+    "id": "log-0301",
+    "createdAt": "2026-04-15T10:48:11.546Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0302",
+    "createdAt": "2026-04-15T11:09:33.402Z",
+    "type": "register",
+    "userId": "acc-new-5",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0303",
+    "createdAt": "2026-04-15T11:27:44.895Z",
+    "type": "listing_approved",
+    "userId": null,
+    "userRole": "admin",
+    "meta": {
+      "listingId": "lst-105"
+    }
+  },
+  {
+    "id": "log-0304",
+    "createdAt": "2026-04-15T11:53:08.621Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0305",
+    "createdAt": "2026-04-15T12:31:50.339Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0306",
+    "createdAt": "2026-04-15T13:14:22.771Z",
+    "type": "application_submitted",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": {
+      "applicationId": "app-208",
+      "listingId": "lst-107"
+    }
+  },
+  {
+    "id": "log-0307",
+    "createdAt": "2026-04-15T13:47:05.448Z",
+    "type": "login",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0308",
+    "createdAt": "2026-04-15T14:08:39.211Z",
+    "type": "login_failed",
+    "userId": null,
+    "userRole": null,
+    "meta": {
+      "email": "ghost@x.com"
+    }
+  },
+  {
+    "id": "log-0309",
+    "createdAt": "2026-04-15T14:36:51.984Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0310",
+    "createdAt": "2026-04-15T15:12:07.318Z",
+    "type": "login",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0311",
+    "createdAt": "2026-04-15T15:40:53.662Z",
+    "type": "application_submitted",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": {
+      "applicationId": "app-209",
+      "listingId": "lst-103"
+    }
+  },
+  {
+    "id": "log-0312",
+    "createdAt": "2026-04-15T16:18:22.057Z",
+    "type": "logout",
+    "userId": "acc-001",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0313",
+    "createdAt": "2026-04-15T16:52:49.908Z",
+    "type": "logout",
+    "userId": "acc-003",
+    "userRole": "host",
+    "meta": null
+  },
+  {
+    "id": "log-0314",
+    "createdAt": "2026-04-15T17:29:14.471Z",
+    "type": "login",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0315",
+    "createdAt": "2026-04-15T17:41:50.025Z",
+    "type": "account_deactivated",
+    "userId": null,
+    "userRole": "admin",
+    "meta": {
+      "targetAccountId": "acc-spam-2"
+    }
+  },
+  {
+    "id": "log-0316",
+    "createdAt": "2026-04-15T18:15:32.740Z",
+    "type": "logout",
+    "userId": "acc-000",
+    "userRole": "admin",
+    "meta": null
+  },
+  {
+    "id": "log-0317",
+    "createdAt": "2026-04-15T19:04:19.558Z",
+    "type": "login",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
+  },
+  {
+    "id": "log-0318",
+    "createdAt": "2026-04-15T19:38:47.112Z",
+    "type": "logout",
+    "userId": "acc-002",
+    "userRole": "rentee",
+    "meta": null
   }
 ]
