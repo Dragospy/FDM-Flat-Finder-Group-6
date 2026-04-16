@@ -118,5 +118,186 @@
     "reviewCount": 5,
     "createdAt": "2024-05-20T14:00:00.000Z",
     "status": "submitted"
+  },
+  {
+    "id": "lst-005",
+    "hostId": "acc-001",
+    "title": "Quay Apartments Manchester",
+    "description": "Quay Apartments Manchester is situated in Manchester city centre, offering easy access to key attractions.",
+    "type": "Apartment",
+    "location": {
+      "address": "26 Edge street",
+      "city": "Manchester",
+      "postcode": "M4 1HN",
+      "country": "UK",
+      "latitude": 53.4843,
+      "longitude": -2.2366
+    },
+    "price": 4600,
+    "priceUnit": "month",
+    "bedrooms": 6,
+    "bathrooms": 2,
+    "maxGuests": 10,
+    "amenities": ["WiFi", "Washing Machine", "Parking", "Dishwasher"],
+    "images": [
+      "https://images.unsplash.com/photo-1772656674442-a37d93baae3f?w=800",
+      "https://plus.unsplash.com/premium_photo-1676321046262-4978a752fb15?w=800",
+      "https://images.unsplash.com/photo-1620626011761-996317b8d101?w=800"
+    ],
+    "available": true,
+    "rating": 2.7,
+    "reviewCount": 220,
+    "createdAt": "2024-04-02T08:00:00.000Z",
+    "status": "accepted" 
+  },
+  {
+    "id": "lst-006",
+    "hostId": "acc-001",
+    "title": "Beech House Urban Apartments",
+    "description": "Each apartment offers a kitchen area, complete with Bosch appliances.",
+    "type": "Apartment",
+    "location": {
+      "address": "6 St. Paul's Road",
+      "city": "Bristol",
+      "postcode": "BS8 1LT",
+      "country": "UK",
+      "latitude": 53.4843,
+      "longitude": -2.2366
+    },
+    "price": 560,
+    "priceUnit": "month",
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "maxGuests": 1,
+    "amenities": ["WiFi", "Washing Machine", "Parking"],
+    "images": [
+      "https://images.unsplash.com/photo-1721522283160-c50194639fef?w=800",
+      "https://images.unsplash.com/photo-1638799869566-b17fa794c4de?w=800"
+    ],
+    "available": true,
+    "rating": 3.7,
+    "reviewCount": 23,
+    "createdAt": "2024-04-05T08:00:00.000Z",
+    "status": "accepted" 
+  },
+  {
+    "id": "lst-007",
+    "hostId": "acc-001",
+    "title": "Citadines City Centre Liverpool",
+    "description": "Citadines City Centre Liverpool in Liverpool offers a central base with Liverpool Central Station a 3-minute walk.",
+    "type": "Apartment",
+    "location": {
+      "address": "72 Church Street",
+      "city": "Liverpool",
+      "postcode": "L1 3AY",
+      "country": "UK",
+      "latitude": 53.4047,
+      "longitude": -2.9825
+    },
+    "price": 1804,
+    "priceUnit": "month",
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "maxGuests": 1,
+    "amenities": ["WiFi", "Parking"],
+    "images": [
+      "https://images.unsplash.com/photo-1723641302810-03bfd8859dab?w=800",
+      "https://images.unsplash.com/photo-1600488999585-e4364713b90a?w=800"
+    ],
+    "available": true,
+    "rating": 1.2,
+    "reviewCount": 3,
+    "createdAt": "2024-04-06T08:00:00.000Z",
+    "status": "accepted" 
+  },
+  {
+    "id": "lst-008",
+    "hostId": "acc-001",
+    "title": "Staycity Aparthotels Liverpool Waterfront",
+    "description": "Set in Liverpool, Staycity Aparthotels Liverpool Waterfront has well-equipped accommodation.",
+    "type": "Apartment",
+    "location": {
+      "address": "25 Drury Lane",
+      "city": "Liverpool",
+      "postcode": "L2 0PH",
+      "country": "UK",
+      "latitude": 53.4054,
+      "longitude": -2.9922
+    },
+    "price": 5200,
+    "priceUnit": "month",
+    "bedrooms": 2,
+    "bathrooms": 1,
+    "maxGuests": 2,
+    "amenities": ["WiFi", "Parking","Dishwasher","Washing Machine"],
+    "images": [
+      "https://images.unsplash.com/photo-1638454795595-0a0abf68614d?w=800",
+      "https://images.unsplash.com/photo-1720430499886-8943f89990e1?w=800",
+      "https://images.unsplash.com/photo-1602028915047-37269d1a73f7?w=800"
+    ],
+    "available": true,
+    "rating": 4.2,
+    "reviewCount": 46,
+    "createdAt": "2024-04-07T08:00:00.000Z",
+    "status": "accepted" 
+  },
+  {
+    "id": "lst-009",
+    "hostId": "acc-001",
+    "title": "Monument Serviced Apartments",
+    "description": "Monument Serviced Apartments by LovelyStay in London offers a convenient location with Sky Garden a 2-minute walk away.",
+    "type": "Studio",
+    "location": {
+      "address": "14 Lovat Lane",
+      "city": "London",
+      "postcode": "SE1 4NH",
+      "country": "UK",
+      "latitude": 51.5006,
+      "longitude": -0.091
+    },
+    "price": 2234,
+    "priceUnit": "month",
+    "bedrooms": 1,
+    "bathrooms": 1,
+    "maxGuests": 1,
+    "amenities": ["WiFi", "Parking","Dishwasher","Washing Machine"],
+    "images": [
+      "https://media.gettyimages.com/id/1930421812/video/modern-apartment-with-large-windows.jpg?s=640x640&k=20&c=DhKesMmlxceklayaTYYdjV24NkZjeVI6wXvU67PfB2w="
+    ],
+    "available": false,
+    "rating": 3.2,
+    "reviewCount": 83,
+    "createdAt": "2024-04-08T08:00:00.000Z",
+    "status": "accepted" 
+  },
+  {
+    "id": "lst-010",
+    "hostId": "acc-001",
+    "title": "Colthorn Farm Cottage",
+    "description": "Colthorn Farm Cottage By Aryas Properties in Oxford offers a spacious holiday home with four bedrooms and two bathrooms.",
+    "type": "House",
+    "location": {
+      "address": "Colthorn Farm",
+      "city": "Oxford",
+      "postcode": "OX3 0PQ",
+      "country": "UK",
+      "latitude": 51.7743,
+      "longitude": -1.2371
+    },
+    "price": 2588,
+    "priceUnit": "month",
+    "bedrooms": 4,
+    "bathrooms": 2,
+    "maxGuests": 4,
+    "amenities": ["WiFi", "Parking","Dishwasher","Washing Machine"],
+    "images": [
+      "https://thumbs.dreamstime.com/b/aged-country-house-under-cloudy-sky-exterior-architecture-beautiful-masonry-cottage-green-lawn-fence-gloomy-oxford-144726866.jpg",
+      "https://media.istockphoto.com/id/1291245611/photo/living-room.jpg?s=612x612&w=0&k=20&c=eOhjerMbgcENfVFF1M7ysjxZUhY9vft5oDqxutnvhjc="
+    ],
+    "available": true,
+    "rating": 4.6,
+    "reviewCount": 423,
+    "createdAt": "2024-04-08T08:00:00.000Z",
+    "status": "accepted" 
   }
 ]

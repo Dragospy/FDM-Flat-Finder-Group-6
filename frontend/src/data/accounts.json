@@ -3,7 +3,7 @@
     "id": "acc-000",
     "name": "Admin User",
     "email": "admin@example.com",
-    "password": "admin123",
+    "password": "password123",
     "role": "admin",
     "phone": "02070000000",
     "avatar": "https://i.pravatar.cc/150?u=admin",
@@ -14,8 +14,8 @@
   {
     "id": "acc-001",
     "name": "Alice Johnson",
-    "email": "alice@example.com",
-    "password": "password",
+    "email": "host@example.com",
+    "password": "password123",
     "role": "host",
     "phone": "07111111111",
     "avatar": "https://i.pravatar.cc/150?u=alice",
@@ -36,7 +36,7 @@
   {
     "id": "acc-002",
     "name": "Bob Smith",
-    "email": "bob@example.com",
+    "email": "rentee@example.com",
     "password": "password123",
     "role": "rentee",
     "phone": "07222222222",
@@ -65,7 +65,7 @@
   {
     "id": "acc-003",
     "name": "Carol White",
-    "email": "carol@example.com",
+    "email": "host2@example.com",
     "password": "password123",
     "role": "host",
     "phone": "07333333333",
