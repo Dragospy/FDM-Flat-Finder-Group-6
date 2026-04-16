@@ -30,7 +30,7 @@
     "preferredStayLengthMonths": "",
     "relevantDetailsForHost": "",
     "defaultListingCity": "London",
-    "defaultListingCountry": "test1",
+    "defaultListingCountry": "",
     "defaultListingPriceUnit": "week"
   },
   {
@@ -43,8 +43,8 @@
     "avatar": "https://i.pravatar.cc/150?u=bob",
     "createdAt": "2024-02-20T14:30:00.000Z",
     "preferredLocation": "Manny",
-    "budgetMin": 107,
-    "budgetMax": 133022,
+    "budgetMin": 120,
+    "budgetMax": 1800,
     "preferredMoveInDate": "2026-03-02",
     "preferredStayLengthMonths": 21,
     "preferredAmenities": [
@@ -55,7 +55,7 @@
     "defaultListingCountry": "",
     "defaultListingPrice": "",
     "securityQuestion": "What was the name of your first pet?",
-    "securityAnswer": "bob",
+    "securityAnswer": "bobby",
     "preferredCity": "",
     "preferredType": "apartment",
     "hostRelevantDetails": "",

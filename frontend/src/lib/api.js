@@ -8,6 +8,7 @@
  * cannot be completed (e.g. record not found, missing required field).
  */
 
+import { ROLES } from "./auth";
 import { db } from "./db";
 import { logEvent, USAGE_EVENTS } from "./usageLog";
 
@@ -957,6 +958,59 @@ export function resetPasswordByEmailAndPhone({
 }
 
 /**
+ * Human-readable reasons the account cannot be deleted yet (empty = allowed).
+ * Rentee: pending applications or accepted/booking pipeline. Host: listings or open applications.
+ *
+ * @param {string} userId
+ * @param {string} role  ROLES value
+ * @returns {string[]}
+ */
+export function getAccountDeletionBlockers(userId, role) {
+  const blockers = [];
+  if (!userId) return ["You must be signed in to delete an account."];
+
+  if (role === ROLES.RENTEE) {
+    const apps = getApplicationsByConsultant(userId);
+    const pending = apps.filter((a) => a.status === APPLICATION_STATUS.SUBMITTED);
+    const accepted = apps.filter((a) => a.status === APPLICATION_STATUS.ACCEPTED);
+    if (pending.length) {
+      blockers.push(
+        pending.length === 1
+          ? "You have an application still awaiting the host’s decision. Withdraw it from My Applications before deleting your account."
+          : `You have ${pending.length} applications awaiting the host’s decision. Withdraw them from My Applications before deleting your account.`
+      );
+    }
+    if (accepted.length) {
+      blockers.push(
+        "You have an accepted application or booking in progress. Resolve it with your host via My Applications before deleting your account."
+      );
+    }
+  } else if (role === ROLES.HOST) {
+    const listings = getListingsByHost(userId);
+    if (listings.length) {
+      blockers.push(
+        listings.length === 1
+          ? "You still have a property listing on the system. Delete it from My Listings before deleting your account."
+          : `You still have ${listings.length} property listings. Delete them from My Listings before deleting your account.`
+      );
+    }
+    const hostApps = getApplicationsByHost(userId);
+    const openHostApps = hostApps.filter(
+      (a) =>
+        a.status === APPLICATION_STATUS.SUBMITTED
+        || a.status === APPLICATION_STATUS.ACCEPTED
+    );
+    if (openHostApps.length) {
+      blockers.push(
+        "You have pending or in-progress applications on your listings. Resolve them in Host Applications before deleting your account."
+      );
+    }
+  }
+
+  return blockers;
+}
+
+/**
  * Permanently delete an account.
  * Throws if the account does not exist.
  *
@@ -967,6 +1021,14 @@ export function deleteAccount(id) {
   const accounts = db.getAll("accounts");
   if (accounts.length <= 1) {
     throw new Error("Cannot delete the final account.");
+  }
+
+  const account = db.getById("accounts", id);
+  if (!account) throw new Error(`Account "${id}" not found.`);
+
+  const blockers = getAccountDeletionBlockers(id, account.role);
+  if (blockers.length) {
+    throw new Error(blockers.join(" "));
   }
 
   const removed = db.remove("accounts", id);
